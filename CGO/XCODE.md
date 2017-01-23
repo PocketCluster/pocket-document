@@ -14,13 +14,13 @@
 
 1. Add a new script file in XCode.  
 
-  ![](../img/xcode-script1.png)
+  ![](img/xcode-script1.png)
 2. Setup a new `Run Script` phase in `Build Phases`  
 
-  ![](../img/xcode-script2.png)
+  ![](img/xcode-script2.png)
 3. Drag the script into `Run Script` phase.  
 
-  ![](../img/xcode-script3.png)
+  ![](img/xcode-script3.png)
 4. Edit the script for what it should do.
 
   ```sh
