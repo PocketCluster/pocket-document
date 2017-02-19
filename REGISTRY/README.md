@@ -26,7 +26,24 @@ service docker restart
 
 ## Remarks
 
-- `update-ca-certificates` is just a script. We might be able to include it in `pocketd`
+- `update-ca-certificates` is just a script. We might be able to include it in `pocketd`. Here's another method from [RancherOS](https://docs.rancher.com/rancher/v1.1/en/environments/registries/#self-signed-certificates).
+
+  ```sh
+  # Download the certificate from the domain
+  $ openssl s_client -showcerts -connect ${DOMAIN}:${PORT} </dev/null 2>/dev/null|openssl x509 -outform PEM > ca.crt
+
+  # Copy the certificate to the appropriate directories
+  $ sudo cp ca.crt /etc/docker/certs.d/${DOMAIN}/ca.crt
+
+  # Append the certificate to a file
+  $ cat ca.crt | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+
+  # Restart the docker service to have the changes take affect
+  $ sudo service docker restart
+  ```
+
+
+
 - we might be able to create a new CA certificate pool and add `pocketcluster.crt` there to isolate docker engine. This requires to manipulate TCP connection.
 
   ```go
