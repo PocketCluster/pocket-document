@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+  namenode:
+    image: pocket/amd64-hadoop-app:2.6.5
+    container_name: pc-core
+    hostname: pc-core
+    networks:
+      hadoop:
+        ipv4_address: 172.16.128.1
+    volumes:
+      - /pocket/hadoop/2.6.5:/pocket
+    environment:
+      - CLUSTER_NAME=POCKETCLUSTER-HADOOP
+      - NUM_SLAVES=2
+      - constraint:node==pc-core
+    env_file:
+      - ./hadoop.env
+      
+  datanode1:
+    image: pocket/armhf-hadoop-datanode:2.6.5
+    container_name: pc-node1
+    hostname: pc-node1
+    depends_on:
+      - namenode
+    networks:
+      hadoop:
+        ipv4_address: 172.16.128.2
+    volumes:
+      - /pocket/hadoop/2.6.5:/pocket
+    environment:
+      - NUM_SLAVES=2
+      - constraint:node==pocket
+    env_file:
+      - ./hadoop.env
+
+  datanode2:
+    image: pocket/armhf-hadoop-datanode:2.6.5
+    container_name: pc-node2
+    hostname: pc-node2
+    depends_on:
+      - namenode    
+    networks:
+      hadoop:
+        ipv4_address: 172.16.128.3
+    volumes:
+      - /pocket/hadoop/2.6.5:/pocket
+    environment:
+      - NUM_SLAVES=2
+      - constraint:node==rpi2
+    env_file:
+      - ./hadoop.env
+
+networks:
+  hadoop:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 172.16.128.0/24
+          gateway: 172.16.128.254
+          ip-range: 172.16.128.0/24
