@@ -6,7 +6,77 @@ ETCD plays the central role in PocketCluster setup in which it provides cluster-
 
 Later, we'll look into providing High-Availability or pseudo-production setup.
 
-## Example ETCD setup
+
+## ETCD 2.2.8 / 3.1.1 setup on OSX
+
+- All slave knows pc-master address stated in `/etc/hosts`
+- Below is deployed in live
+
+
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="../data" \
+  --initial-cluster="pc-master=http://192.168.1.105:2380" \
+  --initial-advertise-peer-urls="http://pc-master:2380" \
+  --advertise-client-urls="http://pc-master:2379" \
+  --listen-client-urls="http://0.0.0.0:2379" \
+  --listen-peer-urls="http://0.0.0.0:2380" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
+  --client-cert-auth=true
+  ```
+  
+  secure connection. doesn't work :(  
+
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="../data" \
+  --initial-cluster="pc-master=https://192.168.1.105:2380" \
+  --advertise-client-urls="https://pc-master:2379" \
+  --listen-client-urls="https://0.0.0.0:2379" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
+  --client-cert-auth=true
+  ```
+- 1:1 translation between [etcd.conf](etcd.conf) and cli argument
+
+  ```sh
+  ETCD_NAME="pc-master"
+  ETCD_INITIAL_CLUSTER="pc-master=http://192.168.1.105:2380"
+  ETCD_INITIAL_ADVERTISE_PEER_URLS="http://192.168.1.105:2380"
+  ETCD_ADVERTISE_CLIENT_URLS="http://192.168.1.105:2379"
+  ETCD_LISTEN_CLIENT_URLS="http://0.0.0.0:2379"
+  ETCD_LISTEN_PEER_URLS="http://0.0.0.0:2380"
+  ETCD_CERT_FILE="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.cert"
+  ETCD_KEY_FILE="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.key"
+  ETCD_TRUSTED_CA_FILE="/Users/almightykim/Workspace/DKIMG/CERT/ca-cert.pub"
+  ETCD_CLIENT_CERT_AUTH=true
+  ```
+ 
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="/Users/almightykim/Workspace/DKIMG/ETCD/data" \
+  --initial-cluster="pc-master=http://192.168.1.105:2380" \
+  --initial-advertise-peer-urls="http://192.168.1.105:2380" \
+  --advertise-client-urls="http://192.168.1.105:2379" \
+  --listen-client-urls="http://0.0.0.0:2379" \
+  --listen-peer-urls="http://0.0.0.0:2380" \
+  --cert-file="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.cert" \
+  --key-file="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.key" \
+  --trusted-ca-file="/Users/almightykim/Workspace/DKIMG/CERT/ca-cert.pub" \
+  --client-cert-auth=true
+  ```
+
+> Reference
+
+- <https://github.com/coreos/etcd/blob/v3.1.1/Documentation/op-guide/configuration.md>
+
+## ETCD 2.2.5 setup on vagrant
 
 Following shows an example ETCD setup where `pc-core` is a master host with ip address of `192.168.1.150` and related certs at `/etc/etcd/`
 
