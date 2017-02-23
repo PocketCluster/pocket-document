@@ -11,8 +11,48 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
 
 - All slave knows pc-master address stated in `/etc/hosts`
 - Below is deployed in live
+- [PC-MASTER SSL CONF](pc-master-cert/pc-master.conf)
 
-
+  Secure lean connection config. Listen to local only for peer with TLS
+  
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="../data" \
+  --initial-cluster="pc-master=https://127.0.0.1:2380" \
+  --initial-advertise-peer-urls="https://127.0.0.1:2380" \
+  --listen-peer-urls="https://127.0.0.1:2380" \
+  --peer-cert-file="pc-master.cert" \
+  --peer-key-file="pc-master.key" \
+  --peer-trusted-ca-file="ca-cert.pub" \
+  --peer-client-cert-auth=true \
+  --advertise-client-urls="https://pc-master:2379" \
+  --listen-client-urls="https://0.0.0.0:2379" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
+  --client-cert-auth=true 
+  ```
+  
+  Insecure lean config connection. Listen to local only for peer.
+  
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="/Users/almightykim/Workspace/DKIMG/ETCD/data" \
+  --initial-cluster="pc-master=http://127.0.0.1:2380" \
+  --initial-advertise-peer-urls="http://127.0.0.1:2380" \
+  --listen-peer-urls="http://127.0.0.1:2380" \
+  --advertise-client-urls="https://pc-master:2379" \
+  --listen-client-urls="https://0.0.0.0:2379" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
+  --client-cert-auth=true 
+  ```
+  
+  Insecure connection
+  
   ```sh
   bin/etcd \
   --name="pc-master" \
@@ -28,21 +68,7 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
   --client-cert-auth=true
   ```
   
-  secure connection. doesn't work :(  
-
-  ```sh
-  bin/etcd \
-  --name="pc-master" \
-  --data-dir="../data" \
-  --initial-cluster="pc-master=https://192.168.1.105:2380" \
-  --advertise-client-urls="https://pc-master:2379" \
-  --listen-client-urls="https://0.0.0.0:2379" \
-  --cert-file="pc-master.cert" \
-  --key-file="pc-master.key" \
-  --trusted-ca-file="ca-cert.pub" \
-  --client-cert-auth=true
-  ```
-- 1:1 translation between [etcd.conf](etcd.conf) and cli argument
+- 1:1 translation between [etcd.conf](etcd.conf) and cli argument. Insecure connection.
 
   ```sh
   ETCD_NAME="pc-master"
@@ -66,9 +92,9 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
   --advertise-client-urls="http://192.168.1.105:2379" \
   --listen-client-urls="http://0.0.0.0:2379" \
   --listen-peer-urls="http://0.0.0.0:2380" \
-  --cert-file="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.cert" \
-  --key-file="/Users/almightykim/Workspace/DKIMG/PC-MASTER/pc-master.key" \
-  --trusted-ca-file="/Users/almightykim/Workspace/DKIMG/CERT/ca-cert.pub" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
   --client-cert-auth=true
   ```
 
