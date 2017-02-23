@@ -28,10 +28,12 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   * [Compiled and passed for ARMHF, ARM64](https://github.com/stkim1/GOLANG-ARM)  
 - ETCD [3.1.1](https://github.com/coreos/etcd/releases/tag/v2.3.8)  
   * Recommended to use with Golang 1.7+
+  * use `github.com/coreos/etcd/embed`
 - Swarm [1.2.6](https://github.com/docker/swarm/releases/tag/v1.2.6)  
   * `go test ./...` passed
-  * `go install ./...` will install `swarm` binary in GOPATH
-  
+  * `$GOPATH/src/github.com/docker/swarm && go install ./...` will install `swarm` binary in `$GOPATH/bin`
+- Distribution [2.6.0](https://github.com/docker/distribution/releases/tag/v2.6.0)
+  * `cd $GOPATH/src/github.com/docker/distribution/cmd/registry && go install` will install `registry` binary in `$GOPATH/bin`
 
 **Issues**
 
@@ -52,6 +54,7 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   cd vendor/github.com/Microsoft
   rm -rf go-winio
   git clone https://github.com/Microsoft/go-winio
+  cd go-winio
   git checkout 24a3e3d3fc7451805e09d11e11e95d9a0a4f205e
   ```
-
+- `github.com/docker/distribution/registry/storage/driver/inmemory` test failed due to prolonged test time
