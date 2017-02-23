@@ -34,6 +34,7 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   * `$GOPATH/src/github.com/docker/swarm && go install ./...` will install `swarm` binary in `$GOPATH/bin`
 - Distribution [2.6.0](https://github.com/docker/distribution/releases/tag/v2.6.0)
   * `cd $GOPATH/src/github.com/docker/distribution/cmd/registry && go install` will install `registry` binary in `$GOPATH/bin`
+- Libcompose [0.4.0](https://github.com/docker/libcompose/releases/tag/v0.4.0)
 
 **Issues**
 
