@@ -30,6 +30,8 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   * Recommended to use with Golang 1.7+
 - Swarm [1.2.6](https://github.com/docker/swarm/releases/tag/v1.2.6)  
   * `go test ./...` passed
+  * `go install ./...` will install `swarm` binary in GOPATH
+  
 
 **Issues**
 

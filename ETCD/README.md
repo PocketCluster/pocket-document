@@ -13,12 +13,14 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
 - Below is deployed in live
 - [PC-MASTER SSL CONF](pc-master-cert/pc-master.conf)
   
-  Insecure peer conn/ Secure client conn. Listen to local only for peer.
+  Insecure peer conn/ Secure client conn. Listen to local only for peer.<br/>
+  heartbeat & election-timeout tuned to 5s and 50s respectively.<br/>
+  This is due to the fact that the default swarm heartbeat is [60s](https://github.com/docker/swarm/pull/1501) 
   
   ```sh
   bin/etcd \
   --name="pc-master" \
-  --data-dir="/Users/almightykim/Workspace/DKIMG/ETCD/data" \
+  --data-dir="../data" \
   --initial-cluster="pc-master=http://127.0.0.1:2380" \
   --initial-advertise-peer-urls="http://127.0.0.1:2380" \
   --listen-peer-urls="http://127.0.0.1:2380" \
@@ -27,7 +29,10 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
   --cert-file="pc-master.cert" \
   --key-file="pc-master.key" \
   --trusted-ca-file="ca-cert.pub" \
-  --client-cert-auth=true 
+  --client-cert-auth=true \
+  --heartbeat-interval=50000 \
+  --election-timeout=50000 \
+  --debug
   ```
   
   `[NOT WORKING]` Secure connection config. Listen to local only for peer with TLS
