@@ -12,8 +12,25 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
 - All slave knows pc-master address stated in `/etc/hosts`
 - Below is deployed in live
 - [PC-MASTER SSL CONF](pc-master-cert/pc-master.conf)
-
-  Secure lean connection config. Listen to local only for peer with TLS
+  
+  Insecure peer conn/ Secure client conn. Listen to local only for peer.
+  
+  ```sh
+  bin/etcd \
+  --name="pc-master" \
+  --data-dir="/Users/almightykim/Workspace/DKIMG/ETCD/data" \
+  --initial-cluster="pc-master=http://127.0.0.1:2380" \
+  --initial-advertise-peer-urls="http://127.0.0.1:2380" \
+  --listen-peer-urls="http://127.0.0.1:2380" \
+  --advertise-client-urls="https://pc-master:2379" \
+  --listen-client-urls="https://0.0.0.0:2379" \
+  --cert-file="pc-master.cert" \
+  --key-file="pc-master.key" \
+  --trusted-ca-file="ca-cert.pub" \
+  --client-cert-auth=true 
+  ```
+  
+  `[NOT WORKING]` Secure connection config. Listen to local only for peer with TLS
   
   ```sh
   bin/etcd \
@@ -33,25 +50,8 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
   --trusted-ca-file="ca-cert.pub" \
   --client-cert-auth=true 
   ```
-  
-  Insecure lean config connection. Listen to local only for peer.
-  
-  ```sh
-  bin/etcd \
-  --name="pc-master" \
-  --data-dir="/Users/almightykim/Workspace/DKIMG/ETCD/data" \
-  --initial-cluster="pc-master=http://127.0.0.1:2380" \
-  --initial-advertise-peer-urls="http://127.0.0.1:2380" \
-  --listen-peer-urls="http://127.0.0.1:2380" \
-  --advertise-client-urls="https://pc-master:2379" \
-  --listen-client-urls="https://0.0.0.0:2379" \
-  --cert-file="pc-master.cert" \
-  --key-file="pc-master.key" \
-  --trusted-ca-file="ca-cert.pub" \
-  --client-cert-auth=true 
-  ```
-  
-  Insecure connection
+    
+  `[NOT WORKING]` Insecure connection
   
   ```sh
   bin/etcd \
@@ -68,7 +68,7 @@ Later, we'll look into providing High-Availability or pseudo-production setup.
   --client-cert-auth=true
   ```
   
-- 1:1 translation between [etcd.conf](etcd.conf) and cli argument. Insecure connection.
+- `[WORKING]` Insecure 1:1 translation between [etcd.conf](etcd.conf) and cli argument.
 
   ```sh
   ETCD_NAME="pc-master"
