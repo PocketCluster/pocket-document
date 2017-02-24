@@ -19,7 +19,6 @@
   * <https://groups.google.com/forum/#!topic/golang-nuts/yBu8lyPmFLM>
   * <https://godoc.org/golang.org/x/tools/cmd/gomvpkg#pkg-files>
 
-
 **3rd Party Packages**  
 
 All the packages are saved in source code format at <https://github.com/stkim1/pc-osx-manager/PKGS>  
@@ -35,6 +34,46 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
 - Distribution [2.6.0](https://github.com/docker/distribution/releases/tag/v2.6.0)
   * `cd $GOPATH/src/github.com/docker/distribution/cmd/registry && go install` will install `registry` binary in `$GOPATH/bin`
 - Libcompose [0.4.0](https://github.com/docker/libcompose/releases/tag/v0.4.0)
+- Teleport [1.2.0-baafe3](https://github.com/gravitational/teleport/commit/baafe3a332735d0cf7111be8ad571869fe038b35)
+  * We don't want "cluster snapshot" that works without `auth`
+  * We don't need 2FA hardware support
+  * We need to work with legacy codebase that has been modified
+  * `baafe3` commit will be a base of [`backbone`](https://github.com/stkim1/teleport/tree/backbone) branch and we'll make modifications to that with cherry picking.
+  
+  ```sh
+  # Clone single branch from origin
+  git clone -b master --single-branch https://github.com/gravitational/teleport
+  
+  # Add `private` as a mirroring remote
+  git remote add private https://github.com/stkim1/teleport.git
+  
+  # check remotes
+  git remote -v
+  
+  origin  https://github.com/gravitational/teleport (fetch)
+  origin  https://github.com/gravitational/teleport (push)
+  private https://github.com/stkim1/teleport.git (fetch)
+  private https://github.com/stkim1/teleport.git (push)
+  
+  # fetch origin master
+  git pull origin
+  
+  # update `private` master
+  git push private master
+  
+  # create backbone branch from baafe3a332735d0cf7111be8ad571869fe038b35
+  git checkout -b backbone baafe3a332735d0cf7111be8ad571869fe038b35
+  
+  # setup the branch
+  git push --set-upstream private backbone
+  ```
+
+  > Reference
+  
+  - [Teleport 07e8d2...33044f](https://github.com/gravitational/teleport/compare/07e8d212ff5caff194feb4b217b4638e238d0c86...33044f6d89525e3055a33620b5877db1320576a5)
+  - [Teleport 1d0ec4](https://github.com/gravitational/teleport/commit/1d0ec48dfa788d03f016a6754219dd67db890c8f)
+  - [Teleport baafe3](https://github.com/gravitational/teleport/commit/baafe3a332735d0cf7111be8ad571869fe038b35)
+
 
 **Issues**
 
