@@ -26,8 +26,13 @@ ${WORK_ROOT}/condense_dep.py && source ${WORK_ROOT}/vendor_cleanup.sh
 
 for comp in ${MAIN_COMPONENT[@]}; do
     if [[ ! -d "${GOREPO}/MAINCOMP/${comp}" ]]; then
-        tar -xvf "${GOREPO}/MAINCOMP/${comp}.tar.gz" -C "${GOREPO}/MAINCOMP"
-    fi 
+        tar -xzf "${GOREPO}/MAINCOMP/${comp}.tar.gz" -C "${GOREPO}/MAINCOMP"
+    fi
+    # etcd need special attention
+    if [[ ${comp} =~ "etcd" ]] && [[ -d "${GOREPO}/MAINCOMP/${comp}/cmd/vendor/" ]]; then
+        echo "Special treat for ${comp}..."
+        mv "${GOREPO}/MAINCOMP/${comp}/cmd/vendor/" "${GOREPO}/MAINCOMP/${comp}/vendor/"
+    fi
     if [[ -d "${GOREPO}/MAINCOMP/${comp}/vendor" ]]; then
         pushd ${WORK_ROOT}
         echo "cleanup ${GOREPO}/MAINCOMP/${comp}/vendor..."
@@ -43,7 +48,8 @@ mkdir -p ${TELEPORT} && cp -rf ${GOREPO}/TELEPORT/teleport/* "${TELEPORT}/" && c
 popd
 
 # setup etcd
-if [ -e "${GOREPO}/src/github.com/coreos/etcd" ]; then
+if [[ -d "${GOREPO}/src/github.com/coreos/etcd" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/coreos/etcd"
     rm "${GOREPO}/src/github.com/coreos/etcd"
 fi
 pushd ${WORK_ROOT}
@@ -51,7 +57,8 @@ mkdir -p "${GOREPO}/src/github.com/coreos" && cd "${GOREPO}/src/github.com/coreo
 popd
 
 # setup swarm
-if [ -e "${GOREPO}/src/github.com/docker/swarm" ]; then
+if [[ -d "${GOREPO}/src/github.com/docker/swarm" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/docker/swarm"
     rm "${GOREPO}/src/github.com/docker/swarm"
 fi
 pushd ${WORK_ROOT}
@@ -59,7 +66,8 @@ mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/dock
 popd
 
 # setup libcompose
-if [ -e "${GOREPO}/src/github.com/docker/libcompose" ]; then
+if [[ -d "${GOREPO}/src/github.com/docker/libcompose" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/docker/libcompose"
     rm "${GOREPO}/src/github.com/docker/libcompose"
 fi
 pushd ${WORK_ROOT}
@@ -67,7 +75,8 @@ mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/dock
 popd
 
 # setup distribution
-if [ -e "${GOREPO}/src/github.com/docker/distribution" ]; then
+if [[ -d "${GOREPO}/src/github.com/docker/distribution" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/docker/distribution"
     rm "${GOREPO}/src/github.com/docker/distribution"
 fi
 pushd ${WORK_ROOT}

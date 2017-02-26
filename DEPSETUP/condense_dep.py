@@ -279,7 +279,7 @@ if __name__ == "__main__":
                       "github.com/gravitational/teleport"]
 
     # these are the component that needs packages
-    single_vendor_required = ["etcd", "pocketcluster"]
+    single_vendor_required = ["pocketcluster"]
 
     # package basket
     package = dict()
