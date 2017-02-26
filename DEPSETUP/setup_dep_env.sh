@@ -32,6 +32,7 @@ for comp in ${MAIN_COMPONENT[@]}; do
     if [[ ${comp} =~ "etcd" ]] && [[ -d "${GOREPO}/MAINCOMP/${comp}/cmd/vendor/" ]]; then
         echo "Special treat for ${comp}..."
         mv "${GOREPO}/MAINCOMP/${comp}/cmd/vendor/" "${GOREPO}/MAINCOMP/${comp}/vendor/"
+        rm -rf "${GOREPO}/MAINCOMP/${comp}/cmd/"
     fi
     if [[ -d "${GOREPO}/MAINCOMP/${comp}/vendor" ]]; then
         pushd ${WORK_ROOT}
