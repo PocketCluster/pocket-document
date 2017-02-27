@@ -105,3 +105,13 @@ import:
   - assert
 - package: github.com/karlseguin/ccache
   version: v2.0.2
+- package: github.com/prometheus/client_model
+  version: fa8ad6fec33561be4280a8f0514318c79d7f6cb6
+- package: github.com/prometheus/common
+  version: ebdfc6da46522d58825777cf1f90490a5b1ef1d8
+- package: github.com/prometheus/procfs
+  version: abf152e5f3e97f2fafac028d2cc06c1feb87ffa5
+- package: github.com/beorn7/perks
+  version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
+- package: github.com/matttproud/golang_protobuf_extensions
+  version: c12348ce28de40eed0136aa2b644d0ee0650e56c

@@ -159,7 +159,7 @@ def parse_glide(dependencies=None):
 
 
 # parsing vendor.sh
-def parse_vendoer_sh(dependencies=None):
+def parse_vendor_sh(dependencies=None):
     rpkg = dict()
     subpkg = list()
 
@@ -180,6 +180,29 @@ def parse_vendoer_sh(dependencies=None):
 
     return subpkg
 
+
+# parsing vendor.conf
+def parse_vendor_conf(dependencies=None):
+    rpkg = dict()
+    subpkg = list()
+
+    for dep in dependencies:
+        deppkg = string.strip(dep)
+        if len(deppkg) != 0 and not deppkg.startswith("#"):
+            (pkg, rev) = deppkg.split(" ")[0:2]
+            pkg = string.strip(pkg).encode('ascii', 'replace')
+            rev = string.strip(rev).encode('ascii', 'replace')
+            if pkg not in subpkg:
+                subpkg.append((pkg, rev))
+            if rev not in rpkg:
+                rpkg[rev] = pkg
+
+    for (ver, pkg) in rpkg.iteritems():
+        print "\n", ver
+        print "\t", "-" * 16
+        print "\t", pkg
+
+    return subpkg
 
 # --------------------------------------------- SORTING, FILTERING -----------------------------------------------------
 
@@ -262,13 +285,27 @@ def find_latest_commit(rootpath=None, pkg=None, versions=None):
     return commit_sorted
 
 
+def generate_dir_cleanup_script(pkg=""):
+    path_comp = pkg.split("/")
+    stub_dir = "/".join(pkg.split("/")[:len(path_comp) - 1])
+    return "rm -rf {} && (rmdir {} > /dev/null 2>&1 || true)\n".format(pkg, stub_dir)
+
 # ----------------------------------------------------- MAIN -----------------------------------------------------------
 
 
 if __name__ == "__main__":
 
-    WORK_ROOT = os.environ["WORK_ROOT"]
-    GOREPO = os.environ["GOREPO"]
+    WORK_ROOT = None
+    try:
+        WORK_ROOT = os.environ["WORK_ROOT"]
+    except Exception:
+        WORK_ROOT = "/Users/almightykim/Workspace/POCKETPKG/DEPSETUP"
+
+    GOREPO = None
+    try:
+        GOREPO = os.environ["GOREPO"]
+    except Exception:
+        GOREPO = "/Users/almightykim/Workspace/POCKETPKG"
 
     pkg_root = "{}/src".format(GOREPO)
     # these are the main component we need to manually keep
@@ -276,6 +313,7 @@ if __name__ == "__main__":
                       "github.com/docker/libcompose",
                       "github.com/docker/swarm",
                       "github.com/docker/distribution",
+                      "github.com/docker/docker",
                       "github.com/gravitational/teleport"]
 
     # these are the component that needs packages
@@ -305,13 +343,17 @@ if __name__ == "__main__":
                 # Vendor.sh
                 elif fullpath.endswith("vendor.sh"):
                     origin = filename.replace("-vendor.sh", "")
-                    vender_sh = parse_vendoer_sh(depfile)
-                    sort_packages(package, vender_sh, origin, True)
-
+                    vendor_sh = parse_vendor_sh(depfile)
+                    sort_packages(package, vendor_sh, origin, True)
+                # Vendor.conf
+                elif fullpath.endswith("vendor.conf"):
+                    origin = filename.replace("-vendor.conf", "")
+                    vendor_conf = parse_vendor_conf(depfile)
+                    sort_packages(package, vendor_conf, origin, True)
 
     # print json.dumps(package)
     print "-" * 8, "downloading packages, finding latest commit", "-" * 8
-    with open(os.path.join(WORK_ROOT, "dependencies.list"), "w") as finaldep:
+    with open(os.path.join(WORK_ROOT, "dependencies.txt"), "w") as finaldep:
 
         for pkg, vers in package.iteritems():
             repo_url = "https://{}".format(pkg)
@@ -364,25 +406,25 @@ if __name__ == "__main__":
         finaldep.write("\n---------------- DELETE CONFLICETED VENDORS ---------------- \n")
         for pkg, vers in package.iteritems():
             if 1 < len(vers):
-                finaldep.write("rm -rf {}\n".format(pkg))
+                finaldep.write(generate_dir_cleanup_script(pkg))
 
         for pkg in main_compoment:
-            finaldep.write("rm -rf {}\n".format(pkg))
+            finaldep.write(generate_dir_cleanup_script(pkg))
 
         print "-" * 8, "cleanup vendor script", "-" * 8
         with open(os.path.join(WORK_ROOT, "vendor_cleanup.sh"), "w") as cleandep:
             cleandep.write("#!/usr/bin/env bash\n\nfunction clean_vendor() {\n")
             for pkg, vers in package.iteritems():
                 if 1 < len(vers):
-                    cleandep.write("\trm -rf {}\n".format(pkg))
+                    cleandep.write(generate_dir_cleanup_script(pkg))
 
             for pkg in main_compoment:
-                cleandep.write("\trm -rf {}\n".format(pkg))
+                cleandep.write(generate_dir_cleanup_script(pkg))
 
-            cleandep.write("}\n\nfunction cleanup_gopath() {\n")
+            cleandep.write("}\n\nfunction clean_gopath() {\n")
 
             for pkg, vers in package.iteritems():
                 if 1 == len(vers):
-                    cleandep.write("\trm -rf {}\n".format(pkg))
+                    cleandep.write(generate_dir_cleanup_script(pkg))
 
             cleandep.write("}\n")

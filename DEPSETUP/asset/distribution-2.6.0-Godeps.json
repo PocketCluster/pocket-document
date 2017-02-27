@@ -7,19 +7,24 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "(2017-02-27, stkim1) logrus is aligned with logrus in docker-c8388a-2016_11_22",
+			"Rev": "f76d643702a30fbffecdfe50831e11881c96ceb3"
+		},
+		{
+			"ImportPath": "github.com/bshuster-repo/logrus-logstash-hook",
+			"Comment": "(2017-02-27, stkim1) Formatter version is aligned with https://github.com/docker/distribution/blob/50133d63723f8fa376e632a853739990a133be16/vendor.conf",
+			"Rev": "5f729f2fb50a301153cae84ff5c58981d51c095a"
+		},
+		{
+			"ImportPath": "github.com/cpuguy83/go-md2man",
+			"Comment": "(2017-02-27, stkim1) This is added due to original godep misses. Aligned for a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa in docker-c8388a-2016_11_22",
+			"Rev": "a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa"
+		},
+		{
 			"ImportPath": "github.com/Azure/azure-sdk-for-go/storage",
 			"Comment": "v5.0.0-beta-6-g0b5fe2a",
 			"Rev": "0b5fe2abe0271ba07049eacaa65922d67c319543"
-		},
-		{
-			"ImportPath": "github.com/Sirupsen/logrus",
-			"Comment": "v0.7.3",
-			"Rev": "55eb11d21d2a31a3cc93838241d04800f52e823d"
-		},
-		{
-			"ImportPath": "github.com/Sirupsen/logrus/formatters/logstash",
-			"Comment": "v0.7.3",
-			"Rev": "55eb11d21d2a31a3cc93838241d04800f52e823d"
 		},
 		{
 			"ImportPath": "github.com/aws/aws-sdk-go/aws",
