@@ -33,12 +33,8 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   * `$GOPATH/src/github.com/docker/swarm && go install ./...` will install `swarm` binary in `$GOPATH/bin`
 - Distribution [2.6.0](https://github.com/docker/distribution/releases/tag/v2.6.0)
   * `cd $GOPATH/src/github.com/docker/distribution/cmd/registry && go install` will install `registry` binary in `$GOPATH/bin`
-- Libcompose [0.4.0](https://github.com/docker/libcompose/releases/tag/v0.4.0)
+- Libcompose [0.4.0](https://github.com/docker/libcompose/releases/tag/v0.4.0) + [42066b](https://github.com/docker/libcompose/commit/42066b8afe5c987ac896076f704a87a35cee86c5) + [f5739a](https://github.com/docker/libcompose/commit/f5739a73c53493ebd1ff76d6ec95f3fc1c478c38)
 - Teleport [1.2.0-baafe3](https://github.com/gravitational/teleport/commit/baafe3a332735d0cf7111be8ad571869fe038b35)
-  * We don't want "cluster snapshot" that works without `auth`
-  * We don't need 2FA hardware support
-  * We need to work with legacy codebase that has been modified
-  * `baafe3` commit will be a base of [`backbone`](https://github.com/stkim1/teleport/tree/backbone) branch and we'll make modifications to that with cherry picking.
   
   ```sh
   # Clone single branch from origin
@@ -98,3 +94,11 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   git checkout 24a3e3d3fc7451805e09d11e11e95d9a0a4f205e
   ```
 - `github.com/docker/distribution/registry/storage/driver/inmemory` test failed due to prolonged test time
+- `github.com/docker/libcompose-0.4.0` collide with docker 
+  * The latest version `f5739a` refers a newest docker version that would not be compatible with what `swarm` use (`c8388a`).
+  * In order to mitigate the difference, `0.4.0` is used as base and `42066b` (disable oom killer) + `f5739a` (new docker engine incorporation).
+- Teleport  
+  * We don't want "cluster snapshot" that works without `auth`
+  * We don't need 2FA hardware support
+  * We need to work with legacy codebase that has been modified
+  * `baafe3` commit will be a base of [`backbone`](https://github.com/stkim1/teleport/tree/backbone) branch and we'll make modifications to that with cherry picking.
