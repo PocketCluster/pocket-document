@@ -71,10 +71,14 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   - [Teleport baafe3](https://github.com/gravitational/teleport/commit/baafe3a332735d0cf7111be8ad571869fe038b35)
 
 
-**Issues**
+## Issues
+
+### `ETCD`
 
 - [etcd < v3.1 does not work properly if built with Go > v1.7](https://github.com/coreos/etcd/blob/master/Documentation/upgrades/upgrade_3_0.md#known-issues). Issue [6951](https://github.com/coreos/etcd/issues/6951)
   * Use ETCD 3.1.1 with Golang 1.7.5
+
+### `Swarm`
 - Swarm 1.2.6 has platform incompatibility issue with [Microsoft/go-winio](https://github.com/Microsoft/go-winio). Issue [swarmkit#1067](https://github.com/docker/swarmkit/issues/1067)<br/> The issue is patched at [d8f60f2](https://github.com/Microsoft/go-winio/commit/d8f60f2dd117cd64c2825143a89ecb6f158ad743) and Go 1.7 compatibility is checked at [24a3e3](https://github.com/Microsoft/go-winio/commit/24a3e3d3fc7451805e09d11e11e95d9a0a4f205e)
   * Patch Microsoft/go-winio in `swarm/Godeps/Godeps.json`
 
@@ -93,11 +97,60 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
   cd go-winio
   git checkout 24a3e3d3fc7451805e09d11e11e95d9a0a4f205e
   ```
+
+### `Distribution` (Registry)  
+
 - `github.com/docker/distribution/registry/storage/driver/inmemory` test failed due to prolonged test time
+
+
+### `Libcompose`  
+
 - `github.com/docker/libcompose-0.4.0` collide with docker 
   * The latest version `f5739a` refers a newest docker version that would not be compatible with what `swarm` use (`c8388a`).
   * In order to mitigate the difference, `0.4.0` is used as base and `42066b` (disable oom killer) + `f5739a` (new docker engine incorporation).
-- Teleport  
+  * We don't need following storage dependencies. So removed are they and their vendors
+    - s3      :   github.com/aws/aws-sdk-go, github.com/docker/goamz
+    - azure   :   github.com/Azure/azure-sdk-for-go (collided with docker)
+    - gcs     :   google.golang.org/cloud (collided with docker)
+    - swift   :   github.com/ncw/swift
+    - oss     :   github.com/denverdino/aliyungo
+
+    ```sh
+    google.golang.org/cloud
+    ----------------- !!!CONFLICT!!! --------------------- 
+    dae7e3d993bc3812a2185af60552bb6b847e52a0    ->    2015-12-16 16:54:51+11:00 : docker-c8388a-2016_11_22
+    975617b05ea8a58727e6c1a06b6161ff4185a9f2    ->    2015-11-04 17:14:34-05:00 : distribution-2.6.0
+    
+    
+    github.com/aws/aws-sdk-go
+    ----------------- !!!CONFLICT!!! --------------------- 
+    v1.4.22                                     ->    2016-10-25 21:23:00+00:00 : docker-c8388a-2016_11_22
+    90dec2183a5f5458ee79cbaf4b8e9ab910bc81a6    ->    2016-07-07 17:08:20-07:00 : distribution-2.6.0
+	```
+
+    ```sh
+    rm -rf ./distribution/registry/storage/driver/azure/
+    rm -rf ./distribution/registry/storage/driver/gcs/
+    rm -rf ./distribution/registry/storage/driver/oss/
+    rm -rf ./distribution/registry/storage/driver/s3-aws/
+    rm -rf ./distribution/registry/storage/driver/s3-goamz/
+    rm -rf ./distribution/registry/storage/driver/swift/
+    rm -rf ./distribution/registry/storage/driver/middleware/cloudfront/
+
+    rm -rf ./distribution/vendor/github.com/aws/aws-sdk-go/
+    rm -rf ./distribution/vendor/github.com/docker/goamz/
+    rm -rf ./distribution/vendor/github.com/Azure/azure-sdk-for-go/
+    rm -rf ./distribution/vendor/google.golang.org/cloud/
+    rm -rf ./distribution/vendor/github.com/ncw/swift/
+    rm -rf ./distribution/vendor/github.com/denverdino/aliyungo/
+    ```
+  * `github.com/Sirupsen/logrus` (f76d643702a30fbffecdfe50831e11881c96ceb3) : logrus is aligned with logrus in docker-c8388a-2016_11_22
+  * `github.com/bshuster-repo/logrus-logstash-hook` (5f729f2fb50a301153cae84ff5c58981d51c095a) : Formatter version is aligned with [distribution 50133d] (https://github.com/docker/distribution/blob/50133d63723f8fa376e632a853739990a133be16/vendor.conf)
+  * `github.com/cpuguy83/go-md2man` (a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa) : This is added due to original godep misses. Aligned with docker-c8388a-2016_11_22
+
+### `Teleport`  
+
+- Why go with old version?
   * We don't want "cluster snapshot" that works without `auth`
   * We don't need 2FA hardware support
   * We need to work with legacy codebase that has been modified

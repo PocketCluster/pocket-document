@@ -6,13 +6,16 @@ import:
   version: v1.1.0
 - package: gopkg.in/vmihailenco/msgpack.v2
   version: v2.8.3
-- package: github.com/docker/leadership
-  version: bfc7753dd48af19513b29deec23c364bf0f274eb
+- package: github.com/spf13/afero
+  version: 9be650865eab0c12963d8753212f4f9c66cdcf12
 - package: github.com/cloudflare/cfssl
   version: 7fb22c8cba7ecaf98e4082d22d65800cf45e042a
+# For swarm
+- package: github.com/docker/leadership
+  version: bfc7753dd48af19513b29deec23c364bf0f274eb
 - package: github.com/docker/libkv
   version: aabc039ad04deb721e234f99cd1b4aa28ac71a40
-# For distribution. Gah!
+# For distribution
 - package: github.com/bshuster-repo/logrus-logstash-hook
   version: 5f729f2fb50a301153cae84ff5c58981d51c095a
 - package: github.com/cpuguy83/go-md2man

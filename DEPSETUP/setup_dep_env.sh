@@ -87,7 +87,25 @@ fi
 pushd ${WORK_ROOT}
 mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-2.6.0" "./distribution"
 echo "special treatment for distribution/registry/registry.go since registry.go is using very old version of logrus, it still contains logstash formatter"
-sed -i '' 's|"github.com/Sirupsen/logrus/formatters/logstash"|logstash "github.com/bshuster-repo/logrus-logstash-hook"|g' ./distribution/registry/registry.go
+sed -i '' 's|"github.com/Sirupsen/logrus/formatters/logstash"|logstash "github.com/bshuster-repo/logrus-logstash-hook"|g' ./distribution//registry/registry.go
+
+echo "eliminate storage driver other than filesystem..."
+rm -rf ./distribution/registry/storage/driver/azure/
+rm -rf ./distribution/registry/storage/driver/gcs/
+rm -rf ./distribution/registry/storage/driver/oss/
+rm -rf ./distribution/registry/storage/driver/s3-aws/
+rm -rf ./distribution/registry/storage/driver/s3-goamz/
+rm -rf ./distribution/registry/storage/driver/swift/
+rm -rf ./distribution/registry/storage/driver/middleware/cloudfront/
+
+echo "eliminate vendored storage drivers..."
+rm -rf ./distribution/vendor/github.com/aws/aws-sdk-go/           && (rmdir ./distribution/vendor/github.com/aws > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/docker/goamz/             && (rmdir ./distribution/vendor/github.com/docker > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/Azure/azure-sdk-for-go/   && (rmdir ./distribution/vendor/github.com/Azure > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/google.golang.org/cloud/             && (rmdir ./distribution/vendor/google.golang.org > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/ncw/swift/                && (rmdir ./distribution/vendor/github.com/ncw > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/denverdino/aliyungo/      && (rmdir ./distribution/vendor/github.com/denverdino > /dev/null 2>&1 || true)
+
 popd
 
 # setup docker
