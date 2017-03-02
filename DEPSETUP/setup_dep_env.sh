@@ -14,10 +14,10 @@ export PATH=$GEM_HOME/ruby/2.0.0/bin:$HOME/.util:$GOROOT/bin:$GOREPO/bin:$GOWORK
 export WORK_ROOT="${GOREPO}/DEPSETUP"
 
 # main component to unpack
-MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "etcd-3.1.1" "libcompose-0.4.0-f5739a7-mix" "docker-c8388a-2016_11_22")
+MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "etcd-3.1.1" "docker-c8388a-2016_11_22")
 
 # TESTING
-TESTGO=${TESTGO:-1}
+TESTGO=${TESTGO:-0}
 ADV_TESTGO=${ADV_TESTGO:-0}
 
 echo "prep directories"
@@ -48,44 +48,64 @@ done
 
 # setup teleport
 pushd ${WORK_ROOT}
+echo "setting up teleport..."
 TELEPORT="${GOREPO}/src/github.com/gravitational/teleport"
-mkdir -p ${TELEPORT} && cp -rf ${GOREPO}/TELEPORT/teleport/* "${TELEPORT}/" && cd "${TELEPORT}/vendor/" && clean_vendor
-popd
-
-# setup etcd
-if [[ -d "${GOREPO}/src/github.com/coreos/etcd" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/coreos/etcd"
-    rm "${GOREPO}/src/github.com/coreos/etcd"
+if [[ -d ${TELEPORT} ]]; then
+    #find ${TELEPORT} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
+    rm -rf ${TELEPORT}/*
+else
+    mkdir -p ${TELEPORT}
 fi
-pushd ${WORK_ROOT}
-mkdir -p "${GOREPO}/src/github.com/coreos" && cd "${GOREPO}/src/github.com/coreos" && ln -s "../../../MAINCOMP/etcd-3.1.1" "./etcd"
-popd
-
-# setup swarm
-if [[ -d "${GOREPO}/src/github.com/docker/swarm" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/docker/swarm"
-    rm "${GOREPO}/src/github.com/docker/swarm"
-fi
-pushd ${WORK_ROOT}
-mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/swarm-1.2.6" "./swarm"
+cp -rf ${GOREPO}/DEPREPO/teleport/* ${TELEPORT}/ && cd "${TELEPORT}/vendor/" && clean_vendor && (rm ${TELEPORT}/*.iml || true)
 popd
 
 # setup libcompose
-if [[ -d "${GOREPO}/src/github.com/docker/libcompose" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/docker/libcompose"
-    rm "${GOREPO}/src/github.com/docker/libcompose"
-fi
 pushd ${WORK_ROOT}
-mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/libcompose-0.4.0-f5739a7-mix" "./libcompose"
+echo "setting up libcompose..."
+LIBCOMPOSE="${GOREPO}/src/github.com/docker/libcompose"
+if [[ -d ${LIBCOMPOSE} ]]; then
+    #find ${LIBCOMPOSE} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
+    rm -rf ${LIBCOMPOSE}/*
+else
+    mkdir -p ${LIBCOMPOSE}
+fi
+cp -rf ${GOREPO}/DEPREPO/libcompose/* ${LIBCOMPOSE}/ && cd "${LIBCOMPOSE}/vendor/" && clean_vendor && (rm ${LIBCOMPOSE}/*.iml || true)
+popd
+
+# setup etcd
+pushd ${WORK_ROOT}
+echo "setting up etcd..."
+if [[ -d "${GOREPO}/src/github.com/coreos/etcd" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/coreos/etcd"
+    rm "${GOREPO}/src/github.com/coreos/etcd"
+else
+    mkdir -p "${GOREPO}/src/github.com/coreos"
+fi
+cd "${GOREPO}/src/github.com/coreos" && ln -s "../../../MAINCOMP/etcd-3.1.1" "./etcd"
+popd
+
+# setup swarm
+pushd ${WORK_ROOT}
+echo "setting up swarm..."
+if [[ -d "${GOREPO}/src/github.com/docker/swarm" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/docker/swarm"
+    rm "${GOREPO}/src/github.com/docker/swarm"
+else
+    mkdir -p "${GOREPO}/src/github.com/docker/"
+fi
+cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/swarm-1.2.6" "./swarm"
 popd
 
 # setup distribution
+pushd ${WORK_ROOT}
+echo "setting up distribution..."
 if [[ -d "${GOREPO}/src/github.com/docker/distribution" ]]; then
     echo "delete old link : ${GOREPO}/src/github.com/docker/distribution"
     rm "${GOREPO}/src/github.com/docker/distribution"
+else
+    mkdir -p "${GOREPO}/src/github.com/docker/"
 fi
-pushd ${WORK_ROOT}
-mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-2.6.0" "./distribution"
+cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-2.6.0" "./distribution"
 echo "special treatment for distribution/registry/registry.go since registry.go is using very old version of logrus, it still contains logstash formatter"
 sed -i '' 's|"github.com/Sirupsen/logrus/formatters/logstash"|logstash "github.com/bshuster-repo/logrus-logstash-hook"|g' ./distribution//registry/registry.go
 

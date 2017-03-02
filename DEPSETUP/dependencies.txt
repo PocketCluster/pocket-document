@@ -175,7 +175,7 @@ bitbucket.org/ww/goautoneg
 	(go get -d bitbucket.org/ww/goautoneg || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/bitbucket.org/ww/goautoneg && git checkout 75cd24fc2f2c2a2088577d12123ddee5f54e0675
 
 github.com/flynn/go-shlex
-	3f9db97f856818214da2e1057f8ad84803971cff	 -> 	libcompose-0.4.0-f5739a7-mix
+	3f9db97f856818214da2e1057f8ad84803971cff	 -> 	libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/flynn && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/flynn && git clone https://github.com/flynn/go-shlex && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/flynn/go-shlex && git checkout 3f9db97f856818214da2e1057f8ad84803971cff
 
@@ -532,7 +532,7 @@ github.com/buger/goterm
 github.com/docker/go-units
 ----------------- !!!CONFLICT!!! --------------------- 
 	8a7beacffa3009a9ac66bad506b18ffdd110cf97	 -> 	2016-10-20 17:32:27-04:00 : docker-c8388a-2016_11_22
-	f2145db703495b2e525c59662db69a7344b00bb8	 -> 	2016-09-08 23:06:52+02:00 : libcompose-0.4.0-f5739a7-mix
+	f2145db703495b2e525c59662db69a7344b00bb8	 -> 	2016-09-08 23:06:52+02:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	0bbddae09c5a5419a8c6dcdd7ff90da3d450393b	 -> 	2015-12-30 09:58:59-08:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && /usr/local/bin/git clone --branch master https://github.com/docker/go-units && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker/go-units
@@ -547,7 +547,7 @@ github.com/hashicorp/serf
 golang.org/x/crypto
 ----------------- !!!CONFLICT!!! --------------------- 
 	3fbbcd23f1cb824e69491a5930cfeff09b12f4d2	 -> 	2016-04-06 11:11:13-05:00 : docker-c8388a-2016_11_22
-	3fbbcd23f1cb824e69491a5930cfeff09b12f4d2	 -> 	2016-04-06 11:11:13-05:00 : libcompose-0.4.0-f5739a7-mix
+	3fbbcd23f1cb824e69491a5930cfeff09b12f4d2	 -> 	2016-04-06 11:11:13-05:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	9e7f5dc375abeb9619ea3c5c58502c428f457aa2	 -> 	2016-03-17 12:45:02+01:00 : Teleport-1.2.0
 	c10c31b5e94b6f7a0283272dc2bb27163dcea24b	 -> 	2015-05-06 20:01:23-07:00 : distribution-2.6.0
 	1351f936d976c60a0a48d728281922cf63eafb8d	 -> 	2015-02-19 07:57:16+11:00 : etcd-3.1.1
@@ -578,7 +578,7 @@ github.com/gogo/protobuf
 
 gopkg.in/check.v1
 ----------------- !!!CONFLICT!!! --------------------- 
-	11d3bc7aa68e238947792f30573146a3231fc0f1	 -> 	2015-07-29 10:04:31+02:00 : libcompose-0.4.0-f5739a7-mix
+	11d3bc7aa68e238947792f30573146a3231fc0f1	 -> 	2015-07-29 10:04:31+02:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	64131543e7896d5bcc6bd5a76287eb75ea96c673	 -> 	2014-10-24 11:38:53-02:00 : distribution-2.6.0
 	64131543e7896d5bcc6bd5a76287eb75ea96c673	 -> 	2014-10-24 11:38:53-02:00 : Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -587,7 +587,7 @@ gopkg.in/check.v1
 golang.org/x/sys
 ----------------- !!!CONFLICT!!! --------------------- 
 	8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9	 -> 	2016-09-14 13:33:16-07:00 : docker-c8388a-2016_11_22
-	eb2c74142fd19a79b3f237334c7384d5167b1b46	 -> 	2016-01-26 17:36:05-08:00 : libcompose-0.4.0-f5739a7-mix
+	eb2c74142fd19a79b3f237334c7384d5167b1b46	 -> 	2016-01-26 17:36:05-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	442cd600860ce722f6615730eb008a37a87b13ee	 -> 	2016-01-13 11:01:27+11:00 : Teleport-1.2.0
 	833a04a10549a95dc34458c195cbad61bbb6cb4d	 -> 	2015-12-10 17:34:15-08:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -612,7 +612,7 @@ github.com/stretchr/testify
 ----------------- !!!CONFLICT!!! --------------------- 
 	976c720a22c8eb4eb6a0b4348ad85ad12491a506	 -> 	2016-09-25 23:06:09+01:00 : etcd-3.1.1
 	f390dcf405f7b83c997eac1b06768bb9f44dec18	 -> 	2016-01-09 21:38:47+01:00 : swarm-1.2.6
-	a1f97990ddc16022ec7610326dd9bce31332c116	 -> 	2015-12-02 19:41:52+01:00 : libcompose-0.4.0-f5739a7-mix
+	a1f97990ddc16022ec7610326dd9bce31332c116	 -> 	2015-12-02 19:41:52+01:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/stretchr && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/stretchr && /usr/local/bin/git clone --branch master https://github.com/stretchr/testify && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/stretchr/testify
 
@@ -692,7 +692,7 @@ github.com/cloudflare/cfssl
 
 github.com/docker/docker
 ----------- [[ MAIN PACKGE CONFLICT ]] --------------- 
-	8658748ef716e43a5f6d834825d818012ed6e2c4	 -> 	libcompose-0.4.0-f5739a7-mix
+	8658748ef716e43a5f6d834825d818012ed6e2c4	 -> 	libcompose-0.4.0-70abeb-f5739a7-mix
 	c8388a52ec7a328b6aee3c48d31bd7f3e0b14aeb	 -> 	swarm-1.2.6
 	0f5c9d301b9b1cca66b3ea0f9dec3b5317d3686d	 -> 	Teleport-1.2.0
 
@@ -738,7 +738,7 @@ github.com/pkg/errors
 ----------------- !!!CONFLICT!!! --------------------- 
 	839d9e913e063e28dfd0e6c7b7512793e0a48be9	 -> 	2016-10-01 22:25:12-07:00 : docker-c8388a-2016_11_22
 	a887431f7f6ef7687b556dbf718d9f351d4858a0	 -> 	2016-09-16 13:02:12+02:00 : swarm-1.2.6
-	01fa4104b9c248c8945d14d9f128454d5b28d595	 -> 	2016-06-13 11:17:47+09:00 : libcompose-0.4.0-f5739a7-mix
+	01fa4104b9c248c8945d14d9f128454d5b28d595	 -> 	2016-06-13 11:17:47+09:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/pkg && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/pkg && /usr/local/bin/git clone --branch master https://github.com/pkg/errors && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/pkg/errors
 
@@ -747,7 +747,7 @@ golang.org/x/time
 	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : distribution-2.6.0
 	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : docker-c8388a-2016_11_22
 	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : etcd-3.1.1
-	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : libcompose-0.4.0-f5739a7-mix
+	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/time >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/time
 
@@ -768,7 +768,7 @@ github.com/spf13/cobra
 github.com/Azure/go-ansiterm
 ----------------- !!!CONFLICT!!! --------------------- 
 	388960b655244e76e24c75f48631564eaefade62	 -> 	2016-04-25 15:46:13-07:00 : docker-c8388a-2016_11_22
-	388960b655244e76e24c75f48631564eaefade62	 -> 	2016-04-25 15:46:13-07:00 : libcompose-0.4.0-f5739a7-mix
+	388960b655244e76e24c75f48631564eaefade62	 -> 	2016-04-25 15:46:13-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/Azure && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Azure && /usr/local/bin/git clone --branch master https://github.com/Azure/go-ansiterm && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Azure/go-ansiterm
 
@@ -781,14 +781,14 @@ golang.org/x/net
 	7dbad50ab5b31073856416cdcfeb2796d682f844	 -> 	2015-01-28 21:50:26+01:00 : swarm-1.2.6
 	7dbad50ab5b31073856416cdcfeb2796d682f844	 -> 	2015-01-28 21:50:26+01:00 : Teleport-1.2.0
 	2beffdc2e92c8a3027590f898fe88f69af48a3f8	 -> 	2000-01-01 00:00:00+00:00 : docker-c8388a-2016_11_22
-	2beffdc2e92c8a3027590f898fe88f69af48a3f8	 -> 	2000-01-01 00:00:00+00:00 : libcompose-0.4.0-f5739a7-mix
+	2beffdc2e92c8a3027590f898fe88f69af48a3f8	 -> 	2000-01-01 00:00:00+00:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/net >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/net
 
 github.com/gorilla/context
 ----------------- !!!CONFLICT!!! --------------------- 
 	v1.1                                    	 -> 	2016-02-26 13:46:23-08:00 : docker-c8388a-2016_11_22
-	v1.1                                    	 -> 	2016-02-26 13:46:23-08:00 : libcompose-0.4.0-f5739a7-mix
+	v1.1                                    	 -> 	2016-02-26 13:46:23-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	1c83b3eabd45b6d76072b66b746c20815fb2872d	 -> 	2015-08-19 22:12:45-07:00 : swarm-1.2.6
 	14f550f51af52180c2eefed15e5fd18d63c0a64a	 -> 	2014-06-04 09:11:50-07:00 : distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -804,13 +804,13 @@ github.com/mitchellh/mapstructure
 github.com/docker/distribution
 ----------- [[ MAIN PACKGE CONFLICT ]] --------------- 
 	d22e09a6686c32be8c17b684b639da4b90efe320	 -> 	docker-c8388a-2016_11_22
-	77b9d2997abcded79a5314970fe69a44c93c25fb	 -> 	libcompose-0.4.0-f5739a7-mix
+	77b9d2997abcded79a5314970fe69a44c93c25fb	 -> 	libcompose-0.4.0-70abeb-f5739a7-mix
 	ee8450ff13538d829a9a7909da9b979764d56865	 -> 	swarm-1.2.6
 
 github.com/pmezard/go-difflib
 ----------------- !!!CONFLICT!!! --------------------- 
 	792786c7400a136282c1664665ae0a8db921c6c2	 -> 	2016-01-10 11:55:54+01:00 : swarm-1.2.6
-	d8ed2627bdf02c080bf22230dbb337003b7aba2d	 -> 	2015-10-28 10:42:44+01:00 : libcompose-0.4.0-f5739a7-mix
+	d8ed2627bdf02c080bf22230dbb337003b7aba2d	 -> 	2015-10-28 10:42:44+01:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	d8ed2627bdf02c080bf22230dbb337003b7aba2d	 -> 	2015-10-28 10:42:44+01:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/pmezard && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/pmezard && /usr/local/bin/git clone --branch master https://github.com/pmezard/go-difflib && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/pmezard/go-difflib
@@ -854,7 +854,7 @@ github.com/mattn/go-shellwords
 github.com/spf13/pflag
 ----------------- !!!CONFLICT!!! --------------------- 
 	dabebe21bf790f782ea4c7bbd2efc430de182afd	 -> 	2016-10-18 19:08:44-04:00 : docker-c8388a-2016_11_22
-	cb88ea77998c3f024757528e3305022ab50b43be	 -> 	2016-03-17 02:02:28+02:00 : libcompose-0.4.0-f5739a7-mix
+	cb88ea77998c3f024757528e3305022ab50b43be	 -> 	2016-03-17 02:02:28+02:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	08b1a584251b5b62f458943640fc8ebd4d50aaa5	 -> 	2015-10-13 15:06:43-05:00 : etcd-3.1.1
 	5644820622454e71517561946e3d94b9f9db6842	 -> 	2015-06-01 17:00:40-05:00 : distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -870,13 +870,13 @@ github.com/prometheus/procfs
 github.com/urfave/cli
 ----------------- !!!CONFLICT!!! --------------------- 
 	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : etcd-3.1.1
-	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : libcompose-0.4.0-f5739a7-mix
+	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave && /usr/local/bin/git clone --branch master https://github.com/urfave/cli && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave/cli
 
 gopkg.in/yaml.v2
 ----------------- !!!CONFLICT!!! --------------------- 
-	e4d366fc3c7938e2958e662b4258c7a89e1f0e3e	 -> 	2016-07-15 00:37:55-03:00 : libcompose-0.4.0-f5739a7-mix
+	e4d366fc3c7938e2958e662b4258c7a89e1f0e3e	 -> 	2016-07-15 00:37:55-03:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	a83829b6f1293c91addabc89d0571c246397bbf4	 -> 	2016-03-01 17:40:22-03:00 : docker-c8388a-2016_11_22
 	53feefa2559fb8dfa8d81baad31be332c97d6c77	 -> 	2015-09-24 11:23:14-03:00 : etcd-3.1.1
 	7ad95dd0798a40da1ccdff6dff35fd177b5edf40	 -> 	2015-06-24 11:29:02+01:00 : Teleport-1.2.0
@@ -887,7 +887,7 @@ gopkg.in/yaml.v2
 github.com/opencontainers/runc
 ----------------- !!!CONFLICT!!! --------------------- 
 	51371867a01c467f08af739783b8beafc15     	 -> 	2016-11-09 12:21:22-07:00 : docker-c8388a-2016_11_22
-	cc29e3dded8e27ba8f65738f40d251c885030a28	 -> 	2016-06-15 13:00:28-07:00 : libcompose-0.4.0-f5739a7-mix
+	cc29e3dded8e27ba8f65738f40d251c885030a28	 -> 	2016-06-15 13:00:28-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	2c3115481ee1782ad687a9e0b4834f89533c2acf	 -> 	2016-02-23 13:30:19+05:30 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/opencontainers && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/opencontainers && /usr/local/bin/git clone --branch master https://github.com/opencontainers/runc && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/opencontainers/runc
@@ -895,14 +895,14 @@ github.com/opencontainers/runc
 github.com/vbatts/tar-split
 ----------------- !!!CONFLICT!!! --------------------- 
 	v0.10.1                                 	 -> 	2016-09-26 19:53:52-04:00 : docker-c8388a-2016_11_22
-	v0.10.1                                 	 -> 	2016-09-26 19:53:52-04:00 : libcompose-0.4.0-f5739a7-mix
+	v0.10.1                                 	 -> 	2016-09-26 19:53:52-04:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/vbatts && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/vbatts && /usr/local/bin/git clone --branch master https://github.com/vbatts/tar-split && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/vbatts/tar-split
 
 github.com/gorilla/mux
 ----------------- !!!CONFLICT!!! --------------------- 
 	v1.1                                    	 -> 	2016-03-17 14:34:30-07:00 : docker-c8388a-2016_11_22
-	v1.1                                    	 -> 	2016-03-17 14:34:30-07:00 : libcompose-0.4.0-f5739a7-mix
+	v1.1                                    	 -> 	2016-03-17 14:34:30-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	26a6070f849969ba72b72256e9f14cf519751690	 -> 	2015-12-31 08:19:08-08:00 : swarm-1.2.6
 	e444e69cbd2e2e3e0749a2f3c717cec491552bbf	 -> 	2014-09-26 08:38:14-07:00 : distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -920,7 +920,7 @@ github.com/Sirupsen/logrus
 	f76d643702a30fbffecdfe50831e11881c96ceb3	 -> 	2016-09-28 11:55:00+01:00 : distribution-2.6.0
 	f76d643702a30fbffecdfe50831e11881c96ceb3	 -> 	2016-09-28 11:55:00+01:00 : docker-c8388a-2016_11_22
 	3ec0642a7fb6488f65b06f9040adc67e3990296a	 -> 	2016-08-29 16:23:21-04:00 : swarm-1.2.6
-	v0.10.0                                 	 -> 	2016-03-17 14:11:10+00:00 : libcompose-0.4.0-f5739a7-mix
+	v0.10.0                                 	 -> 	2016-03-17 14:11:10+00:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	4b6ea7319e214d98c938f12692336f7ca9348d6b	 -> 	2016-03-17 14:11:10+00:00 : Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/Sirupsen && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Sirupsen && /usr/local/bin/git clone --branch master https://github.com/Sirupsen/logrus && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Sirupsen/logrus
@@ -928,7 +928,7 @@ github.com/Sirupsen/logrus
 github.com/docker/go-connections
 ----------------- !!!CONFLICT!!! --------------------- 
 	f512407a188ecb16f31a33dbc9c4e4814afc1b03	 -> 	2016-10-31 11:22:14-07:00 : docker-c8388a-2016_11_22
-	988efe982fdecb46f01d53465878ff1f2ff411ce	 -> 	2016-09-02 17:06:09-07:00 : libcompose-0.4.0-f5739a7-mix
+	988efe982fdecb46f01d53465878ff1f2ff411ce	 -> 	2016-09-02 17:06:09-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	34b5052da6b11e27f5f2e357b38b571ddddd3928	 -> 	2016-02-12 15:19:11-08:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && /usr/local/bin/git clone --branch master https://github.com/docker/go-connections && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker/go-connections
@@ -936,21 +936,21 @@ github.com/docker/go-connections
 github.com/xeipuuv/gojsonschema
 ----------------- !!!CONFLICT!!! --------------------- 
 	93e72a773fade158921402d6a24c819b48aba29d	 -> 	2016-03-23 11:03:13+08:00 : docker-c8388a-2016_11_22
-	ac452913faa25c08bb78810d3e6f88b8a39f8f25	 -> 	2015-10-06 12:08:29+08:00 : libcompose-0.4.0-f5739a7-mix
+	ac452913faa25c08bb78810d3e6f88b8a39f8f25	 -> 	2015-10-06 12:08:29+08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && /usr/local/bin/git clone --branch master https://github.com/xeipuuv/gojsonschema && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv/gojsonschema
 
 github.com/xeipuuv/gojsonreference
 ----------------- !!!CONFLICT!!! --------------------- 
 	e02fc20de94c78484cd5ffb007f8af96be030a45	 -> 	2015-08-08 14:50:54+08:00 : docker-c8388a-2016_11_22
-	e02fc20de94c78484cd5ffb007f8af96be030a45	 -> 	2015-08-08 14:50:54+08:00 : libcompose-0.4.0-f5739a7-mix
+	e02fc20de94c78484cd5ffb007f8af96be030a45	 -> 	2015-08-08 14:50:54+08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && /usr/local/bin/git clone --branch master https://github.com/xeipuuv/gojsonreference && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv/gojsonreference
 
 github.com/davecgh/go-spew
 ----------------- !!!CONFLICT!!! --------------------- 
 	6d212800a42e8ab5c146b8ace3490ee17e5225f9	 -> 	2016-09-07 11:21:46-05:00 : docker-c8388a-2016_11_22
-	5215b55f46b2b919f50a1df0eaa5886afe4e3b3d	 -> 	2015-11-05 15:09:06-06:00 : libcompose-0.4.0-f5739a7-mix
+	5215b55f46b2b919f50a1df0eaa5886afe4e3b3d	 -> 	2015-11-05 15:09:06-06:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	5215b55f46b2b919f50a1df0eaa5886afe4e3b3d	 -> 	2015-11-05 15:09:06-06:00 : swarm-1.2.6
 	2df174808ee097f90d259e432cc04442cf60be21	 -> 	2015-06-17 22:34:22-05:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -960,7 +960,7 @@ github.com/Microsoft/go-winio
 ----------------- !!!CONFLICT!!! --------------------- 
 	24a3e3d3fc7451805e09d11e11e95d9a0a4f205e	 -> 	2016-11-21 14:01:10-08:00 : swarm-1.2.6
 	v0.3.6                                  	 -> 	2016-11-03 11:56:17-07:00 : docker-c8388a-2016_11_22
-	v0.3.4                                  	 -> 	2016-05-13 11:41:16-07:00 : libcompose-0.4.0-f5739a7-mix
+	v0.3.4                                  	 -> 	2016-05-13 11:41:16-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/Microsoft && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Microsoft && /usr/local/bin/git clone --branch master https://github.com/Microsoft/go-winio && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/Microsoft/go-winio
 
@@ -976,7 +976,7 @@ github.com/kr/pty
 ----------------- !!!CONFLICT!!! --------------------- 
 	f7ee69f31298ecbe5d2b349c711e2547a617d398	 -> 	2015-10-07 16:04:24-07:00 : etcd-3.1.1
 	5cf931ef8f                              	 -> 	2015-05-11 13:47:10-04:00 : docker-c8388a-2016_11_22
-	5cf931ef8f                              	 -> 	2015-05-11 13:47:10-04:00 : libcompose-0.4.0-f5739a7-mix
+	5cf931ef8f                              	 -> 	2015-05-11 13:47:10-04:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	05017fcccf23c823bfdea560dcc958a136e54fb7	 -> 	2014-12-17 16:19:37-05:00 : Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/kr && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/kr && /usr/local/bin/git clone --branch master https://github.com/kr/pty && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/kr/pty
@@ -991,7 +991,7 @@ github.com/hashicorp/consul
 github.com/xeipuuv/gojsonpointer
 ----------------- !!!CONFLICT!!! --------------------- 
 	e0fe6f68307607d540ed8eac07a342c33fa1b54a	 -> 	2015-10-27 16:21:46+08:00 : docker-c8388a-2016_11_22
-	e0fe6f68307607d540ed8eac07a342c33fa1b54a	 -> 	2015-10-27 16:21:46+08:00 : libcompose-0.4.0-f5739a7-mix
+	e0fe6f68307607d540ed8eac07a342c33fa1b54a	 -> 	2015-10-27 16:21:46+08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv && /usr/local/bin/git clone --branch master https://github.com/xeipuuv/gojsonpointer && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/xeipuuv/gojsonpointer
 
