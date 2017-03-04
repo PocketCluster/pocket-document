@@ -288,7 +288,7 @@ def find_latest_commit(rootpath=None, pkg=None, versions=None):
 def generate_dir_cleanup_script(pkg=""):
     path_comp = pkg.split("/")
     stub_dir = "/".join(pkg.split("/")[:len(path_comp) - 1])
-    return "rm -rf {} && (rmdir {} > /dev/null 2>&1 || true)\n".format(pkg, stub_dir)
+    return "\trm -rf {} && (rmdir {} > /dev/null 2>&1 || true)\n".format(pkg, stub_dir)
 
 # ----------------------------------------------------- MAIN -----------------------------------------------------------
 

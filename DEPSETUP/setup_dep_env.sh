@@ -19,6 +19,8 @@ MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "etcd-3.1.1" "docker-c8388a-2
 # TESTING
 TESTGO=${TESTGO:-0}
 ADV_TESTGO=${ADV_TESTGO:-0}
+# COPYING REPO
+COPY_DEP_REPO=${COPY_DEP_REPO:-0}
 
 echo "prep directories"
 pushd ${WORK_ROOT}
@@ -46,31 +48,70 @@ for comp in ${MAIN_COMPONENT[@]}; do
     fi
 done
 
-# setup teleport
-pushd ${WORK_ROOT}
-echo "setting up teleport..."
-TELEPORT="${GOREPO}/src/github.com/gravitational/teleport"
-if [[ -d ${TELEPORT} ]]; then
-    #find ${TELEPORT} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
-    rm -rf ${TELEPORT}/*
-else
-    mkdir -p ${TELEPORT}
-fi
-cp -rf ${GOREPO}/DEPREPO/teleport/* ${TELEPORT}/ && cd "${TELEPORT}/vendor/" && clean_vendor && (rm ${TELEPORT}/*.iml || true)
-popd
+if [[ ${COPY_DEP_REPO} -eq 1 ]]; then
 
-# setup libcompose
-pushd ${WORK_ROOT}
-echo "setting up libcompose..."
-LIBCOMPOSE="${GOREPO}/src/github.com/docker/libcompose"
-if [[ -d ${LIBCOMPOSE} ]]; then
-    #find ${LIBCOMPOSE} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
-    rm -rf ${LIBCOMPOSE}/*
+    # setup teleport
+    pushd ${WORK_ROOT}
+    echo "setting up teleport..."
+    TELEPORT="${GOREPO}/src/github.com/gravitational/teleport"
+    if [[ -d ${TELEPORT} ]]; then
+        #find ${TELEPORT} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
+        rm -rf ${TELEPORT}/*
+    else
+        mkdir -p ${TELEPORT}
+    fi
+    cp -rf ${GOREPO}/DEPREPO/teleport/* ${TELEPORT}/ && cd "${TELEPORT}/vendor/" && clean_vendor && (rm ${TELEPORT}/*.iml || true)
+    popd
+
+    # setup libcompose
+    pushd ${WORK_ROOT}
+    echo "setting up libcompose..."
+    LIBCOMPOSE="${GOREPO}/src/github.com/docker/libcompose"
+    if [[ -d ${LIBCOMPOSE} ]]; then
+        #find ${LIBCOMPOSE} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
+        rm -rf ${LIBCOMPOSE}/*
+    else
+        mkdir -p ${LIBCOMPOSE}
+    fi
+    cp -rf ${GOREPO}/DEPREPO/libcompose/* ${LIBCOMPOSE}/ && cd "${LIBCOMPOSE}/vendor/" && clean_vendor && (rm ${LIBCOMPOSE}/*.iml || true)
+    popd
+
 else
-    mkdir -p ${LIBCOMPOSE}
+
+    # setup teleport
+    pushd ${WORK_ROOT}
+    echo "setting up teleport..."
+    GRAVITATIONAL="${GOREPO}/src/github.com/gravitational"
+    if [[ ! -d ${GRAVITATIONAL} ]]; then
+        mkdir -p "${GRAVITATIONAL}/"
+    fi
+    TELEPORT="${GRAVITATIONAL}/teleport"
+    LINK=$(readlink "${TELEPORT}")
+    if [[ ! -d ${TELEPORT} ]] || [[ $LINK != "../../../DEPREPO/teleport" ]]; then
+        echo "cleanup old link ${TELEPORT} and rebuild..."
+        cd "${GRAVITATIONAL}/" && (rm ${TELEPORT} || true) && ln -s ../../../DEPREPO/teleport ./teleport
+    fi
+    cd "${TELEPORT}/vendor/" && clean_vendor
+    popd
+
+    # setup libcompose
+    pushd ${WORK_ROOT}
+    echo "setting up libcompose..."
+    DOCKER="${GOREPO}/src/github.com/docker"
+    if [[ ! -d ${DOCKER} ]]; then
+        mkdir -p "${DOCKER}/"
+    fi
+    LIBCOMPOSE="${DOCKER}/libcompose"
+    LINK=$(readlink "${LIBCOMPOSE}")
+    if [[ ! -d ${LIBCOMPOSE} ]] || [[ $LINK != "../../../DEPREPO/libcompose" ]]; then
+        echo "cleanup old link ${LIBCOMPOSE} and rebuild..."
+        cd ${DOCKER} && (rm ${LIBCOMPOSE} || true) && ln -s ../../../DEPREPO/libcompose ./libcompose
+    fi
+    cd "${LIBCOMPOSE}/vendor/" && clean_vendor
+    popd
+
 fi
-cp -rf ${GOREPO}/DEPREPO/libcompose/* ${LIBCOMPOSE}/ && cd "${LIBCOMPOSE}/vendor/" && clean_vendor && (rm ${LIBCOMPOSE}/*.iml || true)
-popd
+
 
 # setup etcd
 pushd ${WORK_ROOT}

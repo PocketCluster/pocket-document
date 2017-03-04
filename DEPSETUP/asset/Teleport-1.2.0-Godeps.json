@@ -8,6 +8,11 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Comment": "(2017/03/03) v1.1.0 added for sqlite backend",
+			"Rev": "v1.1.0"
+		},
+		{
 			"ImportPath": "github.com/Sirupsen/logrus",
 			"Comment": "v0.10.0",
 			"Rev": "4b6ea7319e214d98c938f12692336f7ca9348d6b"
