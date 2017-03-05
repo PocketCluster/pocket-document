@@ -714,8 +714,8 @@ golang.org/x/oauth2
 github.com/mattn/go-sqlite3
 ----------------- !!!CONFLICT!!! --------------------- 
 	v1.2.0                                  	 -> 	2016-11-11 09:01:23+09:00 : pocketcluster-req-0.1.4
+	v1.2.0                                  	 -> 	2016-11-11 09:01:23+09:00 : Teleport-1.2.0
 	v1.1.0                                  	 -> 	2015-09-05 23:49:54+09:00 : docker-c8388a-2016_11_22
-	v1.1.0                                  	 -> 	2015-09-05 23:49:54+09:00 : Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/mattn && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/mattn && /usr/local/bin/git clone --branch master https://github.com/mattn/go-sqlite3 && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/mattn/go-sqlite3
 
