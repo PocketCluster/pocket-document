@@ -1,0 +1,191 @@
+
+git show --pretty=raw --stat e43032f6a6cdd55f1d3cb97fdb108c1ee6f6dfe2
+git diff 0bb87f5ed3bd752000dc3fa9758507286b203b95..e43032f6a6cdd55f1d3cb97fdb108c1ee6f6dfe2
+git cherry-pick -m 1 e43032f6a6cdd55f1d3cb97fdb108c1ee6f6dfe2
+
+git show --pretty=raw --stat 0a78b45b3c9ed12fea9458534954b30313026680
+git diff e43032f6a6cdd55f1d3cb97fdb108c1ee6f6dfe2..0a78b45b3c9ed12fea9458534954b30313026680
+git cherry-pick 0a78b45b3c9ed12fea9458534954b30313026680
+
+git show --pretty=raw --stat f6a7a2eebf12c537d97ece5e60f19ca5ca5269d0
+git diff 81c056055370c4f519b9cea8f754acec5381b33b..f6a7a2eebf12c537d97ece5e60f19ca5ca5269d0
+git cherry-pick -m 1 f6a7a2eebf12c537d97ece5e60f19ca5ca5269d0
+
+git show --pretty=raw --stat 07e8d212ff5caff194feb4b217b4638e238d0c86
+git diff f97ad755acd78b25cb06ce4afb1b7f23df198f24..07e8d212ff5caff194feb4b217b4638e238d0c86
+git cherry-pick 07e8d212ff5caff194feb4b217b4638e238d0c86
+
+git show --pretty=raw --stat 5629a944ae75fafba02f1c768f68cb9eb638815e
+git cherry-pick 5629a944ae75fafba02f1c768f68cb9eb638815e
+
+git show --pretty=raw --stat 7185690940c76dcd2c115653dc00a68c9f85f2c2
+git cherry-pick -m 1 7185690940c76dcd2c115653dc00a68c9f85f2c2
+git cherry-pick -m 2 7185690940c76dcd2c115653dc00a68c9f85f2c2
+
+git show --pretty=raw --stat fcf8daaeba148e715395844c3ae8340c53106be7
+git cherry-pick -m 1 fcf8daaeba148e715395844c3ae8340c53106be7
+
+git show --pretty=raw --stat 6f2dcb00369ad2de3fce4aad5b12b7932cf67686
+git cherry-pick -m 1 6f2dcb00369ad2de3fce4aad5b12b7932cf67686
+
+git cherry-pick -m 1 103dc2ad9f3d91da05679dff5100a3fee769c3a5
+
+git cherry-pick 9edca758cf336331351d0d7a8d4fb9a490008e85
+
+git cherry-pick -m 1 7933393fcc87663050d205b9175be574b9f556ad
+
+git cherry-pick 13088c0fe8a275c5adaa293124bfbcca4acf186a
+
+git show --pretty=raw --stat 3bacc4f020f799394caf1c55162398bab82286b1
+git cherry-pick -m 2 3bacc4f020f799394caf1c55162398bab82286b1
+
+git show --pretty=raw --stat e05393f9552625c476bb7a32f98a8b31bb7f44b3
+git cherry-pick -m 1 e05393f9552625c476bb7a32f98a8b31bb7f44b3
+
+git show --pretty=raw --stat 7a0500fb68daab8bcc1f298a78064cb6932e01da
+git cherry-pick -m 1 7a0500fb68daab8bcc1f298a78064cb6932e01da
+
+git show --pretty=raw --stat ba853303918e1a48741655b241c58ef60c86a821
+git cherry-pick -m 1 ba853303918e1a48741655b241c58ef60c86a821
+
+git show --pretty=raw --stat 5a0e0616f426a3b8f6a60b786ac9dfddb7c0e238
+git cherry-pick -m 1 5a0e0616f426a3b8f6a60b786ac9dfddb7c0e238
+
+git show --pretty=raw --stat 14dd7ff42b5c861db7016da7eeb97d3729707cc7
+git cherry-pick -m 1 14dd7ff42b5c861db7016da7eeb97d3729707cc7
+
+git show --pretty=raw --stat 485787cf4418290d4d9819008caf1fa2d43845f6
+git cherry-pick -m 1 485787cf4418290d4d9819008caf1fa2d43845f6
+
+git show --pretty=raw --stat 485787cf4418290d4d9819008caf1fa2d43845f6
+git cherry-pick -m 1 485787cf4418290d4d9819008caf1fa2d43845f6
+
+git show --pretty=raw --stat 9cd84ffcf3fe380d0045b47c64202ae3ef3f7221
+git cherry-pick -m 1 9cd84ffcf3fe380d0045b47c64202ae3ef3f7221
+
+git show --pretty=raw --stat bff4e2351af5ffe2265047b93bcf1515af458282
+git cherry-pick bff4e2351af5ffe2265047b93bcf1515af458282
+
+git show --pretty=raw --stat eae9d16999d0b2566763ab36aaa212753bdc4d27
+git cherry-pick -m 1 eae9d16999d0b2566763ab36aaa212753bdc4d27
+
+git show --pretty=raw --stat 002b640a16f097e2f834b4ae33c9edfb81d5798c
+git cherry-pick -m 1 002b640a16f097e2f834b4ae33c9edfb81d5798c
+
+git show --pretty=raw --stat 0a6b04ba4af69034371f0321a6ee4e25667b8cda
+git cherry-pick -m 1 0a6b04ba4af69034371f0321a6ee4e25667b8cda
+
+git show --pretty=raw --stat 36859a0bc875eb6d67c7222c989551bd74d9a74d
+git cherry-pick -m 1 36859a0bc875eb6d67c7222c989551bd74d9a74d
+
+git show --pretty=raw --stat 08c53e4923644e287b8f06f2e317af3a2cc1e991
+git cherry-pick -m 1 08c53e4923644e287b8f06f2e317af3a2cc1e991
+
+git show --pretty=raw --stat 9b9b55cbcc63321cda4c4735f1b6dd788be9c859
+git cherry-pick -m 1 9b9b55cbcc63321cda4c4735f1b6dd788be9c859
+
+git show --pretty=raw --stat be8068b3b8fe4350ec2622eb3b24d48d97d7035f
+git cherry-pick be8068b3b8fe4350ec2622eb3b24d48d97d7035f
+
+git show --pretty=raw --stat 61c8fed31925e1060b3914b564af695163aa8050
+git cherry-pick -m 1 61c8fed31925e1060b3914b564af695163aa8050
+
+git show --pretty=raw --stat 7bb3fa08b4cf5a9fbadd0afa45e5f720b9409278
+git cherry-pick -m 1 7bb3fa08b4cf5a9fbadd0afa45e5f720b9409278
+
+git show --pretty=raw --stat 0c251639c815fc38e9c43f76969e1548a70808d7
+git cherry-pick 0c251639c815fc38e9c43f76969e1548a70808d7
+
+git show --pretty=raw --stat be27e0979dcc82bb2a181403716490bf4cb33193
+git cherry-pick -m 1 be27e0979dcc82bb2a181403716490bf4cb33193
+
+git show --pretty=raw --stat 1bcb8fba03881d0d5d50e70df739648e88621e61
+git cherry-pick -m 1 1bcb8fba03881d0d5d50e70df739648e88621e61
+
+git show --pretty=raw --stat f38b3aa95a3726769b26f9f57fdf8888e766241b
+git cherry-pick -m 1 f38b3aa95a3726769b26f9f57fdf8888e766241b
+
+git checkout a8533fde6694f40eb8ff237bdff6f5a3f34fae06 Godeps/Godeps.json
+git checkout a8533fde6694f40eb8ff237bdff6f5a3f34fae06 vendor/github.com/gravitational/trace/*
+git checkout a8533fde6694f40eb8ff237bdff6f5a3f34fae06 vendor/github.com/tstranex/u2f/*
+
+git show --pretty=raw --stat e42f95041e91e14ab8c17861b604a3088bb17245
+git cherry-pick -m 1 e42f95041e91e14ab8c17861b604a3088bb17245
+
+git show --pretty=raw --stat 893b39c2deb7e17adbf6c03f6b77652f6a2f4d72
+git cherry-pick 893b39c2deb7e17adbf6c03f6b77652f6a2f4d72
+
+git show --pretty=raw --stat dc72a13b9daebbd7833a0091b585b289f744809c
+git cherry-pick -m 1 dc72a13b9daebbd7833a0091b585b289f744809c
+
+git show --pretty=raw --stat c5f2a4a29527b8ad2fa23b271e6d1cc228472e39
+git cherry-pick -m 1 c5f2a4a29527b8ad2fa23b271e6d1cc228472e39
+
+git show --pretty=raw --stat bed42f3c89111bf75b32aca53434d724e9cd48d0
+git cherry-pick bed42f3c89111bf75b32aca53434d724e9cd48d0
+
+git show --pretty=raw --stat fc5110cf920aee3597fd4403ab7629320e5b46ab
+git cherry-pick -m 1 fc5110cf920aee3597fd4403ab7629320e5b46ab
+
+git show --pretty=raw --stat 1afbc4b1d13bb50731eefe9e872b6ee44e65e7c6
+git cherry-pick -m 1 1afbc4b1d13bb50731eefe9e872b6ee44e65e7c6
+
+git show --pretty=raw --stat ca5e8d53db34ed7c24f9bcc3693de98b7ab397f3
+git cherry-pick -m 1 ca5e8d53db34ed7c24f9bcc3693de98b7ab397f3
+
+git show --pretty=raw --stat d5bd7da58cce41d3d5decd13520792cb18c992f2
+git cherry-pick -m 1 d5bd7da58cce41d3d5decd13520792cb18c992f2
+
+git show --pretty=raw --stat e669e542e6edcfa5bd38e3d49f39c1ceba171b23
+git cherry-pick -m 1 e669e542e6edcfa5bd38e3d49f39c1ceba171b23
+
+git reset --hard a170cc4e06bfa31934c9ac8415aa39e73c8bab20
+git push -f private backbone
+
+git show --pretty=raw --stat 4f1c3dfd76ea3af0e2281eedb4bf1c8312bbd240
+git cherry-pick -m 1 4f1c3dfd76ea3af0e2281eedb4bf1c8312bbd240
+
+git show --pretty=raw --stat 1c0b1dcb85a6f272fd6f61d286fd8cb5bccffb6b
+git cherry-pick -m 1 1c0b1dcb85a6f272fd6f61d286fd8cb5bccffb6b
+
+git show --pretty=raw --stat 5cfd89fd81a95194aa66a67ae7a112d192466dd9
+git cherry-pick -m 1 5cfd89fd81a95194aa66a67ae7a112d192466dd9
+
+git show --pretty=raw --stat 7b967d0c66f0b504962f44ff1b1b05a32d999f1c
+git cherry-pick 7b967d0c66f0b504962f44ff1b1b05a32d999f1c
+
+git show --pretty=raw --stat c226a45a5f424ca15e5cae5f6b292884abc0bad0
+git cherry-pick -m 1 c226a45a5f424ca15e5cae5f6b292884abc0bad0
+
+git show --pretty=raw --stat f473407e97073087b2be8ee5399212b69c0d9f9e
+git cherry-pick -m 1 f473407e97073087b2be8ee5399212b69c0d9f9e
+
+git show --pretty=raw --stat 96dde7679319ddb498bf83b71b24d8561de625a8
+git cherry-pick -m 1 96dde7679319ddb498bf83b71b24d8561de625a8
+
+git show --pretty=raw --stat a8c363300a5e17ab5b21bb7db839c8097527a4c0
+git cherry-pick -m 1 a8c363300a5e17ab5b21bb7db839c8097527a4c0
+
+git show --pretty=raw --stat a7190624da322816e281015ed5741f6a41bf3617
+git cherry-pick -m 1 a7190624da322816e281015ed5741f6a41bf3617
+
+git show --pretty=raw --stat d9a7508a7a386a53ffcc301c41a6439666d4cf92
+git cherry-pick -m 1 d9a7508a7a386a53ffcc301c41a6439666d4cf92
+
+git show --pretty=raw --stat 2e59ee51cc969987789b09cc0f277ba2e19cdd70
+git cherry-pick -m 1 2e59ee51cc969987789b09cc0f277ba2e19cdd70
+
+git show --pretty=raw --stat 0a6f419f076fb5f7afd8fc0201bc818151697075
+git cherry-pick -m 1 0a6f419f076fb5f7afd8fc0201bc818151697075
+
+git show --pretty=raw --stat e71a09d01bd2bc45fe5137d9eb17e33460166d03
+git cherry-pick -m 1 e71a09d01bd2bc45fe5137d9eb17e33460166d03
+
+git show --pretty=raw --stat 802535c2998d272e3311db805da5c0c29a730342
+git cherry-pick -m 1 802535c2998d272e3311db805da5c0c29a730342
+
+git show --pretty=raw --stat b907f1c65a14a28c21c41ea47a37df655182770c
+git cherry-pick -m 1 b907f1c65a14a28c21c41ea47a37df655182770c
+
+git show --pretty=raw --stat 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9
+git cherry-pick -m 1 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9
