@@ -4,8 +4,8 @@
 
 | Commit | Description | 
 | --- | --- |
-| 7d47d1ff1246a8e582cf840de769d4aaa60745bf | Merge pull request [#775](https://github.com/gravitational/teleport/pull/775) from gravitational/rjones/agent-fixes<br/>SSH Agent Fixes<br/>February 14, 2017 at 3:47:33 PM GMT+9 |
-| 04fdbd9b528b27c892a995595fcad9c915db476c | Merge pull request [#772](https://github.com/gravitational/teleport/pull/772) from russjones/rjones/deduplicate-principals<br/>Deduplicate principals for host certificates.<br/>February 14, 2017 at 7:59:24 AM GMT+9 |
+| 7d47d1ff1246a8e582cf840de769d4aaa60745bf | _**NEED TO MERGE**_<br/>Merge pull request [#775](https://github.com/gravitational/teleport/pull/775) from gravitational/rjones/agent-fixes<br/>SSH Agent Fixes<br/>February 14, 2017 at 3:47:33 PM GMT+9 |
+| 04fdbd9b528b27c892a995595fcad9c915db476c | _**NEED TO MERGE**_<br/>Merge pull request [#772](https://github.com/gravitational/teleport/pull/772) from russjones/rjones/deduplicate-principals<br/>Deduplicate principals for host certificates.<br/>February 14, 2017 at 7:59:24 AM GMT+9 |
 | **STOPS HERE AS CRYPTO VENDOR UPGRADES** | **<<<<<<< HEAD**
 | **--------- ISSUE COVERAGE END ---------** | <https://github.com/gravitational/teleport/issues/579> |
 | 802535c2998d272e3311db805da5c0c29a730342 | Merge pull request [#763](https://github.com/gravitational/teleport/pull/763) from russjones/rjones/ssh-config-docs<br/>Update OpenSSH Documentation<br/>February 10, 2017 at 11:34:01 AM GMT+9 |
@@ -59,13 +59,12 @@
 | ba853303918e1a48741655b241c58ef60c86a821 | Merge pull request [#581](https://github.com/gravitational/teleport/pull/581) from gravitational/ev/profiles<br/>Client profiles for TSH<br/>October 24, 2016 at 7:07:58 AM GMT+9 |
 | 7a0500fb68daab8bcc1f298a78064cb6932e01da | Merge pull request [#583](https://github.com/gravitational/teleport/pull/583) from gravitational/403_and_node_ip<br/>October 24, 2016 at 7:01:54 AM GMT+9 |
 | e05393f9552625c476bb7a32f98a8b31bb7f44b3 | Merge pull request [#584](https://github.com/gravitational/teleport/pull/584) from gravitational/ev/docs-edits<br/>Fixed typos and formatting errors in documetation<br/>October 24, 2016 at 7:01:38 AM GMT+9 |
-| 3bacc4f020f799394caf1c55162398bab82286b1 | (web) refactoring of the build scripts<br/>October 24, 2016 at 3:36:08 AM GMT+9 |
+| 3bacc4f020f799394caf1c55162398bab82286b1 | Merge pull request [#576](https://github.com/gravitational/teleport/pull/576) from gravitational/web/new-build<br/>(web) refactoring of the build scripts<br/>October 24, 2016 at 3:36:08 AM GMT+9 |
 | 13088c0fe8a275c5adaa293124bfbcca4acf186a | Documentation edits<br/>October 19, 2016 at 1:14:59 PM GMT+9 |
 | 7933393fcc87663050d205b9175be574b9f556ad | Merge pull request [#570](https://github.com/gravitational/teleport/pull/570) from gravitational/sasha/presence<br/>fix verbose logging, fixes #569<br/>October 17, 2016 at 10:51:46 AM GMT+9 |
 | 9edca758cf336331351d0d7a8d4fb9a490008e85 | Fixes Gravity #1118<br/>October 15, 2016 at 10:28:44 AM GMT+9 |
-| 103dc2ad9f3d91da05679dff5100a3fee769c3a5 | Fix expired session cleanup<br/>October 13, 2016 at 5:46:01 AM GMT+9 |
-| 6f2dcb00369ad2de3fce4aad5b12b7932cf67686 | Merge pull request [#565](https://github.com/gravitational/teleport/pull/565) from gravitational/sasha/cleanup<br/>cleanup godeps artefacts<br/>October 13, 2016 at 1:19:11 AM GMT+9 |
-| fcf8daaeba148e715395844c3ae8340c53106be7 | Add RemoveSite method to reverse tunnel<br/>October 12, 2016 at 5:13:54 AM GMT+9 |
+| 103dc2ad9f3d91da05679dff5100a3fee769c3a5 | Merge pull request [#566](https://github.com/gravitational/teleport/pull/566) from gravitational/roman/expire<br/>Fix expired session cleanup<br/>October 13, 2016 at 5:46:01 AM GMT+9 |
+| fcf8daaeba148e715395844c3ae8340c53106be7 | Merge pull request [#564](https://github.com/gravitational/teleport/pull/564) from gravitational/roman/removesite<br/>Add RemoveSite method to reverse tunnel<br/>October 12, 2016 at 5:13:54 AM GMT+9 |
 | 7185690940c76dcd2c115653dc00a68c9f85f2c2 | Merge branch 'master' of github.com:gravitational/teleport<br/>October 12, 2016 at 3:36:33 AM GMT+9 |
 | 5629a944ae75fafba02f1c768f68cb9eb638815e | Updated the docs<br/>October 12, 2016 at 3:29:34 AM GMT+9 |
 | 07e8d212ff5caff194feb4b217b4638e238d0c86 | Minor usability issue with tctl<br/>October 11, 2016 at 8:39:06 AM GMT+9 |
