@@ -15,7 +15,7 @@
 | 0382ec3a50ab9fb3265016c6270b33de490780b5 | ---> russjones fork |
 | d9a7508a7a386a53ffcc301c41a6439666d4cf92 | Merge pull request [#747](https://github.com/gravitational/teleport/pull/747) from gravitational/sasha/proxy<br/>fix default proxy SSH principal<br/>February 3, 2017 at 8:19:44 AM GMT+9 |
 | a7190624da322816e281015ed5741f6a41bf3617 | Merge pull request [#741](https://github.com/gravitational/teleport/pull/741) from gravitational/ev/sshagent<br/>Resolved the issue of having too many certs in ssh-agent<br/>February 2, 2017 at 7:12:42 AM GMT+9 |
-| a8c363300a5e17ab5b21bb7db839c8097527a4c0 | Merge pull request [#734](https://github.com/gravitational/teleport/pull/734) from gravitational/ev/667<br/>tsh logout + tctl create<br/>https://github.com/gravitational/teleport/pull/734<br/>January 31, 2017 at 10:13:01 AM GMT+9 |
+| a8c363300a5e17ab5b21bb7db839c8097527a4c0 | Merge pull request [#734](https://github.com/gravitational/teleport/pull/734) from gravitational/ev/667<br/>tsh logout + tctl create<br/>January 31, 2017 at 10:13:01 AM GMT+9 |
 | 96dde7679319ddb498bf83b71b24d8561de625a8 | Merge pull request [#737](https://github.com/gravitational/teleport/pull/737) from gravitational/ev/keepalive<br/>SSH keepalive implementation + refactoring<br/>January 31, 2017 at 10:03:57 AM GMT+9 |
 | f473407e97073087b2be8ee5399212b69c0d9f9e | Merge pull request [#733](https://github.com/gravitational/teleport/pull/733) from gravitational/ev/729<br/>Finished polish of tsh login<br/>January 31, 2017 at 9:55:34 AM GMT+9 |
 | c226a45a5f424ca15e5cae5f6b292884abc0bad0 | Merge pull request [#731](https://github.com/gravitational/teleport/pull/731) from gravitational/ev/regressions<br/>Better TSH login<br/>January 30, 2017 at 6:00:39 AM GMT+9 |
@@ -30,8 +30,7 @@
 | be5cc56dd85c82d21c6c8b73b3a513c7788f64fe | Merge pull request [#652](https://github.com/gravitational/teleport/pull/652) from gravitational/sasha/rbac<br/>[**ROLE BASED ACCESS CONTROL, INTRODUCING NAMESPACE**](<https://github.com/gravitational/teleport/issues/620>)<br/>December 24, 2016 at 2:56:08 AM GMT+9 |
 | **--------- BREAKING CHANGE ---------** | **--------- BEGIN ---------** |
 | 1afbc4b1d13bb50731eefe9e872b6ee44e65e7c6 | Merge pull request [#663](https://github.com/gravitational/teleport/pull/663) from gravitational/sasha/tokens<br/>pass token TTL, fixes #660<br/>December 25, 2016 at 5:37:05 PM GMT+9 |
-| fc5110cf920aee3597fd4403ab7629320e5b46ab | Merge pull request [#657](https://github.com/gravitational/teleport/pull/657) from gravitational/dmitri/connect-context-head<br/>Add context support to ProxyClient.ConnectToNode
-<br/>December 24, 2016 at 5:01:53 AM GMT+9 |
+| fc5110cf920aee3597fd4403ab7629320e5b46ab | Merge pull request [#657](https://github.com/gravitational/teleport/pull/657) from gravitational/dmitri/connect-context-head<br/>Add context support to ProxyClient.ConnectToNode<br/>December 24, 2016 at 5:01:53 AM GMT+9 |
 | bed42f3c89111bf75b32aca53434d724e9cd48d0 | Version bump to 1.3.1<br/>December 21, 2016 at 6:43:06 AM GMT+9 |
 | c5f2a4a29527b8ad2fa23b271e6d1cc228472e39 | Merge pull request [#650](https://github.com/gravitational/teleport/pull/650) from gravitational/sasha/corruption<br/>fix data corruption in audit logs<br/>December 21, 2016 at 6:40:57 AM GMT+9 |
 | dc72a13b9daebbd7833a0091b585b289f744809c | Merge pull request [#649](https://github.com/gravitational/teleport/pull/649) from gravitational/ev/release<br/>(remove u2fsig from sshlogin.go)<br/>December 19, 2016 at 2:32:18 PM GMT+9 |
