@@ -129,6 +129,11 @@ github.com/mdp/rsc
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/mdp && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/mdp && git clone https://github.com/mdp/rsc && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/mdp/rsc && git checkout 90f07065088deccf50b28eb37c93dad3078c0f3c
 
+github.com/tstranex/u2f
+	eb799ce68da4150b16ff5d0c89a24e2a2ad993d8	 -> 	Teleport-1.2.0
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/tstranex && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/tstranex && git clone https://github.com/tstranex/u2f && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/tstranex/u2f && git checkout eb799ce68da4150b16ff5d0c89a24e2a2ad993d8
+
 github.com/opencontainers/runtime-spec
 	1c7c27d043c2a5e513a44084d2b10d77d1402b8c	 -> 	docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -165,9 +170,9 @@ github.com/coreos/go-semver
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && git clone https://github.com/coreos/go-semver && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos/go-semver && git checkout 568e959cd89871e61434c1143528d9162da89ef2
 
 github.com/coreos/go-oidc
-	f427f54ef96beaa1db5fabbe4fff00de535d5494	 -> 	Teleport-1.2.0
+	dedb650fb29c39c2f21aa88c1e4cec66da8754d1	 -> 	Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && git clone https://github.com/coreos/go-oidc && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos/go-oidc && git checkout f427f54ef96beaa1db5fabbe4fff00de535d5494
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && git clone https://github.com/coreos/go-oidc && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos/go-oidc && git checkout dedb650fb29c39c2f21aa88c1e4cec66da8754d1
 
 bitbucket.org/ww/goautoneg
 	75cd24fc2f2c2a2088577d12123ddee5f54e0675	 -> 	docker-c8388a-2016_11_22
@@ -330,9 +335,9 @@ github.com/gravitational/ttlmap
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && git clone https://github.com/gravitational/ttlmap && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational/ttlmap && git checkout 348cf76cace4d93fdacc38dfdaa2306f4f0e9c16
 
 github.com/gravitational/trace
-	8245bfd83ac483f4f0e8a98f595aa965fcb69a10	 -> 	Teleport-1.2.0
+	6e153c7add15eb07e311f892779fb294373c4cfa	 -> 	Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && git clone https://github.com/gravitational/trace && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational/trace && git checkout 8245bfd83ac483f4f0e8a98f595aa965fcb69a10
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational && git clone https://github.com/gravitational/trace && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/gravitational/trace && git checkout 6e153c7add15eb07e311f892779fb294373c4cfa
 
 github.com/gorilla/handlers
 	60c7bfde3e33c201519a200a4507a158cc03a17b	 -> 	distribution-2.6.0

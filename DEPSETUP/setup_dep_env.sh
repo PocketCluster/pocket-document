@@ -179,7 +179,6 @@ mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/dock
 popd
 
 
-
 if [[ ${TESTGO} -eq 1 ]]; then
 pushd ${WORK_ROOT}
 echo "Starting testing..."
@@ -198,8 +197,8 @@ tun_test.go:461:
 OOPS: 20 passed, 1 FAILED
 --- FAIL: TestAPI (5.94s)
 STATIC_HOST_JOIN_FAIL
+cd "${GOREPO}/src/github.com/gravitational/teleport/integration"    && go test ./...
 cd "${GOREPO}/src/github.com/gravitational/teleport/lib"            && go test ./...
-
 
 # Testing etcd
 if [[ ${ADV_TESTGO} -eq 1 ]];then
