@@ -403,6 +403,189 @@ func onStart(config *service.Config) error {
 					}
 
 
+			// initProxy gets called if teleport runs with 'proxy' role enabled.
+			// this means it will do two things:
+			//    1. serve a web UI
+			//    2. proxy SSH connections to nodes running with 'node' role
+			//    3. take care of revse tunnels
+			func (process *TeleportProcess) initProxy() error {
+				// if no TLS key was provided for the web UI, generate a self signed cert
+				if process.Config.Proxy.TLSKey == "" && !process.Config.Proxy.DisableWebUI {
+					err := initSelfSignedHTTPSCert(process.Config)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+				}
+
+				process.RegisterWithAuthServer(
+					process.Config.Token, teleport.RoleProxy,
+					ProxyIdentityEvent)
+
+				process.RegisterFunc(func() error {
+					eventsC := make(chan Event)
+					process.WaitForEvent(ProxyIdentityEvent, eventsC, make(chan struct{}))
+
+					event := <-eventsC
+					log.Infof("[SSH] received %v", &event)
+					conn, ok := (event.Payload).(*Connector)
+					if !ok {
+						return trace.BadParameter("unsupported connector type: %T", event.Payload)
+					}
+					return trace.Wrap(process.initProxyEndpoint(conn))
+				})
+				return nil
+			}
+
+				func (process *TeleportProcess) initProxyEndpoint(conn *Connector) error {
+					var (
+						askedToExit = true
+						err         error
+					)
+					cfg := process.Config
+					proxyLimiter, err := limiter.NewLimiter(cfg.Proxy.Limiter)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+
+					reverseTunnelLimiter, err := limiter.NewLimiter(cfg.Proxy.Limiter)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+
+					tsrv, err := reversetunnel.NewServer(
+						cfg.Proxy.ReverseTunnelListenAddr,
+						[]ssh.Signer{conn.Identity.KeySigner},
+						conn.Client,
+						reversetunnel.SetLimiter(reverseTunnelLimiter),
+						reversetunnel.DirectSite(conn.Identity.Cert.Extensions[utils.CertExtensionAuthority], conn.Client),
+					)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+
+					SSHProxy, err := srv.New(cfg.Proxy.SSHAddr,
+						cfg.Hostname,
+						[]ssh.Signer{conn.Identity.KeySigner},
+						conn.Client,
+						cfg.DataDir,
+						nil,
+						srv.SetLimiter(proxyLimiter),
+						srv.SetProxyMode(tsrv),
+						srv.SetSessionServer(conn.Client),
+						srv.SetAuditLog(conn.Client),
+					)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+
+					// Register reverse tunnel agents pool
+					agentPool, err := reversetunnel.NewAgentPool(reversetunnel.AgentPoolConfig{
+						HostUUID:    conn.Identity.ID.HostUUID,
+						Client:      conn.Client,
+						HostSigners: []ssh.Signer{conn.Identity.KeySigner},
+					})
+					if err != nil {
+						return trace.Wrap(err)
+					}
+
+					// register SSH reverse tunnel server that accepts connections
+					// from remote teleport nodes
+					process.RegisterFunc(func() error {
+						utils.Consolef(cfg.Console, "[PROXY] Reverse tunnel service is starting on %v", cfg.Proxy.ReverseTunnelListenAddr.Addr)
+						if err := tsrv.Start(); err != nil {
+							utils.Consolef(cfg.Console, "[PROXY] Error: %v", err)
+							return trace.Wrap(err)
+						}
+						// notify parties that we've started reverse tunnel server
+						process.BroadcastEvent(Event{Name: ProxyReverseTunnelServerEvent, Payload: tsrv})
+						tsrv.Wait()
+						if askedToExit {
+							log.Infof("[PROXY] Reverse tunnel exited")
+						}
+						return nil
+					})
+
+					// Register web proxy server
+					var webListener net.Listener
+					if !process.Config.Proxy.DisableWebUI {
+						process.RegisterFunc(func() error {
+							utils.Consolef(cfg.Console, "[PROXY] Web proxy service is starting on %v", cfg.Proxy.WebAddr.Addr)
+							webHandler, err := web.NewHandler(
+								web.Config{
+									Proxy:       tsrv,
+									AssetsDir:   cfg.Proxy.AssetsDir,
+									AuthServers: cfg.AuthServers[0],
+									DomainName:  cfg.Hostname,
+									ProxyClient: conn.Client,
+									DisableUI:   cfg.Proxy.DisableWebUI,
+								})
+							if err != nil {
+								utils.Consolef(cfg.Console, "[PROXY] starting the web server: %v", err)
+								return trace.Wrap(err)
+							}
+							defer webHandler.Close()
+
+							proxyLimiter.WrapHandle(webHandler)
+							process.BroadcastEvent(Event{Name: ProxyWebServerEvent, Payload: webHandler})
+
+							log.Infof("[PROXY] init TLS listeners")
+							webListener, err = utils.ListenTLS(
+								cfg.Proxy.WebAddr.Addr,
+								cfg.Proxy.TLSCert,
+								cfg.Proxy.TLSKey)
+							if err != nil {
+								return trace.Wrap(err)
+							}
+							if err = http.Serve(webListener, proxyLimiter); err != nil {
+								if askedToExit {
+									log.Infof("[PROXY] web server exited")
+									return nil
+								}
+								log.Error(err)
+							}
+							return nil
+						})
+					} else {
+						log.Infof("[WEB] Web UI is disabled")
+					}
+
+					// Register ssh proxy server
+					process.RegisterFunc(func() error {
+						utils.Consolef(cfg.Console, "[PROXY] SSH proxy service is starting on %v", cfg.Proxy.SSHAddr.Addr)
+						if err := SSHProxy.Start(); err != nil {
+							if askedToExit {
+								log.Infof("[PROXY] SSH proxy exited")
+								return nil
+							}
+							utils.Consolef(cfg.Console, "[PROXY] Error: %v", err)
+							return trace.Wrap(err)
+						}
+						return nil
+					})
+
+					process.RegisterFunc(func() error {
+						log.Infof("[PROXY] starting reverse tunnel agent pool")
+						if err := agentPool.Start(); err != nil {
+							log.Fatalf("failed to start: %v", err)
+							return trace.Wrap(err)
+						}
+						agentPool.Wait()
+						return nil
+					})
+
+					// execute this when process is asked to exit:
+					process.onExit(func(payload interface{}) {
+						tsrv.Close()
+						SSHProxy.Close()
+						agentPool.Stop()
+						if webListener != nil {
+							webListener.Close()
+						}
+						log.Infof("[PROXY] proxy service exited")
+					})
+					return nil
+				}
+
 func (s *LocalSupervisor) Start() error {
 	s.Lock()
 	defer s.Unlock()
