@@ -6,7 +6,7 @@ export GOREPO=${GOREPO:-"${HOME}/Workspace/POCKETPKG"}
 export GOPATH=${GOPATH:-"${GOREPO}:$GOWORKPLACE"}
 export PATH=${PATH:-"$GEM_HOME/ruby/2.0.0/bin:$HOME/.util:$GOROOT/bin:$GOREPO/bin:$GOWORKPLACE/bin:$HOME/.util:$NATIVE_PATH"}
 export WORK_ROOT=${WORK_ROOT:-"${GOREPO}/DEPSETUP"}
-export ADV_TESTGO=${ADV_TESTGO:-0}
+ADV_TESTGO=${ADV_TESTGO:-0}
 
 # Testing teleport
 :<<STATIC_HOST_JOIN_FAIL
@@ -37,7 +37,7 @@ function test_dependencies {
     fi
     # !!! some tests in v3 client does not pass  !!!
     # cd "${GOREPO}/src/github.com/coreos/etcd/clientv3/"               && go test ./...
-    cd "${GOREPO}/src/github.com/coreos/etcd/auth/"                     && go test ./...
+    cd "${GOREPO}/src/github.com/coreos/etcd/auth/"                     && TMPDIR="/tmp" bash -c "go test ./..."
     cd "${GOREPO}/src/github.com/coreos/etcd/client/"                   && go test ./...
     cd "${GOREPO}/src/github.com/coreos/etcd/compactor/"                && go test ./...
     cd "${GOREPO}/src/github.com/coreos/etcd/contrib/"                  && go test ./...
