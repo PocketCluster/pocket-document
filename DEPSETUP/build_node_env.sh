@@ -75,4 +75,4 @@ ssh ${TARGET_HOST} 'find /opt/gopkg/src/ -name ".DS_Store" | xargs rm'
 
 popd
 
-scp "${WORKDIR}/remote_test_dep.sh" "${TARGET_HOST}:~/" && ssh "${TARGET_HOST}" "bash ~/remote_testgo.sh"
+scp "${WORKDIR}/remote_test_dep.sh" "${TARGET_HOST}:~/" && ssh "${TARGET_HOST}" "bash ~/remote_test_dep.sh"
