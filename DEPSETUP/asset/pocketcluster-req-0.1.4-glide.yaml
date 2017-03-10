@@ -20,3 +20,7 @@ import:
   version: 5f729f2fb50a301153cae84ff5c58981d51c095a
 - package: github.com/cpuguy83/go-md2man
   version: a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa
+# ARMv7/ARM64 don't pass tests with old version so upgrade
+# https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2 (Jan 24, 2017)
+- package: golang.org/x/crypto
+  version: 728b753d0135da6801d45a38e6f43ff55779c5c2

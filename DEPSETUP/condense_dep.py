@@ -242,7 +242,9 @@ def conflict_mirror_command(rootpath=None, pkg=None):
     repodir = os.path.join(rootpath, pkg)
     if pkg.startswith("github.com/"):
         stubdir = os.path.join(rootpath, "/".join(pkg.split("/")[:-1]))
-        return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone --branch master https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
+        # Clone single master branch causes an issue when retrieving git commit date
+        #return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone --branch master https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
+        return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
     else:
         return "(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d {} >/dev/null 2>&1 || true) && cd {}".format(pkg, repodir)
 
