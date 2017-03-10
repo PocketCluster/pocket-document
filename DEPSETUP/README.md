@@ -203,9 +203,12 @@ Plus, do not use `--branch master` flag for github as it occationally skips comm
 
 Current package with bad object and accurate dependency date.
 
-- <https://golang.org/x/crypto>    -> `728b753d0135da6801d45a38e6f43ff55779c5c2 -> 2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4`
+- <https://golang.org/x/crypto>
+  * `[728b75](https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2) -> 2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4`
   * Re-download and check if commit shows correct date
-- <https://github.com/spf13/cobra> -> `v1.5                                    	-> 2016-11-03 18:13:39-04:00 : docker-c8388a-2016_11_22`
+- <https://github.com/spf13/cobra>
+  * `[v1.5](https://github.com/dnephin/cobra/commit/0e9ca70a23585bdaab4beba1e7c4c23a1adfa857) -> 2016-11-03 18:13:39-04:00 : docker-c8388a-2016_11_22`
   * download a folk from <https://github.com/dnephin/cobra> and checkout again
-- <https://golang.org/x/net>       -> `f2499483f923065a842d38eb4c7f1927e6fc6e6d -> 2017-01-14 15:22:49+11:00 : etcd-3.1.1`
+- <https://golang.org/x/net>
+  * `[f24994](https://github.com/golang/net/commit/f2499483f923065a842d38eb4c7f1927e6fc6e6d) -> 2017-01-14 15:22:49+11:00 : etcd-3.1.1`
   * check the commit date from github
