@@ -190,7 +190,7 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
 
 ### [golang.org/x/crypto](https://golang.org/x/crypto)
 
-ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [728b75](https://github.com/golang/crypto/commit/453249f01cfeb54c3d549ddb75ff152ca243f9d8) (2017-02-08)<br/>
+ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [453249](https://github.com/golang/crypto/commit/453249f01cfeb54c3d549ddb75ff152ca243f9d8) (2017-02-08)<br/>
 <sup>*</sup>[3fbbcd](https://github.com/golang/crypto/commit/3fbbcd23f1cb824e69491a5930cfeff09b12f4d2) for `docker-c8388a-2016_11_22` (2016-04-06) is discarded
 
 ### Git : `fatal: bad object`
