@@ -188,23 +188,24 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
 - Docker [1.11.0](https://github.com/docker/docker/releases/tag/v1.11.0), [commit 4dc599](https://github.com/docker/docker/commit/4dc5990d7565a4a15d641bc6a0bc50a02cfcf302)
 - Difference [20f81d...4dc599](https://github.com/docker/docker/compare/20f81dde9bd97c86b2d0e33bbbf1388018611929...4dc5990d7565a4a15d641bc6a0bc50a02cfcf302)
 
-### <https://golang.org/x/crypto>
+### [golang.org/x/crypto](https://golang.org/x/crypto)
 
-ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [728b75](https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2) (Jan 24, 2017)
+ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [728b75](https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2) (Jan 24, 2017)<br/>
 <sup>*</sup>[3fbbcd](https://github.com/golang/crypto/commit/3fbbcd23f1cb824e69491a5930cfeff09b12f4d2) for `docker-c8388a-2016_11_22` (2016-04-06) is discarded
 
-### Git `fatal: bad object`
+### Git : `fatal: bad object`
 
 When this happens, we cannot determine the commit date which lead to inaccurate dependency setup.
+
 In order to fix this, we can use github api and pull data but it's combersome.
-Look out if `2000-01-01 00:00:00+00:00` happens on a package, checkout the github page to determine the date again.
+Look out if `2000-01-01 00:00:00+00:00` happens on a package, check the packages github page to determine the date again.
 Plus, do not use `--branch master` flag for github as it occationally skips commit data.
 
 Current package with bad object and accurate dependency date.
 
-- <golang.org/x/crypto>        -> `728b753d0135da6801d45a38e6f43ff55779c5c2     ->    2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4`
+- <https://golang.org/x/crypto>    -> `728b753d0135da6801d45a38e6f43ff55779c5c2 -> 2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4`
   * Re-download and check if commit shows correct date
-- <github.com/spf13/cobra>     -> `v1.5                                    	    ->    2016-11-03 18:13:39-04:00 : docker-c8388a-2016_11_22`
+- <https://github.com/spf13/cobra> -> `v1.5                                    	-> 2016-11-03 18:13:39-04:00 : docker-c8388a-2016_11_22`
   * download a folk from <https://github.com/dnephin/cobra> and checkout again
-- <golang.org/x/net>           -> `f2499483f923065a842d38eb4c7f1927e6fc6e6d     ->    2017-01-14 15:22:49+11:00 : etcd-3.1.1`
+- <https://golang.org/x/net>       -> `f2499483f923065a842d38eb4c7f1927e6fc6e6d -> 2017-01-14 15:22:49+11:00 : etcd-3.1.1`
   * check the commit date from github
