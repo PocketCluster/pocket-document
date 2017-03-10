@@ -48,19 +48,18 @@ ssh "${TARGET_HOST}" 'mkdir -p /opt/gopkg/src/github.com/stkim1'
 ssh "${TARGET_HOST}" 'mkdir -p /opt/gopkg/src/github.com/gravitational'
 
 echo "sync dependencies first..."
-rsync_directory "${GOREPO}/src"                                                "/opt/gopkg/src/"
+rsync_native_directory "${GOREPO}/src"                                                "/opt/gopkg/src/"
 
 echo "sync main dependencies..."
-rsync_directory "${GOREPO}/MAINCOMP/etcd-3.1.1"                                "/opt/gopkg/src/github.com/coreos/etcd/"
-rsync_directory "${GOREPO}/MAINCOMP/docker-c8388a-2016_11_22"                  "/opt/gopkg/src/github.com/docker/docker/"
-rsync_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-node-agent/"    "/opt/gopkg/src/github.com/stkim1/pc-node-agent/"
-rsync_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-core/"          "/opt/gopkg/src/github.com/stkim1/pc-core/"
-rsync_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/pcrypto/"             "/opt/gopkg/src/github.com/stkim1/pcrypto/"
+rsync_native_directory "${GOREPO}/MAINCOMP/etcd-3.1.1"                                "/opt/gopkg/src/github.com/coreos/etcd/"
+rsync_native_directory "${GOREPO}/MAINCOMP/docker-c8388a-2016_11_22"                  "/opt/gopkg/src/github.com/docker/docker/"
+rsync_native_directory "${GOREPO}/DEPREPO/teleport"                                   "/opt/gopkg/src/github.com/gravitational/teleport/"
 
-echo "sync extra dependencies..."
-rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/netifaces/"    "/opt/gopkg/src/github.com/stkim1/netifaces/"
-rsync_native_directory "${GOREPO}/src/github.com/mattn/go-sqlite3/"            "/opt/gopkg/src/github.com/mattn/go-sqlite3/"
-rsync_native_directory "${GOREPO}/DEPREPO/teleport"                            "/opt/gopkg/src/github.com/gravitational/teleport/"
+echo "sync dependency projects..."
+rsync_native_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-node-agent/"    "/opt/gopkg/src/github.com/stkim1/pc-node-agent/"
+rsync_native_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-core/"          "/opt/gopkg/src/github.com/stkim1/pc-core/"
+rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/pcrypto/"             "/opt/gopkg/src/github.com/stkim1/pcrypto/"
+rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/netifaces/"           "/opt/gopkg/src/github.com/stkim1/netifaces/"
 
 echo "clean files..."
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/exec/"

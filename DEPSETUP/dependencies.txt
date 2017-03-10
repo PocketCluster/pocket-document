@@ -214,6 +214,11 @@ github.com/docker/notary
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker && git clone https://github.com/docker/notary && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/docker/notary && git checkout v0.4.2
 
+k8s.io/client-go/1.4
+	3a5b96cfd3d3ff1d53d979b4297c4f3b869aab09	 -> 	Teleport-1.2.0
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	(go get -d k8s.io/client-go/1.4 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/k8s.io/client-go/1.4 && git checkout 3a5b96cfd3d3ff1d53d979b4297c4f3b869aab09
+
 github.com/stevvooe/resumable
 	51ad44105773cafcbe91927f70ac68e1bf78f8b4	 -> 	distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -551,10 +556,10 @@ github.com/hashicorp/serf
 
 golang.org/x/crypto
 ----------------- !!!CONFLICT!!! --------------------- 
-	728b753d0135da6801d45a38e6f43ff55779c5c2	 -> 	2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4
+	453249f01cfeb54c3d549ddb75ff152ca243f9d8	 -> 	2017-02-08 12:51:15-08:00 : pocketcluster-req-0.1.4
+	453249f01cfeb54c3d549ddb75ff152ca243f9d8	 -> 	2017-02-08 12:51:15-08:00 : Teleport-1.2.0
 	3fbbcd23f1cb824e69491a5930cfeff09b12f4d2	 -> 	2016-04-06 11:11:13-05:00 : docker-c8388a-2016_11_22
 	3fbbcd23f1cb824e69491a5930cfeff09b12f4d2	 -> 	2016-04-06 11:11:13-05:00 : libcompose-0.4.0-70abeb-f5739a7-mix
-	9e7f5dc375abeb9619ea3c5c58502c428f457aa2	 -> 	2016-03-17 12:45:02+01:00 : Teleport-1.2.0
 	c10c31b5e94b6f7a0283272dc2bb27163dcea24b	 -> 	2015-05-06 20:01:23-07:00 : distribution-2.6.0
 	1351f936d976c60a0a48d728281922cf63eafb8d	 -> 	2015-02-19 07:57:16+11:00 : etcd-3.1.1
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -592,9 +597,9 @@ gopkg.in/check.v1
 
 golang.org/x/sys
 ----------------- !!!CONFLICT!!! --------------------- 
+	e24f485414aeafb646f6fca458b0bf869c0880a1	 -> 	2017-02-10 21:03:03-05:00 : Teleport-1.2.0
 	8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9	 -> 	2016-09-14 13:33:16-07:00 : docker-c8388a-2016_11_22
 	eb2c74142fd19a79b3f237334c7384d5167b1b46	 -> 	2016-01-26 17:36:05-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
-	442cd600860ce722f6615730eb008a37a87b13ee	 -> 	2016-01-13 11:01:27+11:00 : Teleport-1.2.0
 	833a04a10549a95dc34458c195cbad61bbb6cb4d	 -> 	2015-12-10 17:34:15-08:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/sys >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/sys

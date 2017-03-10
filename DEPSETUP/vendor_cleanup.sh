@@ -113,6 +113,7 @@ function clean_gopath() {
 	rm -rf github.com/fsnotify/fsnotify && (rmdir github.com/fsnotify > /dev/null 2>&1 || true)
 	rm -rf github.com/jinzhu/gorm && (rmdir github.com/jinzhu > /dev/null 2>&1 || true)
 	rm -rf github.com/docker/notary && (rmdir github.com/docker > /dev/null 2>&1 || true)
+	rm -rf k8s.io/client-go/1.4 && (rmdir k8s.io/client-go > /dev/null 2>&1 || true)
 	rm -rf github.com/stevvooe/resumable && (rmdir github.com/stevvooe > /dev/null 2>&1 || true)
 	rm -rf github.com/xiang90/probing && (rmdir github.com/xiang90 > /dev/null 2>&1 || true)
 	rm -rf github.com/bugsnag/osext && (rmdir github.com/bugsnag > /dev/null 2>&1 || true)
