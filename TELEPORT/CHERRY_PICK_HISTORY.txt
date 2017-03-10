@@ -131,9 +131,7 @@ e71a09d01bd2bc45fe5137d9eb17e33460166d03    Merge pull request #762 from russjon
                                             https://github.com/gravitational/teleport/pull/763
                                             February 10, 2017 at 11:34:01 AM GMT+9
 
-<<<<<<< HEAD
-
-# STOPS here as CRYPTO VENDOR UPGRADES
+# CRYPTO VENDOR UPGRADES for ARMHF/ARM64
 04fdbd9b528b27c892a995595fcad9c915db476c    Merge pull request #772 from russjones/rjones/deduplicate-principals
                                             Deduplicate principals for host certificates.
                                             https://github.com/gravitational/teleport/pull/772
@@ -144,6 +142,7 @@ e71a09d01bd2bc45fe5137d9eb17e33460166d03    Merge pull request #762 from russjon
                                             https://github.com/gravitational/teleport/pull/775
                                             February 14, 2017 at 3:47:33 PM GMT+9
 
+<<<<<<< HEAD
 --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * -
 
 # ROLE BASED ACCESS CONTROL, introducing namespace

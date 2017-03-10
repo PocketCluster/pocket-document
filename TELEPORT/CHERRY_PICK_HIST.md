@@ -4,9 +4,9 @@
 
 | Commit | Description | 
 | --- | --- |
-| 7d47d1ff1246a8e582cf840de769d4aaa60745bf | _**NEED TO MERGE**_<br/>Merge pull request [#775](https://github.com/gravitational/teleport/pull/775) from gravitational/rjones/agent-fixes<br/>SSH Agent Fixes<br/>February 14, 2017 at 3:47:33 PM GMT+9 |
-| 04fdbd9b528b27c892a995595fcad9c915db476c | _**NEED TO MERGE**_<br/>Merge pull request [#772](https://github.com/gravitational/teleport/pull/772) from russjones/rjones/deduplicate-principals<br/>Deduplicate principals for host certificates.<br/>February 14, 2017 at 7:59:24 AM GMT+9 |
-| **STOPS HERE AS CRYPTO VENDOR UPGRADES** | **<<<<<<< HEAD**
+| **CRYPTO VENDOR UPGRADES FOR ARM** | **<<<<<<< HEAD**
+| 7d47d1ff1246a8e582cf840de769d4aaa60745bf | Merge pull request [#775](https://github.com/gravitational/teleport/pull/775) from gravitational/rjones/agent-fixes<br/>SSH Agent Fixes<br/>February 14, 2017 at 3:47:33 PM GMT+9 |
+| 04fdbd9b528b27c892a995595fcad9c915db476c | Merge pull request [#772](https://github.com/gravitational/teleport/pull/772) from russjones/rjones/deduplicate-principals<br/>Deduplicate principals for host certificates.<br/>February 14, 2017 at 7:59:24 AM GMT+9 |
 | **--------- ISSUE COVERAGE END ---------** | <https://github.com/gravitational/teleport/issues/579> |
 | 802535c2998d272e3311db805da5c0c29a730342 | Merge pull request [#763](https://github.com/gravitational/teleport/pull/763) from russjones/rjones/ssh-config-docs<br/>Update OpenSSH Documentation<br/>February 10, 2017 at 11:34:01 AM GMT+9 |
 | e71a09d01bd2bc45fe5137d9eb17e33460166d03 | Merge pull request [#762](https://github.com/gravitational/teleport/pull/762) from russjones/rjones/agent-load<br/>LocalKeyAgent changes for OpenSSH interoperability<br/>February 10, 2017 at 11:30:52 AM GMT+9 |

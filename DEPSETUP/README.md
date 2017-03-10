@@ -190,7 +190,7 @@ All the packages are saved in source code format at <https://github.com/stkim1/p
 
 ### [golang.org/x/crypto](https://golang.org/x/crypto)
 
-ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [728b75](https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2) (Jan 24, 2017)<br/>
+ARMv7 + ARM64 don't pass tests with old version so upgrade to commit [728b75](https://github.com/golang/crypto/commit/453249f01cfeb54c3d549ddb75ff152ca243f9d8) (2017-02-08)<br/>
 <sup>*</sup>[3fbbcd](https://github.com/golang/crypto/commit/3fbbcd23f1cb824e69491a5930cfeff09b12f4d2) for `docker-c8388a-2016_11_22` (2016-04-06) is discarded
 
 ### Git : `fatal: bad object`
@@ -204,7 +204,7 @@ Plus, do not use `--branch master` flag for github as it occationally skips comm
 Current package with bad object and accurate dependency date.
 
 - <https://golang.org/x/crypto>
-  * [728b75](https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2) -> `2017-01-23 17:46:54-08:00 : pocketcluster-req-0.1.4`
+  * [453249](https://github.com/golang/crypto/commit/453249f01cfeb54c3d549ddb75ff152ca243f9d8) -> `2017-02-08 12:51:15-08:00 : Teleport-1.2.0`
   * Re-download and check if commit shows correct date
 - <https://github.com/spf13/cobra>
   * [v1.5](https://github.com/dnephin/cobra/commit/0e9ca70a23585bdaab4beba1e7c4c23a1adfa857) -> `2016-11-03 18:13:39-04:00 : docker-c8388a-2016_11_22`
