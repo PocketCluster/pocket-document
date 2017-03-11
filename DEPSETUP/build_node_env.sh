@@ -63,7 +63,6 @@ rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/pcrypto/"       
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/netifaces/"           "/opt/gopkg/src/github.com/stkim1/netifaces/"
 
 echo "clean files..."
-clean_remote_files "/opt/gopkg/src/github.com/gravitational/teleport/debugexec/core/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/exec/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/lib/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/staticlib/"
