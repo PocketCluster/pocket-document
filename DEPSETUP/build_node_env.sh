@@ -7,6 +7,7 @@
 
 GOREPO=${GOREPO-"${HOME}/Workspace/POCKETPKG"}
 WORKDIR=${WORK_ROOT-"${GOREPO}/DEPSETUP"}
+TESTGO=${TESTGO:-0}
 
 TARGET_HOST=${1}
 if [[ -z ${TARGET_HOST} ]]; then
@@ -62,6 +63,7 @@ rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/pcrypto/"       
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/netifaces/"           "/opt/gopkg/src/github.com/stkim1/netifaces/"
 
 echo "clean files..."
+clean_remote_files "/opt/gopkg/src/github.com/gravitational/teleport/debugexec/core/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/exec/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/lib/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/staticlib/"
@@ -74,4 +76,6 @@ ssh ${TARGET_HOST} 'find /opt/gopkg/src/ -name ".DS_Store" | xargs rm'
 
 popd
 
-scp "${WORKDIR}/remote_test_dep.sh" "${TARGET_HOST}:~/" && ssh "${TARGET_HOST}" "bash ~/remote_test_dep.sh"
+if [[ ${TESTGO} -eq 1 ]]; then
+    scp "${WORKDIR}/remote_test_dep.sh" "${TARGET_HOST}:~/" && ssh "${TARGET_HOST}" "bash ~/remote_test_dep.sh"
+fi
