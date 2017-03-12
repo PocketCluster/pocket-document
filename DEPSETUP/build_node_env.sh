@@ -30,7 +30,7 @@ function rsync_directory() {
 function rsync_native_directory() {
     local SRC_DIR=${1}
     local DST_DIR=${2}
-    cd ${SRC_DIR}  && rsync -rmvt --no-links -e ssh --exclude '.git*' --exclude '.idea' --exclude '*iml' * "${TARGET_HOST}:${DST_DIR}"
+    cd ${SRC_DIR} && rsync -rmvt --no-links -e ssh --exclude '.git*' --exclude '.idea' --exclude '*iml' * "${TARGET_HOST}:${DST_DIR}"
 }
 
 function clean_remote_files() {
