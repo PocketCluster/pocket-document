@@ -71,6 +71,8 @@ func onSSH(cf *CLIConf) {
 		return client.NewClient(c)
 	}
 
+# -- BEGIN TeleportClient.SSH(context.Context, []string, bool) error --
+
 	/// --- tool/tsh/main.go --- ///
 	// SSH connects to a node and, if 'command' is specified, executes the command on it,
 	// otherwise runs interactive shell
@@ -202,6 +204,99 @@ func onSSH(cf *CLIConf) {
 			tc.SiteName = site.Name
 			return proxyClient, nil
 		}
+
+		/// --- lib/client/client.go --- ///
+		// ConnectToNode connects to the ssh server via Proxy.
+		// It returns connected and authenticated NodeClient
+		func (proxy *ProxyClient) ConnectToNode(ctx context.Context, nodeAddress string, user string, quiet bool) (*NodeClient, error) {
+			log.Infof("[CLIENT] connecting to node: %s", nodeAddress)
+
+			// parse destination first:
+			localAddr, err := utils.ParseAddr("tcp://" + proxy.proxyAddress)
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			fakeAddr, err := utils.ParseAddr("tcp://" + nodeAddress)
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+
+			// we have to try every auth method separatedly,
+			// because go SSH will try only one (fist) auth method
+			// of a given type, so if you have 2 different public keys
+			// you have to try each one differently
+			proxySession, err := proxy.Client.NewSession()
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			proxyWriter, err := proxySession.StdinPipe()
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			proxyReader, err := proxySession.StdoutPipe()
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			proxyErr, err := proxySession.StderrPipe()
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			err = proxySession.RequestSubsystem("proxy:" + nodeAddress)
+			if err != nil {
+				// read the stderr output from the failed SSH session and append
+				// it to the end of our own message:
+				serverErrorMsg, _ := ioutil.ReadAll(proxyErr)
+				return nil, trace.Errorf("failed connecting to node %v. %s",
+					nodeName(strings.Split(nodeAddress, "@")[0]), serverErrorMsg)
+			}
+			pipeNetConn := utils.NewPipeNetConn(
+				proxyReader,
+				proxyWriter,
+				proxySession,
+				localAddr,
+				fakeAddr,
+			)
+			sshConfig := &ssh.ClientConfig{
+				User:            user,
+				Auth:            []ssh.AuthMethod{proxy.authMethod},
+				HostKeyCallback: proxy.hostKeyCallback,
+			}
+			conn, chans, reqs, err := newClientConn(ctx, pipeNetConn, nodeAddress, sshConfig)
+			if err != nil {
+				if utils.IsHandshakeFailedError(err) {
+					proxySession.Close()
+					parts := strings.Split(nodeAddress, "@")
+					hostname := parts[0]
+					if len(hostname) == 0 && len(parts) > 1 {
+						hostname = "cluster " + parts[1]
+					}
+					return nil, trace.Errorf(`access denied to %v connecting to %v`, user, nodeName(hostname))
+				}
+				return nil, trace.Wrap(err)
+			}
+
+			client := ssh.NewClient(conn, chans, reqs)
+			if err != nil {
+				return nil, trace.Wrap(err)
+			}
+			return &NodeClient{Client: client, Proxy: proxy}, nil
+		}
+
+		/// --- lib/client/api.go --- ///
+		func (tc *TeleportClient) startPortForwarding(nodeClient *NodeClient) error {
+			if len(tc.Config.LocalForwardPorts) > 0 {
+				for _, fp := range tc.Config.LocalForwardPorts {
+					socket, err := net.Listen("tcp", net.JoinHostPort(fp.SrcIP, strconv.Itoa(fp.SrcPort)))
+					if err != nil {
+						return trace.Wrap(err)
+					}
+					go nodeClient.listenAndForward(socket, net.JoinHostPort(fp.DestHost, strconv.Itoa(fp.DestPort)))
+				}
+			}
+			return nil
+		}
+
+# -- END TeleportClient.SSH(context.Context, []string, bool) error --
 
 			/// --- lib/client/api.go --- ///
 			// Login logs the user into a Teleport cluster by talking to a Teleport proxy.
@@ -573,8 +668,6 @@ WARN[0437] password auth error:
 
 -> access denied to 'root': bad username or credentials
 */
-
-
 
 
 /************************************************ AUTH SERVER ************************************************/
