@@ -17,61 +17,127 @@ func onSSH(cf *CLIConf) {
 	}
 }
 
-	// makeClient takes the command-line configuration and constructs & returns
-	// a fully configured TeleportClient object
-	func makeClient(cf *CLIConf) (tc *client.TeleportClient, err error) {
-		// apply defults
-		if cf.NodePort == 0 {
-			cf.NodePort = defaults.SSHServerListenPort
-		}
-		if cf.MinsToLive == 0 {
-			cf.MinsToLive = int32(defaults.CertDuration / time.Minute)
-		}
+// makeClient takes the command-line configuration and constructs & returns
+// a fully configured TeleportClient object
+func makeClientConfig(login, proxy, targetHost string) *client.Config {
+    // prep client config:
+    return &client.Config{
+        // Username is the Teleport user's username (to login into proxies)
+        Username:           login,
+        // Target Host to issue SSH command
+        Host:               targetHost,
+        // Login on a remote SSH host
+        HostLogin:          login,
+        // HostPort is a remote host port to connect to
+        HostPort:           int(defaults.SSHServerListenPort),
+        // Proxy keeps the hostname:port of the SSH proxy to use
+        ProxyHostPort:      proxy,
+        // TTL defines how long a session must be active (in minutes)
+        KeyTTL:             time.Minute * time.Duration(defaults.CertDuration / time.Minute),
+        // InsecureSkipVerify bypasses verification of HTTPS certificate when talking to web proxy
+        InsecureSkipVerify: false,
+        // SkipLocalAuth will not try to connect to local SSH agent
+        // or use any local certs, and not use interactive logins
+        SkipLocalAuth:      false,
 
-		// split login & host
-		hostLogin := cf.NodeLogin
-		var labels map[string]string
-		if cf.UserHost != "" {
-			parts := strings.Split(cf.UserHost, "@")
-			if len(parts) > 1 {
-				hostLogin = parts[0]
-				cf.UserHost = parts[1]
-			}
-			// see if remote host is specified as a set of labels
-			if strings.Contains(cf.UserHost, "=") {
-				labels, err = client.ParseLabelSpec(cf.UserHost)
-				if err != nil {
-					return nil, err
-				}
-			}
-		}
-		fPorts, err := client.ParsePortForwardSpec(cf.LocalForwardPorts)
-		if err != nil {
-			return nil, err
-		}
+        // AuthMethods to use to login into cluster. If left empty, teleport will
+        // use its own session store,
+        //AuthMethods:
 
-		// prep client config:
-		c := &client.Config{
-			Stdout:             os.Stdout,
-			Stderr:             os.Stderr,
-			Stdin:              os.Stdin,
-			Username:           cf.Username,
-			ProxyHost:          cf.Proxy,
-			Host:               cf.UserHost,
-			HostPort:           int(cf.NodePort),
-			HostLogin:          hostLogin,
-			Labels:             labels,
-			KeyTTL:             time.Minute * time.Duration(cf.MinsToLive),
-			InsecureSkipVerify: cf.InsecureSkipVerify,
-			LocalForwardPorts:  fPorts,
-			ConnectorID:        cf.ExternalAuth,
-			SiteName:           cf.SiteName,
-			Interactive:        cf.Interactive,
-		}
-		return client.NewClient(c)
+        Stdout:             os.Stdout,
+        Stderr:             os.Stderr,
+        Stdin:              os.Stdin,
+        // Interactive, when set to true, launches remote command with the terminal attached
+        Interactive:        false,
+    }
+}
+
+
+// NewPocketClient creates a TeleportClient object and fully configures it
+func NewPocketClient(c *Config) (tc *TeleportClient, err error) {
+    // validate configuration
+    if c.Username == "" {
+        c.Username = Username()
+        log.Infof("no teleport login given. defaulting to %s", c.Username)
+    }
+    if c.ProxyHostPort == "" {
+        return nil, trace.Errorf("No proxy address specified, missed --proxy flag?")
+    }
+    if c.HostLogin == "" {
+        c.HostLogin = Username()
+        log.Infof("no host login given. defaulting to %s", c.HostLogin)
+    }
+    if c.KeyTTL == 0 {
+        c.KeyTTL = defaults.CertDuration
+    } else if c.KeyTTL > defaults.MaxCertDuration || c.KeyTTL < defaults.MinCertDuration {
+        return nil, trace.Errorf("invalid requested cert TTL")
+    }
+
+    tc = &TeleportClient{Config: *c}
+
+    // initialize the local agent (auth agent which uses local SSH keys signed by the CA):
+    tc.localAgent, err = newPocketAgent(c.KeysDir, c.Username)
+    if err != nil {
+        return nil, trace.Wrap(err)
+    }
+
+    if tc.Stdout == nil {
+        tc.Stdout = os.Stdout
+    }
+    if tc.Stderr == nil {
+        tc.Stderr = os.Stderr
+    }
+    if tc.Stdin == nil {
+        tc.Stdin = os.Stdin
+    }
+    if tc.HostKeyCallback == nil {
+        tc.HostKeyCallback = tc.localAgent.CheckHostSignature
+    }
+
+    // sometimes we need to use external auth without using local auth
+    // methods, e.g. in automation daemons
+    if c.SkipLocalAuth {
+        if len(c.AuthMethods) == 0 {
+            return nil, trace.BadParameter("SkipLocalAuth is true but no AuthMethods provided")
+        }
+        return tc, nil
+    }
+    return tc, nil
+}
+
+	// NewLocalAgent reads all Teleport certificates from disk (using FSLocalKeyStore),
+	// creates a LocalKeyAgent, loads all certificates into it, and returns the agent.
+	func newPocketAgent(keyDir, username string) (a *LocalKeyAgent, err error) {
+	    keystore, err := NewFSLocalKeyStore(keyDir)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
+
+	    // TODO : (03/08/2017) add auth method based on pocketcluster auth protocol. we're watching ssh agent for now.
+	    a = &LocalKeyAgent{
+	        Agent:    agent.NewKeyring(),
+	        keyStore: keystore,
+	        sshAgent: connectToSSHAgent(),
+	    }
+
+	    // read all keys from disk (~/.tsh usually)
+	    keys, err := a.GetKeys(username)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
+
+	    // load all keys into the agent
+	    for _, key := range keys {
+	        _, err = a.LoadKey(username, key)
+	        if err != nil {
+	            return nil, trace.Wrap(err)
+	        }
+	    }
+
+	    return a, nil
 	}
 
-# -- BEGIN TeleportClient.SSH(context.Context, []string, bool) error --
+# -- BEGIN TeleportClient.APISSH(context.Context, []string, bool) error --
 
 	/// --- tool/tsh/main.go --- ///
 	// SSH connects to a node and, if 'command' is specified, executes the command on it,
@@ -133,76 +199,80 @@ func onSSH(cf *CLIConf) {
 		return tc.runShell(nodeClient, nil)
 	}
 
-		/// --- lib/client/api.go --- ///
+		/// --- lib/client/pc_api.go --- ///
 		// ConnectToProxy dials the proxy server and returns ProxyClient if successful
-		func (tc *TeleportClient) ConnectToProxy() (*ProxyClient, error) {
-			proxyAddr := tc.Config.ProxySSHHostPort()
-			sshConfig := &ssh.ClientConfig{
-				User:            tc.getProxySSHPrincipal(),
-				HostKeyCallback: tc.HostKeyCallback,
-			}
-			// helper to create a ProxyClient struct
-			makeProxyClient := func(sshClient *ssh.Client, m ssh.AuthMethod) *ProxyClient {
-				return &ProxyClient{
-					Client:          sshClient,
-					proxyAddress:    proxyAddr,
-					hostKeyCallback: sshConfig.HostKeyCallback,
-					authMethod:      m,
-					hostLogin:       tc.Config.HostLogin,
-					siteName:        tc.Config.SiteName,
-				}
-			}
-			successMsg := fmt.Sprintf("[CLIENT] successful auth with proxy %v", proxyAddr)
-			// try to authenticate using every non interactive auth method we have:
-			for i, m := range tc.authMethods() {
-				log.Infof("[CLIENT] connecting proxy=%v login='%v' method=%d", proxyAddr, sshConfig.User, i)
+		func (tc *TeleportClient) apiConnectToProxy() (*ProxyClient, error) {
+		    proxyAddr := tc.Config.ProxySSHHostPort()
+		    sshConfig := &ssh.ClientConfig{
+		        User:            tc.getProxySSHPrincipal(),
+		        HostKeyCallback: tc.HostKeyCallback,
+		    }
+		    // helper to create a ProxyClient struct
+		    makeProxyClient := func(sshClient *ssh.Client, m ssh.AuthMethod) *ProxyClient {
+		        return &ProxyClient{
+		            Client:          sshClient,
+		            proxyAddress:    proxyAddr,
+		            hostKeyCallback: sshConfig.HostKeyCallback,
+		            authMethod:      m,
+		            hostLogin:       tc.Config.HostLogin,
+		            siteName:        tc.Config.SiteName,
+		        }
+		    }
+		    successMsg := fmt.Sprintf("[CLIENT] successful auth with proxy %v", proxyAddr)
+		    // try to authenticate using every non interactive auth method we have:
+		    for i, m := range tc.authMethods() {
+		        log.Infof("[CLIENT] connecting proxy=%v login='%v' method=%d", proxyAddr, sshConfig.User, i)
 
-				sshConfig.Auth = []ssh.AuthMethod{m}
-				sshClient, err := ssh.Dial("tcp", proxyAddr, sshConfig)
-				if err != nil {
-					if utils.IsHandshakeFailedError(err) {
-						log.Warn(err)
-						continue
-					}
-					return nil, trace.Wrap(err)
-				}
-				log.Infof(successMsg)
-				return makeProxyClient(sshClient, m), nil
-			}
-			// we have exhausted all auth existing auth methods and local login
-			// is disabled in configuration
-			if tc.Config.SkipLocalAuth {
-				return nil, trace.BadParameter("failed to authenticate with proxy %v", proxyAddr)
-			}
-			// if we get here, it means we failed to authenticate using stored keys
-			// and we need to ask for the login information
-			authMethod, err := tc.Login()
-			if err != nil {
-				// we need to communicate directly to user here,
-				// otherwise user will see endless loop with no explanation
-				if trace.IsTrustError(err) {
-					fmt.Printf("Refusing to connect to untrusted proxy %v without --insecure flag\n", proxyAddr)
-				}
-				return nil, trace.Wrap(err)
-			}
+		        sshConfig.Auth = []ssh.AuthMethod{m}
+		        sshClient, err := ssh.Dial("tcp", proxyAddr, sshConfig)
+		        if err != nil {
+		            if utils.IsHandshakeFailedError(err) {
+		                log.Warn(err)
+		                continue
+		            }
+		            return nil, trace.Wrap(err)
+		        }
+		        log.Infof(successMsg)
+		        return makeProxyClient(sshClient, m), nil
+		    }
 
-			// After successfull login we have local agent updated with latest
-			// and greatest auth information, try it now
-			sshConfig.Auth = []ssh.AuthMethod{authMethod}
-			sshConfig.User = tc.getProxySSHPrincipal()
-			sshClient, err := ssh.Dial("tcp", proxyAddr, sshConfig)
-			if err != nil {
-				return nil, trace.Wrap(err)
-			}
-			log.Debugf(successMsg)
-			proxyClient := makeProxyClient(sshClient, authMethod)
-			// get (and remember) the site info:
-			site, err := proxyClient.currentSite()
-			if err != nil {
-				return nil, trace.Wrap(err)
-			}
-			tc.SiteName = site.Name
-			return proxyClient, nil
+		    // We'd never skip the login. infact, flow should never come to this point
+		/*
+		    // we have exhausted all auth existing auth methods and local login
+		    // is disabled in configuration
+		    if tc.Config.SkipLocalAuth {
+		        return nil, trace.BadParameter("failed to authenticate with proxy %v", proxyAddr)
+		    }
+		*/
+		    // if we get here, it means we failed to authenticate using stored keys
+		    // and we need to ask for the login information
+		    authMethod, err := tc.apiLogin()
+		    if err != nil {
+		        // we need to communicate directly to user here,
+		        // otherwise user will see endless loop with no explanation
+		        if trace.IsTrustError(err) {
+		            fmt.Printf("Refusing to connect to untrusted proxy %v without --insecure flag\n", proxyAddr)
+		        }
+		        return nil, trace.Wrap(err)
+		    }
+
+		    // After successfull login we have local agent updated with latest
+		    // and greatest auth information, try it now
+		    sshConfig.Auth = []ssh.AuthMethod{authMethod}
+		    sshConfig.User = tc.getProxySSHPrincipal()
+		    sshClient, err := ssh.Dial("tcp", proxyAddr, sshConfig)
+		    if err != nil {
+		        return nil, trace.Wrap(err)
+		    }
+		    log.Debugf(successMsg)
+		    proxyClient := makeProxyClient(sshClient, authMethod)
+		    // get (and remember) the site info:
+		    site, err := proxyClient.currentSite()
+		    if err != nil {
+		        return nil, trace.Wrap(err)
+		    }
+		    tc.SiteName = site.Name
+		    return proxyClient, nil
 		}
 
 			/// --- lib/client/api.go --- ///
@@ -357,114 +427,87 @@ func onSSH(cf *CLIConf) {
 			/// --- lib/client/api.go --- ///
 			// Login logs the user into a Teleport cluster by talking to a Teleport proxy.
 			// If successful, saves the received session keys into the local keystore for future use.
-			func (tc *TeleportClient) Login() (*CertAuthMethod, error) {
-				// generate a new keypair. the public key will be signed via proxy if our password+HOTP  are legit
-				key, err := tc.MakeKey()
-				if err != nil {
-					return nil, trace.Wrap(err)
-				}
-				var response *web.SSHLoginResponse
-				if tc.ConnectorID == "" {
-					response, err = tc.directLogin(key.Pub)
-					if err != nil {
-						return nil, trace.Wrap(err)
-					}
-				} else {
-					response, err = tc.oidcLogin(tc.ConnectorID, key.Pub)
-					if err != nil {
-						return nil, trace.Wrap(err)
-					}
-					// in this case identity is returned by the proxy
-					tc.Username = response.Username
-				}
-				key.Cert = response.Cert
+			func (tc *TeleportClient) apiLogin() (*CertAuthMethod, error) {
+			    // generate a new keypair. the public key will be signed via proxy if our password+HOTP  are legit
+			    key, err := tc.MakeKey()
+			    if err != nil {
+			        return nil, trace.Wrap(err)
+			    }
+			    var response *web.SSHLoginResponse
 
-				// save the list of CAs we trust to the cache file
-				err = tc.localAgent.AddHostSignersToCache(response.HostSigners)
-				if err != nil {
-					return nil, trace.Wrap(err)
-				}
+			    // TODO : what do we do for password section?
+			    var password, encrypted string = "1524rmfo", "aes-encrypted-message"
+			    response, err = tc.apiDirectLogin(password, encrypted, key.Pub)
+			    if err != nil {
+			        return nil, trace.Wrap(err)
+			    }
+			    key.Cert = response.Cert
 
-				// save the key:
-				return tc.localAgent.AddKey(tc.ProxyHost(), tc.Config.Username, key)
+			    // save the list of CAs we trust to the cache file
+			    err = tc.localAgent.AddHostSignersToCache(response.HostSigners)
+			    if err != nil {
+			        return nil, trace.Wrap(err)
+			    }
+
+			    // save the key:
+			    return tc.localAgent.AddKey(tc.ProxyHost(), tc.Config.Username, key)
 			}
 
-			/// --- lib/client/api.go --- ///
+			/// --- lib/client/pc_api.go --- ///
 			// directLogin asks for a password + HOTP token, makes a request to CA via proxy
-			func (tc *TeleportClient) directLogin(pub []byte) (*web.SSHLoginResponse, error) {
-				httpsProxyHostPort := tc.Config.ProxyWebHostPort()
-				certPool := loopbackPool(httpsProxyHostPort)
+			func (tc *TeleportClient) apiDirectLogin(password, encryptedpwd string, pub []byte) (*web.SSHLoginResponse, error) {
+			    httpsProxyHostPort := tc.Config.ProxyWebHostPort()
+			    certPool := loopbackPool(httpsProxyHostPort)
 
-				// ping the HTTPs endpoint first:
-				if err := web.Ping(httpsProxyHostPort, tc.InsecureSkipVerify, certPool); err != nil {
-					return nil, trace.Wrap(err)
-				}
+			/*
+			    // FIXME why ping is not working? Is this even requred fromt the first place?
+			    // ping the HTTPs endpoint first:
+			    if err := web.Ping(httpsProxyHostPort, tc.InsecureSkipVerify, certPool); err != nil {
+			        return nil, trace.Wrap(err)
+			    }
+			*/
 
-				password, hotpToken, err := tc.AskPasswordAndHOTP()
-				if err != nil {
-					return nil, trace.Wrap(err)
-				}
+			    // ask the CA (via proxy) to sign our public key:
+			    response, err := web.SSHAgentLoginWithAES(httpsProxyHostPort,
+			        tc.Config.Username,
+			        password,
+			        encryptedpwd,
+			        pub,
+			        tc.KeyTTL,
+			        tc.InsecureSkipVerify,
+			        certPool)
 
-				// ask the CA (via proxy) to sign our public key:
-				response, err := web.SSHAgentLogin(httpsProxyHostPort,
-					tc.Config.Username,
-					password,
-					hotpToken,
-					pub,
-					tc.KeyTTL,
-					tc.InsecureSkipVerify,
-					certPool)
-
-				return response, trace.Wrap(err)
+			    return response, trace.Wrap(err)
 			}
 
-					/// --- lib/client/api.go --- ///
-					// AskPasswordAndHOTP prompts the user to enter the password + HTOP 2nd factor
-					func (tc *TeleportClient) AskPasswordAndHOTP() (pwd string, token string, err error) {
-						fmt.Printf("Enter password for Teleport user %v:\n", tc.Config.Username)
-						pwd, err = passwordFromConsole()
-						if err != nil {
-							fmt.Println(err)
-							return "", "", trace.Wrap(err)
-						}
-
-						fmt.Printf("Enter your HOTP token:\n")
-						token, err = lineFromConsole()
-						if err != nil {
-							fmt.Println(err)
-							return "", "", trace.Wrap(err)
-						}
-						return pwd, token, nil
-					}
-
-					/// --- lib/client/sshlogin.go --- ///
-					// SSHAgentLogin issues call to web proxy and receives temp certificate
-					// if credentials are valid
+					/// --- lib/client/pc_sshlogin.go --- ///
+					// SSHAgentLoginWithAES issues call to web proxy and receives temp certificate
+					// if credentials encrypted with live AES key are valid
 					//
 					// proxyAddr must be specified as host:port
-					func SSHAgentLogin(proxyAddr, user, password, hotpToken string, pubKey []byte, ttl time.Duration, insecure bool, pool *x509.CertPool) (*SSHLoginResponse, error) {
-						clt, _, err := initClient(proxyAddr, insecure, pool)
-						if err != nil {
-							return nil, trace.Wrap(err)
-						}
-						re, err := clt.PostJSON(clt.Endpoint("webapi", "ssh", "certs"), createSSHCertReq{
-							User:      user,
-							Password:  password,
-							HOTPToken: hotpToken,
-							PubKey:    pubKey,
-							TTL:       ttl,
-						})
-						if err != nil {
-							return nil, trace.Wrap(err)
-						}
+					func SSHAgentLoginWithAES(proxyAddr, user, password, encrypted string, pubKey []byte, ttl time.Duration, insecure bool, pool *x509.CertPool) (*SSHLoginResponse, error) {
+					    clt, _, err := initClient(proxyAddr, insecure, pool)
+					    if err != nil {
+					        return nil, trace.Wrap(err)
+					    }
+					    re, err := clt.PostJSON(clt.Endpoint("webapi", "ssh", "certs"), createSSHCertReq{
+					        User:      user,
+					        Password:  password,
+					        HOTPToken: encrypted,
+					        PubKey:    pubKey,
+					        TTL:       ttl,
+					    })
+					    if err != nil {
+					        return nil, trace.Wrap(err)
+					    }
 
-						var out *SSHLoginResponse
-						err = json.Unmarshal(re.Bytes(), &out)
-						if err != nil {
-							return nil, trace.Wrap(err)
-						}
+					    var out *SSHLoginResponse
+					    err = json.Unmarshal(re.Bytes(), &out)
+					    if err != nil {
+					        return nil, trace.Wrap(err)
+					    }
 
-						return out, nil
+					    return out, nil
 					}
 
 // -- SERVER -- //
@@ -501,7 +544,8 @@ type SSHLoginResponse struct {
 	HostSigners []services.CertAuthority `json:"host_signers"`
 }
 
-// createSSHCert is a web call that generates new SSH certificate based
+/// --- lib/web/pc_web.go --- ///
+// createSSHCert is a web call that generates new SSH certificate based with AES encryption
 // on user's name, password, 2nd factor token and public key user wishes to sign
 //
 // POST /v1/webapi/ssh/certs
@@ -512,61 +556,49 @@ type SSHLoginResponse struct {
 //
 // { "cert": "base64 encoded signed cert", "host_signers": [{"domain_name": "example.com", "checking_keys": ["base64 encoded public signing key"]}] }
 //
-func (h *Handler) createSSHCert(w http.ResponseWriter, r *http.Request, p httprouter.Params) (interface{}, error) {
-	var req *createSSHCertReq
-	if err := httplib.ReadJSON(r, &req); err != nil {
-		return nil, trace.Wrap(err)
-	}
+func (h *Handler) createEncryptedSSHCert(w http.ResponseWriter, r *http.Request, p httprouter.Params) (interface{}, error) {
+    var req *createSSHCertReq
+    if err := httplib.ReadJSON(r, &req); err != nil {
+        return nil, trace.Wrap(err)
+    }
 
-	cert, err := h.auth.GetCertificate(*req)
-	if err != nil {
-		return nil, trace.Wrap(err)
-	}
-	return cert, nil
+    cert, err := h.auth.GetAESEncryptedCertificate(*req)
+    if err != nil {
+        return nil, trace.Wrap(err)
+    }
+    return cert, nil
 }
 
-	/// --- lib/web/web.go --- ///
-	// SSHLoginResponse is a response returned by web proxy
-	type SSHLoginResponse struct {
-		// User contains a logged in user informationn
-		Username string `json:"username"`
-		// Cert is a signed certificate
-		Cert []byte `json:"cert"`
-		// HostSigners is a list of signing host public keys
-		// trusted by proxy
-		HostSigners []services.CertAuthority `json:"host_signers"`
-	}
+	/// --- lib/web/pc_sessions.go --- ///
+	// This originates from "func (s *sessionCache) GetCertificate(c createSSHCertReq) (*SSHLoginResponse, error)"
+	func (s *sessionCache) GetAESEncryptedCertificate(c createSSHCertReq) (*SSHLoginResponse, error) {
+	    method, err := auth.NewWebAESEncryptionAuth(c.User, []byte(c.Password), c.HOTPToken)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
+	    clt, err := auth.NewTunClient("web.session", s.authServers, c.User, method)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
+	    defer clt.Close()
+	    cert, err := clt.GenerateUserCert(c.PubKey, c.User, c.TTL)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
+	    hostSigners, err := clt.GetCertAuthorities(services.HostCA, false)
+	    if err != nil {
+	        return nil, trace.Wrap(err)
+	    }
 
-	/// --- lib/web/sessions.go --- ///
-	func (s *sessionCache) GetCertificate(c createSSHCertReq) (*SSHLoginResponse, error) {
-		method, err := auth.NewWebPasswordAuth(c.User, []byte(c.Password),
-			c.HOTPToken)
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
-		clt, err := auth.NewTunClient("web.session", s.authServers, c.User, method)
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
-		defer clt.Close()
-		cert, err := clt.GenerateUserCert(c.PubKey, c.User, c.TTL)
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
-		hostSigners, err := clt.GetCertAuthorities(services.HostCA, false)
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
+	    signers := []services.CertAuthority{}
+	    for _, hs := range hostSigners {
+	        signers = append(signers, *hs)
+	    }
 
-		signers := []services.CertAuthority{}
-		for _, hs := range hostSigners {
-			signers = append(signers, *hs)
-		}
-
-		return &SSHLoginResponse{
-			Cert:        cert,
-			HostSigners: signers,
-		}, nil
+	    return &SSHLoginResponse{
+	        Cert:        cert,
+	        HostSigners: signers,
+	    }, nil
 	}
 
 		/// --- lib/auth/tun.go --- ///
@@ -580,17 +612,17 @@ func (h *Handler) createSSHCert(w http.ResponseWriter, r *http.Request, p httpro
 		}
 
 		/// --- lib/auth/pc_tun.go --- ///
-		func NewWebPasswordAuth(user string, password []byte, hotpToken string) ([]ssh.AuthMethod, error) {
-			data, err := json.Marshal(authBucket{
-				Type:      AuthWebPassword,
-				User:      user,
-				Pass:      password,
-				HotpToken: hotpToken,
-			})
-			if err != nil {
-				return nil, err
-			}
-			return []ssh.AuthMethod{ssh.Password(string(data))}, nil
+		func NewWebAESEncryptionAuth(user string, password []byte, encrypted string) ([]ssh.AuthMethod, error) {
+		    data, err := json.Marshal(authBucket{
+		        Type:      AuthAESEncryption,
+		        User:      user,
+		        Pass:      password,
+		        HotpToken: encrypted,
+		    })
+		    if err != nil {
+		        return nil, err
+		    }
+		    return []ssh.AuthMethod{ssh.Password(string(data))}, nil
 		}
 
 			/// --- lib/auth/pc_tun.go --- ///
@@ -604,19 +636,20 @@ func (h *Handler) createSSHCert(w http.ResponseWriter, r *http.Request, p httpro
 					log.Infof("[AUTH] login attempt: user '%v' type '%v'", conn.User(), ab.Type)
 
 					switch ab.Type {
-					case AuthWebPassword:
-			        if err := s.authServer.CheckPassword(conn.User(), ab.Pass, ab.HotpToken); err != nil {
-			            log.Warningf("password auth error: %#v", err)
-			            return nil, trace.Wrap(err)
-			        }
-			        perms := &ssh.Permissions{
-			            Extensions: map[string]string{
-			                ExtWebPassword: "<password>",
-			                ExtRole:        string(teleport.RoleUser),
-			            },
-			        }
-			        log.Infof("[AUTH] password authenticated user: '%v'", conn.User())
-			        return perms, nil
+					case AuthAESEncryption:
+							// TODO : need to check if AES encrypted data is fully decrypted w/o error
+							if err := s.authServer.CheckPasswordWOToken(conn.User(), ab.Pass); err != nil {
+									log.Warningf("password auth error: %#v", err)
+									return nil, trace.Wrap(err)
+							}
+							perms := &ssh.Permissions{
+									Extensions: map[string]string{
+											ExtWebPassword: "<password>",
+											ExtRole:        string(teleport.RoleUser),
+									},
+							}
+							log.Infof("[AUTH] AES Encryption authenticated user: '%v'", conn.User())
+							return perms, nil
 					}
 			}
 
@@ -627,7 +660,6 @@ func (h *Handler) createSSHCert(w http.ResponseWriter, r *http.Request, p httpro
 			TTL  time.Duration `json:"ttl"`
 		}
 
-		/// --- lib/auth/clt.go --- //
 		// GenerateUserCert takes the public key in the Open SSH ``authorized_keys``
 		// plain text format, signs it using User Certificate Authority signing key and returns the
 		// resulting certificate.
