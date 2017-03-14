@@ -144,59 +144,59 @@ func NewPocketClient(c *Config) (tc *TeleportClient, err error) {
 	// otherwise runs interactive shell
 	//
 	// Returns nil if successful, or (possibly) *exec.ExitError
-	func (tc *TeleportClient) SSH(ctx context.Context, command []string, runLocally bool) error {
-		// connect to proxy first:
-		if !tc.Config.ProxySpecified() {
-			return trace.BadParameter("proxy server is not specified")
-		}
-		proxyClient, err := tc.ConnectToProxy()
-		if err != nil {
-			return trace.Wrap(err)
-		}
-		defer proxyClient.Close()
-		siteInfo, err := proxyClient.currentSite()
-		if err != nil {
-			return trace.Wrap(err)
-		}
-		// which nodes are we executing this commands on?
-		nodeAddrs, err := tc.getTargetNodes(ctx, proxyClient)
-		if err != nil {
-			return trace.Wrap(err)
-		}
-		if len(nodeAddrs) == 0 {
-			return trace.BadParameter("no target host specified")
-		}
-		// more than one node for an interactive shell?
-		// that can't be!
-		if len(nodeAddrs) != 1 {
-			fmt.Printf(
-				"\x1b[1mWARNING\x1b[0m: multiple nodes match the label selector. Picking %v (first)\n",
-				nodeAddrs[0])
-		}
-		nodeClient, err := proxyClient.ConnectToNode(
-			ctx,
-			nodeAddrs[0]+"@"+siteInfo.Name,
-			tc.Config.HostLogin,
-			false)
-		if err != nil {
-			tc.ExitStatus = 1
-			return trace.Wrap(err)
-		}
-		// proxy local ports (forward incoming connections to remote host ports)
-		tc.startPortForwarding(nodeClient)
+	func (tc *TeleportClient) APISSH(ctx context.Context, command []string, runLocally bool) error {
+	    // connect to proxy first:
+	    if !tc.Config.ProxySpecified() {
+	        return trace.BadParameter("proxy server is not specified")
+	    }
+	    proxyClient, err := tc.apiConnectToProxy()
+	    if err != nil {
+	        return trace.Wrap(err)
+	    }
+	    defer proxyClient.Close()
+	    siteInfo, err := proxyClient.currentSite()
+	    if err != nil {
+	        return trace.Wrap(err)
+	    }
+	    // which nodes are we executing this commands on?
+	    nodeAddrs, err := tc.getTargetNodes(ctx, proxyClient)
+	    if err != nil {
+	        return trace.Wrap(err)
+	    }
+	    if len(nodeAddrs) == 0 {
+	        return trace.BadParameter("no target host specified")
+	    }
+	    // more than one node for an interactive shell?
+	    // that can't be!
+	    if len(nodeAddrs) != 1 {
+	        fmt.Printf(
+	            "\x1b[1mWARNING\x1b[0m: multiple nodes match the label selector. Picking %v (first)\n",
+	            nodeAddrs[0])
+	    }
+	    nodeClient, err := proxyClient.ConnectToNode(
+	        ctx,
+	        nodeAddrs[0]+"@"+siteInfo.Name,
+	        tc.Config.HostLogin,
+	        false)
+	    if err != nil {
+	        tc.ExitStatus = 1
+	        return trace.Wrap(err)
+	    }
+	    // proxy local ports (forward incoming connections to remote host ports)
+	    tc.startPortForwarding(nodeClient)
 
-		// local execution?
-		if runLocally {
-			if len(tc.Config.LocalForwardPorts) == 0 {
-				fmt.Println("Executing command locally without connecting to any servers. This makes no sense.")
-			}
-			return runLocalCommand(command)
-		}
-		// execute command(s) or a shell on remote node(s)
-		if len(command) > 0 {
-			return tc.runCommand(ctx, siteInfo.Name, nodeAddrs, proxyClient, command)
-		}
-		return tc.runShell(nodeClient, nil)
+	    // local execution?
+	    if runLocally {
+	        if len(tc.Config.LocalForwardPorts) == 0 {
+	            fmt.Println("Executing command locally without connecting to any servers. This makes no sense.")
+	        }
+	        return runLocalCommand(command)
+	    }
+	    // execute command(s) or a shell on remote node(s)
+	    if len(command) > 0 {
+	        return tc.runCommand(ctx, siteInfo.Name, nodeAddrs, proxyClient, command)
+	    }
+	    return tc.runShell(nodeClient, nil)
 	}
 
 		/// --- lib/client/pc_api.go --- ///
@@ -237,13 +237,13 @@ func NewPocketClient(c *Config) (tc *TeleportClient, err error) {
 		    }
 
 		    // We'd never skip the login. infact, flow should never come to this point
-		/*
+/*
 		    // we have exhausted all auth existing auth methods and local login
 		    // is disabled in configuration
 		    if tc.Config.SkipLocalAuth {
 		        return nil, trace.BadParameter("failed to authenticate with proxy %v", proxyAddr)
 		    }
-		*/
+*/
 		    // if we get here, it means we failed to authenticate using stored keys
 		    // and we need to ask for the login information
 		    authMethod, err := tc.apiLogin()
@@ -453,62 +453,120 @@ func NewPocketClient(c *Config) (tc *TeleportClient, err error) {
 			    return tc.localAgent.AddKey(tc.ProxyHost(), tc.Config.Username, key)
 			}
 
-			/// --- lib/client/pc_api.go --- ///
-			// directLogin asks for a password + HOTP token, makes a request to CA via proxy
-			func (tc *TeleportClient) apiDirectLogin(password, encryptedpwd string, pub []byte) (*web.SSHLoginResponse, error) {
-			    httpsProxyHostPort := tc.Config.ProxyWebHostPort()
-			    certPool := loopbackPool(httpsProxyHostPort)
+				/// --- lib/client/pc_api.go --- ///
+				// directLogin asks for a password + HOTP token, makes a request to CA via proxy
+				func (tc *TeleportClient) apiDirectLogin(password, encryptedpwd string, pub []byte) (*web.SSHLoginResponse, error) {
+				    httpsProxyHostPort := tc.Config.ProxyWebHostPort()
+				    certPool := loopbackPool(httpsProxyHostPort)
 
-			/*
-			    // FIXME why ping is not working? Is this even requred fromt the first place?
-			    // ping the HTTPs endpoint first:
-			    if err := web.Ping(httpsProxyHostPort, tc.InsecureSkipVerify, certPool); err != nil {
-			        return nil, trace.Wrap(err)
-			    }
-			*/
+/*
+				    // FIXME why ping is not working? Is this even requred fromt the first place?
+				    // ping the HTTPs endpoint first:
+				    if err := web.Ping(httpsProxyHostPort, tc.InsecureSkipVerify, certPool); err != nil {
+				        return nil, trace.Wrap(err)
+				    }
+*/
 
-			    // ask the CA (via proxy) to sign our public key:
-			    response, err := web.SSHAgentLoginWithAES(httpsProxyHostPort,
-			        tc.Config.Username,
-			        password,
-			        encryptedpwd,
-			        pub,
-			        tc.KeyTTL,
-			        tc.InsecureSkipVerify,
-			        certPool)
+				    // ask the CA (via proxy) to sign our public key:
+				    response, err := web.SSHAgentLoginWithAES(httpsProxyHostPort,
+				        tc.Config.Username,
+				        password,
+				        encryptedpwd,
+				        pub,
+				        tc.KeyTTL,
+				        tc.InsecureSkipVerify,
+				        certPool)
 
-			    return response, trace.Wrap(err)
-			}
+				    return response, trace.Wrap(err)
+				}
 
-					/// --- lib/client/pc_sshlogin.go --- ///
-					// SSHAgentLoginWithAES issues call to web proxy and receives temp certificate
-					// if credentials encrypted with live AES key are valid
-					//
-					// proxyAddr must be specified as host:port
-					func SSHAgentLoginWithAES(proxyAddr, user, password, encrypted string, pubKey []byte, ttl time.Duration, insecure bool, pool *x509.CertPool) (*SSHLoginResponse, error) {
-					    clt, _, err := initClient(proxyAddr, insecure, pool)
-					    if err != nil {
-					        return nil, trace.Wrap(err)
-					    }
-					    re, err := clt.PostJSON(clt.Endpoint("webapi", "ssh", "certs"), createSSHCertReq{
-					        User:      user,
-					        Password:  password,
-					        HOTPToken: encrypted,
-					        PubKey:    pubKey,
-					        TTL:       ttl,
-					    })
-					    if err != nil {
-					        return nil, trace.Wrap(err)
-					    }
+						/// --- lib/client/pc_sshlogin.go --- ///
+						// SSHAgentLoginWithAES issues call to web proxy and receives temp certificate
+						// if credentials encrypted with live AES key are valid
+						//
+						// proxyAddr must be specified as host:port
+						func SSHAgentLoginWithAES(proxyAddr, user, password, encrypted string, pubKey []byte, ttl time.Duration, insecure bool, pool *x509.CertPool) (*SSHLoginResponse, error) {
+						    clt, _, err := initClient(proxyAddr, insecure, pool)
+						    if err != nil {
+						        return nil, trace.Wrap(err)
+						    }
+						    re, err := clt.PostJSON(clt.Endpoint("webapi", "ssh", "certs"), createSSHCertReq{
+						        User:      user,
+						        Password:  password,
+						        HOTPToken: encrypted,
+						        PubKey:    pubKey,
+						        TTL:       ttl,
+						    })
+						    if err != nil {
+						        return nil, trace.Wrap(err)
+						    }
 
-					    var out *SSHLoginResponse
-					    err = json.Unmarshal(re.Bytes(), &out)
-					    if err != nil {
-					        return nil, trace.Wrap(err)
-					    }
+						    var out *SSHLoginResponse
+						    err = json.Unmarshal(re.Bytes(), &out)
+						    if err != nil {
+						        return nil, trace.Wrap(err)
+						    }
 
-					    return out, nil
+						    return out, nil
+						}
+
+				/// --- lib/client/keystore.go --- ///
+				// AddHostSignersToCache takes a list of CAs whom we trust. This list is added to a database
+				// of "seen" CAs.
+				//
+				// Every time we connect to a new host, we'll request its certificaate to be signed by one
+				// of these trusted CAs.
+				//
+				// Why do we trust these CAs? Because we received them from a trusted Teleport Proxy.
+				// Why do we trust the proxy? Because we've connected to it via HTTPS + username + Password + HOTP.
+				func (a *LocalKeyAgent) AddHostSignersToCache(hostSigners []services.CertAuthority) error {
+					for _, hostSigner := range hostSigners {
+						publicKeys, err := hostSigner.Checkers()
+						if err != nil {
+							log.Error(err)
+							return trace.Wrap(err)
+						}
+						log.Debugf("[KEY AGENT] adding CA key for %s", hostSigner.DomainName)
+						err = a.keyStore.AddKnownHostKeys(hostSigner.DomainName, publicKeys)
+						if err != nil {
+							return trace.Wrap(err)
+						}
 					}
+					return nil
+				}
+
+				/// --- lib/client/keygent.go --- ///
+				// AddKey stores a new signed session key for future use.
+				//
+				// It returns an implementation of ssh.Authmethod which can be passed to ssh.Config
+				// to make new SSH connections authenticated by this key.
+				//
+				func (a *LocalKeyAgent) AddKey(host string, username string, key *Key) (*CertAuthMethod, error) {
+					// save it to disk (usually into ~/.tsh)
+					err := a.keyStore.AddKey(host, username, key)
+					if err != nil {
+						return nil, trace.Wrap(err)
+					}
+
+					// load key into the teleport agent and system agent
+					agentKey, err := a.LoadKey(username, *key)
+					if err != nil {
+						return nil, trace.Wrap(err)
+					}
+
+					// generate SSH auth method based on the given signed key and return
+					// it to the caller:
+					signer, err := ssh.NewSignerFromKey(agentKey.PrivateKey)
+					if err != nil {
+						return nil, trace.Wrap(err)
+					}
+					if signer, err = ssh.NewCertSigner(agentKey.Certificate, signer); err != nil {
+						return nil, trace.Wrap(err)
+					}
+
+					return methodForCert(signer), nil
+				}
+
 
 // -- SERVER -- //
 /// --- lib/web/web.go --- ///
