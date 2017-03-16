@@ -1,145 +1,145 @@
 //// ---- BEGIN TELEPORT USER SIGNUP TOKEN ---- ////
+
+// connect to the teleport auth service:
+client, err := connectToAuthService(cfg)
+if err != nil {
+	utils.FatalError(err)
+}
+
+// *** IMPORTANT ***
+// connectToAuthService creates a valid client connection to the auth service
+func connectToAuthService(cfg *service.Config) (client *auth.TunClient, err error) {
+	// connect to the local auth server by default:
+	cfg.Auth.Enabled = true
+	if len(cfg.AuthServers) == 0 {
+		cfg.AuthServers = []utils.NetAddr{
+			*defaults.AuthConnectAddr(),
+		}
+	}
+	// read the host SSH keys and use them to open an SSH connection to the auth service
+	i, err := auth.ReadIdentity(cfg.DataDir, auth.IdentityID{Role: teleport.RoleAdmin, HostUUID: cfg.HostUUID})
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+	client, err = auth.NewTunClient(
+		"tctl",
+		cfg.AuthServers,
+		cfg.HostUUID,
+		[]ssh.AuthMethod{ssh.PublicKeys(i.KeySigner)})
+	if err != nil {
+		return nil, trace.Wrap(err)
+	}
+
+	// check connectivity by calling something on a clinet:
+	_, err = client.GetDialer()()
+	if err != nil {
+		utils.Consolef(os.Stderr,
+			"Cannot connect to the auth server: %v.\nIs the auth server running on %v?", err, cfg.AuthServers[0].Addr)
+		os.Exit(1)
+	}
+	return client, nil
+}
+
 type UserCommand struct {
 	config        *service.Config
 	login         string
 	allowedLogins string
 	identities    []string
 }
-cmdUsers := UserCommand{config: cfg}
-	case userAdd.FullCommand():
-		err = cmdUsers.Add(client)
 
-	// *** IMPORTANT ***
-	// connectToAuthService creates a valid client connection to the auth service
-	func connectToAuthService(cfg *service.Config) (client *auth.TunClient, err error) {
-		// connect to the local auth server by default:
-		cfg.Auth.Enabled = true
-		if len(cfg.AuthServers) == 0 {
-			cfg.AuthServers = []utils.NetAddr{
-				*defaults.AuthConnectAddr(),
-			}
-		}
-		// read the host SSH keys and use them to open an SSH connection to the auth service
-		i, err := auth.ReadIdentity(cfg.DataDir, auth.IdentityID{Role: teleport.RoleAdmin, HostUUID: cfg.HostUUID})
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
-		client, err = auth.NewTunClient(
-			"tctl",
-			cfg.AuthServers,
-			cfg.HostUUID,
-			[]ssh.AuthMethod{ssh.PublicKeys(i.KeySigner)})
-		if err != nil {
-			return nil, trace.Wrap(err)
-		}
+// TeleportUser is an optional user entry in the database
+type TeleportUser struct {
+	// Name is a user name
+	Name string `json:"name"`
 
-		// check connectivity by calling something on a clinet:
-		_, err = client.GetDialer()()
-		if err != nil {
-			utils.Consolef(os.Stderr,
-				"Cannot connect to the auth server: %v.\nIs the auth server running on %v?", err, cfg.AuthServers[0].Addr)
-			os.Exit(1)
-		}
-		return client, nil
+	// AllowedLogins represents a list of OS users this teleport
+	// user is allowed to login as
+	AllowedLogins []string `json:"allowed_logins"`
+
+	// OIDCIdentities lists associated OpenID Connect identities
+	// that let user log in using externally verified identity
+	OIDCIdentities []OIDCIdentity `json:"oidc_identities"`
+}
+
+// Add creates a new sign-up token and prints a token URL to stdout.
+// A user is not created until he visits the sign-up URL and completes the process
+func (u *UserCommand) Add(client *auth.TunClient) error {
+	// if no local logins were specified, default to 'login'
+	if u.allowedLogins == "" {
+		u.allowedLogins = u.login
 	}
-	client, err := connectToAuthService(cfg)
+	user := services.TeleportUser{
+		Name:          u.login,
+		AllowedLogins: strings.Split(u.allowedLogins, ","),
+	}
+	if len(u.identities) != 0 {
+		for _, identityVar := range u.identities {
+			vals := strings.SplitN(identityVar, ":", 2)
+			if len(vals) != 2 {
+				return trace.Errorf("bad flag --identity=%v, expected <connector-id>:<email> format", identityVar)
+			}
+			user.OIDCIdentities = append(user.OIDCIdentities, services.OIDCIdentity{ConnectorID: vals[0], Email: vals[1]})
+		}
+	}
+	token, err := client.CreateSignupToken(&user)
 	if err != nil {
-		utils.FatalError(err)
+		return err
+	}
+	proxies, err := client.GetProxies()
+	if err != nil {
+		return trace.Wrap(err)
+	}
+	hostname := "teleport-proxy"
+	if len(proxies) == 0 {
+		fmt.Printf("\x1b[1mWARNING\x1b[0m: this Teleport cluster does not have any proxy servers online.\nYou need to start some to be able to login.\n\n")
+	} else {
+		hostname = proxies[0].Hostname
 	}
 
-		// TeleportUser is an optional user entry in the database
-		type TeleportUser struct {
-			// Name is a user name
-			Name string `json:"name"`
+	// try to auto-suggest the activation link
+	_, proxyPort, err := net.SplitHostPort(u.config.Proxy.WebAddr.Addr)
+	if err != nil {
+		proxyPort = strconv.Itoa(defaults.HTTPListenPort)
+	}
+	url := web.CreateSignupLink(net.JoinHostPort(hostname, proxyPort), token)
+	fmt.Printf("Signup token has been created and is valid for %v seconds. Share this URL with the user:\n%v\n\nNOTE: make sure '%s' is accessible!\n", defaults.MaxSignupTokenTTL.Seconds(), url, hostname)
+	return nil
+}
 
-			// AllowedLogins represents a list of OS users this teleport
-			// user is allowed to login as
-			AllowedLogins []string `json:"allowed_logins"`
-
-			// OIDCIdentities lists associated OpenID Connect identities
-			// that let user log in using externally verified identity
-			OIDCIdentities []OIDCIdentity `json:"oidc_identities"`
+		// User represents teleport or external user
+		type User interface {
+			// GetName returns user name
+			GetName() string
+			// GetAllowedLogins returns user's allowed linux logins
+			GetAllowedLogins() []string
+			// GetIdentities returns a list of connected OIDCIdentities
+			GetIdentities() []OIDCIdentity
+			// String returns user
+			String() string
+			// Check checks if all parameters are correct
+			Check() error
+			// Equals checks if user equals to another
+			Equals(other User) bool
 		}
 
-		// Add creates a new sign-up token and prints a token URL to stdout.
-		// A user is not created until he visits the sign-up URL and completes the process
-		func (u *UserCommand) Add(client *auth.TunClient) error {
-			// if no local logins were specified, default to 'login'
-			if u.allowedLogins == "" {
-				u.allowedLogins = u.login
+		// CreateSignupToken creates one time token for creating account for the user
+		// For each token it creates username and hotp generator
+		func (c *Client) CreateSignupToken(user services.User) (string, error) {
+			if err := user.Check(); err != nil {
+				return "", trace.Wrap(err)
 			}
-			user := services.TeleportUser{
-				Name:          u.login,
-				AllowedLogins: strings.Split(u.allowedLogins, ","),
-			}
-			if len(u.identities) != 0 {
-				for _, identityVar := range u.identities {
-					vals := strings.SplitN(identityVar, ":", 2)
-					if len(vals) != 2 {
-						return trace.Errorf("bad flag --identity=%v, expected <connector-id>:<email> format", identityVar)
-					}
-					user.OIDCIdentities = append(user.OIDCIdentities, services.OIDCIdentity{ConnectorID: vals[0], Email: vals[1]})
-				}
-			}
-			token, err := client.CreateSignupToken(&user)
+			out, err := c.PostJSON(c.Endpoint("signuptokens"), createSignupTokenReq{
+				User: user,
+			})
 			if err != nil {
-				return err
+				return "", trace.Wrap(err)
 			}
-			proxies, err := client.GetProxies()
-			if err != nil {
-				return trace.Wrap(err)
+			var token string
+			if err := json.Unmarshal(out.Bytes(), &token); err != nil {
+				return "", trace.Wrap(err)
 			}
-			hostname := "teleport-proxy"
-			if len(proxies) == 0 {
-				fmt.Printf("\x1b[1mWARNING\x1b[0m: this Teleport cluster does not have any proxy servers online.\nYou need to start some to be able to login.\n\n")
-			} else {
-				hostname = proxies[0].Hostname
-			}
-
-			// try to auto-suggest the activation link
-			_, proxyPort, err := net.SplitHostPort(u.config.Proxy.WebAddr.Addr)
-			if err != nil {
-				proxyPort = strconv.Itoa(defaults.HTTPListenPort)
-			}
-			url := web.CreateSignupLink(net.JoinHostPort(hostname, proxyPort), token)
-			fmt.Printf("Signup token has been created and is valid for %v seconds. Share this URL with the user:\n%v\n\nNOTE: make sure '%s' is accessible!\n", defaults.MaxSignupTokenTTL.Seconds(), url, hostname)
-			return nil
+			return token, nil
 		}
-
-			// User represents teleport or external user
-			type User interface {
-				// GetName returns user name
-				GetName() string
-				// GetAllowedLogins returns user's allowed linux logins
-				GetAllowedLogins() []string
-				// GetIdentities returns a list of connected OIDCIdentities
-				GetIdentities() []OIDCIdentity
-				// String returns user
-				String() string
-				// Check checks if all parameters are correct
-				Check() error
-				// Equals checks if user equals to another
-				Equals(other User) bool
-			}
-
-			// CreateSignupToken creates one time token for creating account for the user
-			// For each token it creates username and hotp generator
-			func (c *Client) CreateSignupToken(user services.User) (string, error) {
-				if err := user.Check(); err != nil {
-					return "", trace.Wrap(err)
-				}
-				out, err := c.PostJSON(c.Endpoint("signuptokens"), createSignupTokenReq{
-					User: user,
-				})
-				if err != nil {
-					return "", trace.Wrap(err)
-				}
-				var token string
-				if err := json.Unmarshal(out.Bytes(), &token); err != nil {
-					return "", trace.Wrap(err)
-				}
-				return token, nil
-			}
 
 // -- BEGIN SERVER -- //
 srv.POST("/v1/signuptokens", httplib.MakeHandler(srv.createSignupToken))
@@ -148,7 +148,7 @@ type createSignupTokenReqRaw struct {
 	User json.RawMessage `json:"user"`
 }
 
-func (s *APIServer) CreateSignupToken(w http.ResponseWriter, r *http.Request, p httprouter.Params) (interface{}, error) {
+func (s *APIServer) createSignupToken(w http.ResponseWriter, r *http.Request, p httprouter.Params) (interface{}, error) {
 	var req *createSignupTokenReqRaw
 	if err := httplib.ReadJSON(r, &req); err != nil {
 		return nil, trace.Wrap(err)
@@ -184,6 +184,7 @@ func (s *APIServer) CreateSignupToken(w http.ResponseWriter, r *http.Request, p 
 		}
 		return a.authServer.CreateSignupToken(user)
 	}
+
 		// CreateSignupToken creates one time token for creating account for the user
 		// For each token it creates username and hotp generator
 		//
@@ -260,9 +261,6 @@ func (s *APIServer) CreateSignupToken(w http.ResponseWriter, r *http.Request, p 
 			}
 
 //// ---- END TELEPORT USER SIGNUP TOKEN ---- ////
-
-
-
 
 
 //// ---- BEGIN TELEPORT WEB USER INVITE ---- ////
@@ -475,7 +473,7 @@ func (m *Handler) createNewUser(w http.ResponseWriter, r *http.Request, p httpro
 
 
 // -- BEGIN SERVER -- // (lib/auth/apiserver.go)
-/*				
+/*
 	// signup token data is utterly useless
 	srv.GET("/v1/signuptokens/:token", httplib.MakeHandler(srv.getSignupTokenData))
 
@@ -565,7 +563,38 @@ func (s *APIServer) createUserWithToken(w http.ResponseWriter, r *http.Request, 
 				return nil, trace.Wrap(err)
 			}
 
--			err = s.UpsertHOTP(tokenData.User.GetName(), otp)
+/// --- lib/services/local/users.go --- ///
+			// UpsertUser updates parameters about user
+			func (s *IdentityService) UpsertUser(user services.User) error {
+
+				if !cstrings.IsValidUnixUser(user.GetName()) {
+					return trace.BadParameter("'%v is not a valid unix username'", user.GetName())
+				}
+
+				for _, l := range user.GetAllowedLogins() {
+					if !cstrings.IsValidUnixUser(l) {
+						return trace.BadParameter("'%v is not a valid unix username'", l)
+					}
+				}
+				for _, i := range user.GetIdentities() {
+					if err := i.Check(); err != nil {
+						return trace.Wrap(err)
+					}
+				}
+				data, err := json.Marshal(user)
+				if err != nil {
+					return trace.Wrap(err)
+				}
+
+				err = s.backend.UpsertVal([]string{"web", "users", user.GetName()}, "params", []byte(data), backend.Forever)
+				if err != nil {
+					return trace.Wrap(err)
+				}
+				return nil
+			}
+/// --- lib/services/local/users.go --- ///
+
+*			err = s.UpsertHOTP(tokenData.User.GetName(), otp)
 			if err != nil {
 				return nil, trace.Wrap(err)
 			}
@@ -616,6 +645,17 @@ func (s *APIServer) createUserWithToken(w http.ResponseWriter, r *http.Request, 
 				}
 
 				err = s.UpsertPasswordHash(user, hash)
+/// --- lib/services/local/users.go --- ///
+				// UpsertPasswordHash upserts user password hash
+				func (s *IdentityService) UpsertPasswordHash(user string, hash []byte) error {
+					err := s.backend.UpsertVal([]string{"web", "users", user}, "pwd", hash, 0)
+					if err != nil {
+						return trace.Wrap(err)
+					}
+					return nil
+				}
+/// --- lib/services/local/users.go --- ///
+
 				if err != nil {
 					return "", nil, err
 				}
@@ -653,6 +693,21 @@ func (s *APIServer) createUserWithToken(w http.ResponseWriter, r *http.Request, 
 				}
 				return nil
 			}
+
+			// UpsertHOTP upserts HOTP state for user
+			func (s *IdentityService) UpsertHOTP(user string, otp *hotp.HOTP) error {
+				bytes, err := hotp.Marshal(otp)
+				if err != nil {
+					return trace.Wrap(err)
+				}
+				err = s.backend.UpsertVal([]string{"web", "users", user},
+					"hotp", bytes, 0)
+				if err != nil {
+					return trace.Wrap(err)
+				}
+				return nil
+			}
+
 // -- END SERVER -- //
 
 //// ---- END TELEPORT SERVER USER APPROVAL ---- ////
