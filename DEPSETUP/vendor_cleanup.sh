@@ -137,6 +137,7 @@ function clean_gopath() {
 	rm -rf github.com/pivotal-golang/clock && (rmdir github.com/pivotal-golang > /dev/null 2>&1 || true)
 	rm -rf github.com/fluent/fluent-logger-golang && (rmdir github.com/fluent > /dev/null 2>&1 || true)
 	rm -rf google.golang.org/appengine && (rmdir google.golang.org > /dev/null 2>&1 || true)
+	rm -rf github.com/jmoiron/sqlx && (rmdir github.com/jmoiron > /dev/null 2>&1 || true)
 	rm -rf github.com/gravitational/ttlmap && (rmdir github.com/gravitational > /dev/null 2>&1 || true)
 	rm -rf github.com/gravitational/trace && (rmdir github.com/gravitational > /dev/null 2>&1 || true)
 	rm -rf github.com/gorilla/handlers && (rmdir github.com/gorilla > /dev/null 2>&1 || true)

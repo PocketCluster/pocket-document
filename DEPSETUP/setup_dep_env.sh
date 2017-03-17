@@ -178,6 +178,22 @@ pushd ${WORK_ROOT}
 mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/docker-c8388a-2016_11_22" "./docker"
 popd
 
+# THIS IS 2ndary dependency setup. We might need to recover from this!
+# cfssl dependency clearing
+if [[ ! -d "${GOREPO}/src/github.com/cloudflare/cfssl" ]]; then
+    echo "Cloudflare cfssl is not present!!!"
+else
+    # (03/18/17)
+    # with combined dependency clearing, we get "WebSuite.TestNodesWithSessions" error in
+    # "github.com/gravitational/teleport/lib/web" testing. Just remove sqlx for now.
+
+    echo "[2ND DEP] Clearing Cloudflare cfssl dependencies..."
+    pushd ${WORK_ROOT}
+    cd "${GOREPO}/src/github.com/cloudflare/cfssl" && git stash
+    rm -rf "${GOREPO}/src/github.com/cloudflare/cfssl/vendor/github.com/jmoiron/sqlx"
+    popd
+fi
+
 if [[ ${TESTGO} -eq 1 ]]; then
 source ${WORK_ROOT}/test_dep.sh
 fi

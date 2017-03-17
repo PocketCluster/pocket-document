@@ -334,6 +334,11 @@ google.golang.org/appengine
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	(go get -d google.golang.org/appengine || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/google.golang.org/appengine && git checkout 12d5545dc1cfa6047a286d5e853841b6471f4c19
 
+github.com/jmoiron/sqlx
+	398dd5876282499cdfd4cb8ea0f31a672abe9495	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/jmoiron && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/jmoiron && git clone https://github.com/jmoiron/sqlx && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/jmoiron/sqlx && git checkout 398dd5876282499cdfd4cb8ea0f31a672abe9495
+
 github.com/gravitational/ttlmap
 	348cf76cace4d93fdacc38dfdaa2306f4f0e9c16	 -> 	Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -

@@ -24,3 +24,6 @@ import:
 # https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2 (Jan 24, 2017)
 - package: golang.org/x/crypto
   version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
+# cloudflare cfssl depedendency
+- package: github.com/jmoiron/sqlx
+  version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
