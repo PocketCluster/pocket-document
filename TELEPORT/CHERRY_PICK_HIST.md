@@ -4,10 +4,10 @@
 
 | Commit | Description | 
 | --- | --- |
-| | **<<<<<<< HEAD** |
 | 488d7b481016bed600ac23550d1ad83d1f7d89ab | Merge pull request [#834](https://github.com/gravitational/teleport/pull/834) from gravitational/rjones/load-external-agent<br/>Load Keys into System Agent and Exit<br/>March 15, 2017 at 9:10:35 AM GMT+9 |
-| bd65635eb3ef2551f74ba2e8fb5a3d3c8a084cc2 | _`This is not incorporated as it is not necessary and requires namespace`_<br/>**AN IMPORTANT FLOW OF HOW TO FINE CONTROL AGENT FORWARDING COMPATIBLE WITH OPENSSH**<br/>Merge pull request [#819](https://github.com/gravitational/teleport/pull/819) from gravitational/sasha/agents<br/>Sasha/agents<br/>March 11, 2017 at 12:30:27 PM GMT+9 |
-| **CRYPTO VENDOR UPGRADES FOR ARM** | |
+| bd65635eb3ef2551f74ba2e8fb5a3d3c8a084cc2 | **AN IMPORTANT FLOW OF HOW TO FINE CONTROL AGENT FORWARDING COMPATIBLE WITH OPENSSH**<br/>_`This is not incorporated as it is not necessary and requires namespace`_<br/>Merge pull request [#819](https://github.com/gravitational/teleport/pull/819) from gravitational/sasha/agents<br/>Sasha/agents<br/>March 11, 2017 at 12:30:27 PM GMT+9 |
+| 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9 | Merge pull request [#788](https://github.com/gravitational/teleport/pull/788) from gravitational/ev/regressions<br/>SCP fixes<br/>February 24, 2017 at 1:58:08 PM GMT+9 |
+| **CRYPTO VENDOR UPGRADES FOR ARM** | **<<<<<<< HEAD** |
 | 7d47d1ff1246a8e582cf840de769d4aaa60745bf | Merge pull request [#775](https://github.com/gravitational/teleport/pull/775) from gravitational/rjones/agent-fixes<br/>SSH Agent Fixes<br/>February 14, 2017 at 3:47:33 PM GMT+9 |
 | 04fdbd9b528b27c892a995595fcad9c915db476c | Merge pull request [#772](https://github.com/gravitational/teleport/pull/772) from russjones/rjones/deduplicate-principals<br/>Deduplicate principals for host certificates.<br/>February 14, 2017 at 7:59:24 AM GMT+9 |
 | **--------- ISSUE COVERAGE END ---------** | <https://github.com/gravitational/teleport/issues/579> |
