@@ -141,6 +141,19 @@ e71a09d01bd2bc45fe5137d9eb17e33460166d03    Merge pull request #762 from russjon
                                             SSH Agent Fixes
                                             https://github.com/gravitational/teleport/pull/775
                                             February 14, 2017 at 3:47:33 PM GMT+9
+# CRYPTO VENDOR UPGRADES for ARMHF/ARM64
+
+
+/// --- This is not incorporated as it is not necessary and requires namespace --- ///
+bd65635eb3ef2551f74ba2e8fb5a3d3c8a084cc2	AN IMPORTANT FLOW OF HOW TO FINE CONTROL AGENT FORWARDING COMPATIBLE WITH OPENSSH
+                                            Merge pull request #819 from gravitational/sasha/agents
+                                            Sasha/agents
+                                            March 11, 2017 at 12:30:27 PM GMT+9
+/// --- This is not incorporated as it is not necessary and requires namespace --- ///
+
+488d7b481016bed600ac23550d1ad83d1f7d89ab    Merge pull request #834 from gravitational/rjones/load-external-agent
+                                            Load Keys into System Agent and Exit
+                                            March 15, 2017 at 9:10:35 AM GMT+9
 
 <<<<<<< HEAD
 --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * -

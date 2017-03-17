@@ -200,3 +200,10 @@ git cherry-pick -m 1 7d47d1ff1246a8e582cf840de769d4aaa60745bf
 ... conflict resolved ...
 git add --all .
 git cherry-pick --continue
+
+git show --pretty=raw --stat 488d7b481016bed600ac23550d1ad83d1f7d89ab
+git diff ddcdc450e9f74810303ee49807060f115f9f6995..488d7b481016bed600ac23550d1ad83d1f7d89ab
+git cherry-pick -m 1 488d7b481016bed600ac23550d1ad83d1f7d89ab
+... conflict resolved ...
+git add --all .
+git cherry-pick --continue
