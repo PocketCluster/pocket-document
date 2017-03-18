@@ -35,7 +35,7 @@ function rsync_native_directory() {
 
 function clean_remote_files() {
     local DST_FILE=${1}
-    ssh "${TARGET_HOST}" "rm -rf ${DST_FILE}"
+    ssh "${TARGET_HOST}" "rm -rfv ${DST_FILE}"
 }
 
 # check if gobjc++ is installed
@@ -71,7 +71,7 @@ clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/*.h"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/*_binding.go"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/context_darwin.go"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-node-agent/main.go"
-ssh ${TARGET_HOST} 'find /opt/gopkg/src/ -name ".DS_Store" | xargs rm'
+ssh ${TARGET_HOST} 'find /opt/gopkg/src/ -name ".DS_Store" | xargs -r rm -v'
 
 popd
 
