@@ -71,6 +71,7 @@ clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/*.h"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/*_binding.go"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/context/context_darwin.go"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-node-agent/main.go"
+clean_remote_files "/opt/gopkg/src/github.com/cloudflare/cfssl/vendor/github.com/jmoiron/sqlx"
 ssh ${TARGET_HOST} 'find /opt/gopkg/src/ -name ".DS_Store" | xargs -r rm -v'
 
 popd
