@@ -299,6 +299,11 @@ github.com/hashicorp/go-multierror
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/hashicorp && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/hashicorp && git clone https://github.com/hashicorp/go-multierror && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/hashicorp/go-multierror && git checkout fcdddc395df1ddf4247c69bd436e84cfa0733f7e
 
+github.com/ricochet2200/go-disk-usage
+	f0d1b743428fc09792f93233d9412f89f88fa2ab	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/ricochet2200 && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/ricochet2200 && git clone https://github.com/ricochet2200/go-disk-usage && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/ricochet2200/go-disk-usage && git checkout f0d1b743428fc09792f93233d9412f89f88fa2ab
+
 github.com/yvasiyarov/newrelic_platform_go
 	b21fdbd4370f3717f3bbd2bf41c223bc273068e6	 -> 	distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -754,6 +759,7 @@ github.com/ugorji/go
 github.com/pkg/errors
 ----------------- !!!CONFLICT!!! --------------------- 
 	839d9e913e063e28dfd0e6c7b7512793e0a48be9	 -> 	2016-10-01 22:25:12-07:00 : docker-c8388a-2016_11_22
+	839d9e913e063e28dfd0e6c7b7512793e0a48be9	 -> 	2016-10-01 22:25:12-07:00 : pocketcluster-req-0.1.4
 	a887431f7f6ef7687b556dbf718d9f351d4858a0	 -> 	2016-09-16 13:02:12+02:00 : swarm-1.2.6
 	01fa4104b9c248c8945d14d9f128454d5b28d595	 -> 	2016-06-13 11:17:47+09:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -

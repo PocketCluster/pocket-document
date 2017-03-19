@@ -10,6 +10,10 @@ import:
   version: 9be650865eab0c12963d8753212f4f9c66cdcf12
 - package: github.com/cloudflare/cfssl
   version: 7fb22c8cba7ecaf98e4082d22d65800cf45e042a
+- package: github.com/pkg/errors
+  version: 839d9e913e063e28dfd0e6c7b7512793e0a48be9
+- package: github.com/ricochet2200/go-disk-usage
+  version: f0d1b743428fc09792f93233d9412f89f88fa2ab
 # For swarm
 - package: github.com/docker/leadership
   version: bfc7753dd48af19513b29deec23c364bf0f274eb

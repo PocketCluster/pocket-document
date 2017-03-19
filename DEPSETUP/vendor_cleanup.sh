@@ -130,6 +130,7 @@ function clean_gopath() {
 	rm -rf golang.org/x/text && (rmdir golang.org/x > /dev/null 2>&1 || true)
 	rm -rf github.com/codegangsta/cli && (rmdir github.com/codegangsta > /dev/null 2>&1 || true)
 	rm -rf github.com/hashicorp/go-multierror && (rmdir github.com/hashicorp > /dev/null 2>&1 || true)
+	rm -rf github.com/ricochet2200/go-disk-usage && (rmdir github.com/ricochet2200 > /dev/null 2>&1 || true)
 	rm -rf github.com/yvasiyarov/newrelic_platform_go && (rmdir github.com/yvasiyarov > /dev/null 2>&1 || true)
 	rm -rf github.com/dustin/go-humanize && (rmdir github.com/dustin > /dev/null 2>&1 || true)
 	rm -rf github.com/deckarep/golang-set && (rmdir github.com/deckarep > /dev/null 2>&1 || true)
