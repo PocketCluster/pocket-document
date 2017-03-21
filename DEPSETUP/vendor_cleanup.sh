@@ -164,6 +164,7 @@ function clean_gopath() {
 	rm -rf github.com/vishvananda/netlink && (rmdir github.com/vishvananda > /dev/null 2>&1 || true)
 	rm -rf github.com/armon/go-metrics && (rmdir github.com/armon > /dev/null 2>&1 || true)
 	rm -rf github.com/cockroachdb/cmux && (rmdir github.com/cockroachdb > /dev/null 2>&1 || true)
+	rm -rf github.com/jinzhu/inflection && (rmdir github.com/jinzhu > /dev/null 2>&1 || true)
 	rm -rf github.com/Microsoft/hcsshim && (rmdir github.com/Microsoft > /dev/null 2>&1 || true)
 	rm -rf github.com/grpc-ecosystem/go-grpc-prometheus && (rmdir github.com/grpc-ecosystem > /dev/null 2>&1 || true)
 	rm -rf github.com/docker/libnetwork && (rmdir github.com/docker > /dev/null 2>&1 || true)

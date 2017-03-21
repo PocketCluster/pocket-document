@@ -469,6 +469,11 @@ github.com/cockroachdb/cmux
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/cockroachdb && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/cockroachdb && git clone https://github.com/cockroachdb/cmux && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/cockroachdb/cmux && git checkout 112f0506e7743d64a6eb8fedbcff13d9979bbf92
 
+github.com/jinzhu/inflection
+	1c35d901db3da928c72a72d8458480cc9ade058f	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/jinzhu && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/jinzhu && git clone https://github.com/jinzhu/inflection && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/jinzhu/inflection && git checkout 1c35d901db3da928c72a72d8458480cc9ade058f
+
 github.com/Microsoft/hcsshim
 	v0.5.9                                  	 -> 	docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
