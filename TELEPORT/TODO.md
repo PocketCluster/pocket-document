@@ -2,7 +2,7 @@
 
 ## v0.1.4 Release Targets
 
-- [ ] Generate HostUUID from config and use it across application
+- [x] Generate HostUUID from config and use it across application
 - [ ] Dynamically invite node to join
 - [ ] Check **SCP** is working
 - [ ] `lib/auth/pc_local_auth.go:RequestHOTPforSignupToken()` arguments needs encryption
@@ -18,7 +18,7 @@
 - [ ] See if AES encryption is necessary for `lib/auth/pc_tun/AuthAESEncryption`
 - [ ] Add action perm for requesting signed certificate to `lib/auth/pc_auth_with_roles/issueSignedCertificateWithToken`
 - [ ] Check if signed cert for this uuid exists. If does, return the value `lib/auth/pc_auth_with_roles/createSignedCertificate`
-
+- [x] Combine Host Certificate Authorities of PC-CORE and TELEPORT
 
 ## Next Phase
 
