@@ -32,31 +32,97 @@
   - [glandium.org Fun with weak dynamic linking](glandium.org Fun with weak dynamic linking.pdf)
 
 2. Build GO library
+  - With `-s` linker option, debug symbol is stripped. Do not use `strip` as it would break go to run
+  - With `-w` linker option, `dwarf` symbol is refrained from being generated
+  - Default mode seems to be the same as `c-archive` mode as file, and ar commands confirms final output 
 
   ```sh
-# Compile and produce object files
-CGO_ENABLED=1 CC=clang go build -ldflags '-tmpdir ./tmp -linkmode external' ./...
-```
+  # Compile and produce object files
+  CGO_ENABLED=1 CC=clang go build -v -x -ldflags '-v -w -s -tmpdir .tmp -linkmode external' ./...
+  ```
+
+  - In Go 1.7.5, there are more build mode to build static library. You can read more from how `gomobile` handles binding.
+  - With buildmode `c-archive` or `c-shared`, `_main()` reference in symbol is missing and linker fails
+  - With buildmode `c-archive`, `strip -S go.o` fails with following message, which causes `strip -S` in Xcode to quit with 1 in Archving (release). This seems to relate the ability of golang to write an object file.
+
+    > strip: string table not at the end of the file (can't be processed) in file: go.o
+
+  - With buildmode `c-shared` and `-o target_object` option, go can write really nice `.dylib` binary which doesn't cause an issue with `strip` (You should not strip symbols with it though). but `_main()` is missing.<br/>Further, this creates dynamic library which is separated from main executable.<br/>Plus, when you have external function call in your go library, it doesn't seem to be very clear how to link other dynamic library to perform all the linking. (maybe we should build framework like Go mobile did)<br/>**This is postponed**
+
+  - (03/28/2017) Therefore, we'll strip debug symbol from golang, and statically link to executable for now.
+
+    ```
+    > go help buildmode
+    
+    # **This is the mode we go with**
+    -buildmode=default
+        Listed main packages are built into executables and listed
+        non-main packages are built into .a files (the default
+        behavior).
+  
+    # essentially the same as default. It lacks of main().
+    -buildmode=c-archive
+        Build the listed main package, plus all packages it imports,
+        into a C archive file. The only callable symbols will be those
+        functions exported using a cgo //export comment. Requires
+        exactly one main package to be listed.
+    
+    # generate shared library (.dylib). It lacks of main()
+    -buildmode=c-shared
+        Build the listed main packages, plus all packages that they
+        import, into C shared libraries. The only callable symbols will
+        be those functions exported using a cgo //export comment.
+        Non-main packages are ignored.
+
+
+    # (03/29/2017) There are more to buildmode, but not applicable 
+
+    -buildmode=pie [Not supported in amd64]
+        Build the listed main packages and everything they import into
+        position independent executables (PIE). Packages not named
+        main are ignored.
+    
+    -buildmode=exe 
+        Build the listed main packages and everything they import into
+        executables. Packages not named main are ignored.
+    
+    -buildmode=default
+        Listed main packages are built into executables and listed
+        non-main packages are built into .a files (the default
+        behavior).
+    
+    -buildmode=archive
+        Build the listed non-main packages into .a files. Packages named
+        main are ignored.
+    
+    -buildmode=shared
+        Combine all the listed non-main packages into a single shared
+        library that will be used when building with the -linkshared
+        option. Packages named main are ignored.
+    ```
+
 
 3. Generate header file
 
   ```sh
-# Generate _cgo_export.h and copy into source folder
-go tool cgo -objdir ./tmp main.go
-```
+  # Generate _cgo_export.h and copy into source folder
+  go tool cgo -objdir ./tmp main.go
+  ```
+  - You cannot seem to generate `_main()` symbol from `go tool cgo`
 
 4. Combine `.o` files to an `.a` archive file.
 
   ```sh
-# Combine the object files into a static library
-ar rcs output.a ./tmp/*o  
-```
+  # Combine the object files into a static library
+  ar rcs output.a ./tmp/*o  
+  ```
 
 5. Check if all the symbols are included
 
   ```sh
-nm object_file.o
-```
+  nm object_file.o
+  ```
+
 > References
 
 - [Mobile Go, part 1/ Calling Go functions from C](Mobile Go, part 1 Calling Go functions from C — Mobile Go — Medium.pdf)
@@ -71,9 +137,12 @@ In PocketCluster OSX, we will not use Dynamic archive as it opens up an attack v
 
 - [Using C Dynamic Libraries In Go Programs](Using C Dynamic Libraries In Go Programs.pdf)
 - [Using CGO with Pkg-Config And Custom Dynamic Library Locations](Using CGO with Pkg-Config And Custom Dynamic Library Locations.pdf)
+- [`gomobile` ios binding](https://github.com/golang/mobile/blob/226c1c8284dc3ee080c91f7ff62e6431b0b2a74b/cmd/gomobile/bind_iosapp.go#L197-L206)
 - How to build a dylib from several .o in Mac OS X using gcc
 
   ```
   g++ -dynamiclib -undefined suppress -flat_namespace *.o -o something.dylib
   ```
+
+### `AR`, `LIPO` and `LIPTOOL`
 
