@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registering for a Notification</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/10000043i">
+    <meta id="document-version" name="document-version" content="2.7.3">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="20000723">
+    <meta id="date" name="date" content="2009-08-18">
+    <meta id="description" name="description" content="Explains how to send and receive information about events in Cocoa programs.">
+    <meta id="book-title" name="book-title" content="Notification Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Core Services Layer/Foundation}, {Topic/Data Management/Event Handling}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Notification Programming Topics: Registering for a Notification">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Notification Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="Posting.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="NotificationQueues.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/20000723" title="Registering for a Notification"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Notification Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='Posting.html'>Next</a><a class='previousLink' rel='prev' href='NotificationQueues.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/20000723-CEGCCFID" title="Registering for a Notification"></a><h1 id="pageTitle">Registering for a Notification</h1>
+
+<p>You can register for notifications from within your own application or other applications. See <span class="content_text"><a href="#//apple_ref/doc/uid/20000723-98481" data-renderer-version="1">Registering for Local Notifications</a></span> for the former and <span class="content_text"><a href="#//apple_ref/doc/uid/20000723-98486" data-renderer-version="1">Registering for Distributed Notifications</a></span> for the latter. To unregister for a notification, which must be done when your object is <span class="pediaLink" data-header="Memory management" data-contents="Memory management is the programming discipline of managing the life cycles of objects and freeing them when they are no longer needed. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/MemoryManagement.html#//apple_ref/doc/uid/TP40008195-CH27" data-renderer-version="1" target="_self">deallocated</a></span>, see <span class="content_text"><a href="#//apple_ref/doc/uid/20000723-98846" data-renderer-version="1">Unregistering an Observer</a></span>.</p>
+<section><a name="//apple_ref/doc/uid/20000723-98481" title="Registering for Local Notifications"></a><a name="//apple_ref/doc/uid/20000723-98481-BABHDIGJ" title="Registering for Local Notifications"></a><h2 class="jump">Registering for Local Notifications</h2>
+<p>You register an object  to receive a notification by invoking the notification center method <code>addObserver:selector:name:object:</code>, specifying the observer, the <span class="pediaLink" data-header="Message" data-contents="A message is the name of a method, and any parameters associated with it, that are sent to, and executed by, an object. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Message.html#//apple_ref/doc/uid/TP40008195-CH59" data-renderer-version="1" target="_self">message</a></span> the notification center should send to the observer, the name of the notification it wants to receive, and about which object. You don’t need to specify both the name and the object. If you specify only an object, the observer will receive all notifications containing that object. If you specify only a notification name, the observer will receive that notification every time it’s posted, regardless of the object associated with it.</p>
+<p>It is possible for an observer to register to receive more than one message for the same notification. In such a case, the observer will receive all messages it is registered to receive for the notification, but the order in which it receives them cannot be determined.</p>
+<p>If you later decide an observer no longer needs to receive notifications (for example, if the observer is being deallocated), you can remove the observer from the notification center’s list of observers with the methods <code>removeObserver:</code> or <code>removeObserver:name:object:</code>.</p>
+<p>Normally, you register objects with the process’s default notification center. You obtain the default object using the <code>defaultCenter</code> class  <span class="pediaLink" data-header="Class method" data-contents="A class method is a method that operates on class objects rather than instances of the class. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ClassMethod.html#//apple_ref/doc/uid/TP40008195-CH8" data-renderer-version="1" target="_self">method</a></span>.</p>
+<p>As an example of using the notification center to receive notifications, suppose you want to perform an operation any time a window becomes main (for example, if you’re implementing a <span class="pediaLink" data-header="Controller object" data-contents="A controller object acts as a coordinator or as an intermediary between one or more view objects and one or more model objects. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ControllerObject.html#//apple_ref/doc/uid/TP40008195-CH11" data-renderer-version="1" target="_self">controller</a></span> for an inspector panel). You would register your client object as an observer as shown in the following example:</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>[[NSNotificationCenter defaultCenter] addObserver:self<span></span></pre></td></tr><tr><td scope="row"><pre>    selector:@selector(aWindowBecameMain:)<span></span></pre></td></tr><tr><td scope="row"><pre>    name:NSWindowDidBecomeMainNotification object:nil];<span></span></pre></td></tr></table></div>
+<p>By passing <code><!--a  -->nil<!--/a--></code> as the object to observe, the client object (<code><!--a  -->self<!--/a--></code>) is notified when any object posts a <code><a href="https://developer.apple.com/reference/appkit/nswindowdidbecomemainnotification" target="_self" class="urlLink">NSWindowDidBecomeMainNotification</a></code> notification.</p>
+<p>When window becomes main, it posts an <code>NSWindowDidBecomeMainNotification</code> to the notification center. The notification center notifies all observers who are interested in the notification by invoking the method they specified in the <span class="pediaLink" data-header="Selector" data-contents="A selector is the name used to select a method to execute for an object, or the unique identifier that replaces the name when the source code is compiled. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Selector.html#//apple_ref/doc/uid/TP40008195-CH48" data-renderer-version="1" target="_self">selector</a></span> argument of <code>addObserver:selector:name:object:</code>. In the case of our example observer, the selector is <code>aWindowBecameMain:</code>. The <code>aWindowBecameMain:</code> method might have the following implementation:</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>- (void)aWindowBecameMain:(NSNotification *)notification {<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    NSWindow *theWindow = [notification object];<span></span></pre></td></tr><tr><td scope="row"><pre>    MyDocument = (MyDocument *)[[theWindow windowController] document];<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    // Retrieve information about the document and update the panel.<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div>
+<p>The <code>NSWindow</code> objects don’t need to know anything about your inspector panel.</p></section>
+<section><a name="//apple_ref/doc/uid/20000723-98486" title="Registering for Distributed Notifications"></a><a name="//apple_ref/doc/uid/20000723-98486-BABHEFHC" title="Registering for Distributed Notifications"></a><h2 class="jump">Registering for Distributed Notifications</h2>
+<p>An object registers itself to receive a notification by sending the <code>addObserver:selector:name:object:suspensionBehavior:</code> method to an <code>NSDistributedNotificationCenter</code> object, specifying the <span class="pediaLink" data-header="Message" data-contents="A message is the name of a method, and any parameters associated with it, that are sent to, and executed by, an object. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Message.html#//apple_ref/doc/uid/TP40008195-CH59" data-renderer-version="1" target="_self">message</a></span> the notification should send, the name of the notification it wants to receive, the identifying string to match (the <em>object</em> argument), and the behavior to follow if notification delivery is suspended.</p>
+<p>Because the posting object and the observer may be in different processes, notifications can’t contain pointers to arbitrary objects. Therefore, the <code>NSDistributedNotificationCenter</code> class requires notifications to use an <code>NSString</code> object as the <em>object</em> argument. Notification matching is done based on this string, rather than an object pointer. You should check the documentation of the object posting the notification to see what it uses as its identifying string.</p>
+<p>When a process is no longer interested in receiving notifications immediately, it may suspend notification delivery. This is often done when the application is hidden, or is put into the background. (The <code>NSApplication</code> object automatically suspends delivery when the application is not active.) The <em>suspensionBehavior</em> argument in the <code>addObserver</code> method identifies how arriving notifications should be handled while delivery is suspended. There are four different types of suspension behavior, each useful in different circumstances.</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5">
+
+<tr>
+<th scope="col" class="TableHeading_TableRow_TableCell"><p>Suspension Behavior</p></th>
+<th scope="col" class="TableHeading_TableRow_TableCell"><p>Description</p></th>
+</tr>
+
+
+<tr>
+<td  scope="row"><p><code><!--a  -->NSNotificationSuspensionBehaviorDrop<!--/a--></code></p></td>
+<td ><p>The server does not queue any notifications with this name and object until it receives the <code>setSuspended:NO</code> message.</p></td>
+</tr>
+<tr>
+<td  scope="row"><p><code><!--a  -->NSNotificationSuspensionBehaviorCoalesce<!--/a--></code></p></td>
+<td ><p>The server queues only the last notification of the specified name and object; earlier notifications are dropped. In cover methods for which suspension behavior is not an explicit argument, <code><!--a  -->NSNotificationSuspensionBehaviorCoalesce<!--/a--></code> is the default.</p></td>
+</tr>
+<tr>
+<td  scope="row"><p><code><!--a  -->NSNotificationSuspensionBehaviorHold<!--/a--></code></p></td>
+<td ><p>The server holds all matching notifications until the queue has been filled (queue size determined by the server) at which point the server may flush queued notifications.</p></td>
+</tr>
+<tr>
+<td  scope="row"><p><code><!--a  -->NSNotificationSuspensionBehaviorDeliverImmediately<!--/a--></code></p></td>
+<td ><p>The server delivers notifications matching this registration irrespective of whether it has received the <code>setSuspended:YES</code> message. When a notification with this suspension behavior is matched, it has the effect of first flushing any queued notifications. The effect is as if the server received <code>setSuspended:NO</code> while the application is suspended, followed by the notification in question being delivered, followed by a transition back to the previous suspended or unsuspended state.</p></td>
+</tr>
+
+</table></div>
+<p>You suspend notifications by sending <code>setSuspended:YES</code> to the distributed notification center. While notifications are suspended, the notification server handles notifications destined for the process that suspended notification delivery according to the suspension behavior specified by the observers when they registered to receive notifications. When the process resumes notification delivery, all queued notifications are delivered immediately. In applications using Application Kit, the <code>NSApplication</code> object automatically suspends notification delivery when the application is not active.</p>
+<p>Note that a notification destined for an observer that registered with <code><!--a  -->NSNotificationSuspensionBehaviorDeliverImmediately<!--/a--></code>, automatically flushes the queue as it is delivered, causing all queued notifications to be delivered at that time as well.</p>
+<p>The suspended state can be overridden by the poster of a notification. If the notification is urgent, such as a warning of a server being shut down, the poster can force the notification to be delivered immediately to all observers by posting the notification with the <code>NSDistributedNotificationCenter postNotificationName:object:userInfo:deliverImmediately:</code> method with the <em>deliverImmediately</em> argument <code><!--a  -->YES<!--/a--></code>.</p></section>
+<section><a name="//apple_ref/doc/uid/20000723-98846" title="Unregistering an Observer"></a><a name="//apple_ref/doc/uid/20000723-98846-BABCBAJA" title="Unregistering an Observer"></a><h2 class="jump">Unregistering an Observer</h2>
+<p>Before an object that is observing notifications is <span class="pediaLink" data-header="Memory management" data-contents="Memory management is the programming discipline of managing the life cycles of objects and freeing them when they are no longer needed. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/MemoryManagement.html#//apple_ref/doc/uid/TP40008195-CH27" data-renderer-version="1" target="_self">deallocated</a></span>, it must tell the notification center to stop sending it notifications. Otherwise, the next notification gets sent to a nonexistent object and the program crashes. You can send the following message to completely remove an object as an observer of local notifications, regardless of how many objects and notifications for which it registered itself:</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>[[NSNotificationCenter defaultCenter] removeObserver:self];<span></span></pre></td></tr></table></div>
+<p>For observers of distributed notifications send:</p>
+<div class="codesample clear"><table><tr><td scope="row"><pre>[[NSDistributedNotificationCenter defaultCenter] removeObserver:self];<span></span></pre></td></tr></table></div>
+<p>Use the more specific <code>removeObserver...</code> methods that specify the notification name and observed object to selectively unregister an object for particular notifications.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='Posting.html'>Next</a><a class='previousLink' rel='prev' href='NotificationQueues.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-08-18</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

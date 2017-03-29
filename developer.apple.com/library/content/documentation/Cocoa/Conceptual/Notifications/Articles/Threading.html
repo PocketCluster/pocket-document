@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Delivering Notifications To Particular Threads</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/10000043i">
+    <meta id="document-version" name="document-version" content="2.7.3">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="20001289">
+    <meta id="date" name="date" content="2009-08-18">
+    <meta id="description" name="description" content="Explains how to send and receive information about events in Cocoa programs.">
+    <meta id="book-title" name="book-title" content="Notification Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Core Services Layer/Foundation}, {Topic/Data Management/Event Handling}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Notification Programming Topics: Delivering Notifications To Particular Threads">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Notification Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../RevisionHistory.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="Posting.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/20001289" title="Delivering Notifications To Particular Threads"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Notification Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='Posting.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/20001289-CEGJFDFG" title="Delivering Notifications To Particular Threads"></a><h1 id="pageTitle">Delivering Notifications To Particular Threads</h1><p>Regular notification centers deliver notifications on the thread in which the notification was posted. Distributed notification centers deliver notifications on the main thread. At times, you may require notifications to be delivered on a particular thread that is determined by you instead of the notification center. For example, if an object running in a background thread is listening for notifications from the user interface, such as a window closing, you would like to receive the notifications in the background thread instead of the main thread. In these cases, you must capture the notifications as they are delivered on the default thread and redirect them to the appropriate thread.</p><p>One way to redirect notifications is to use a custom notification queue (not an <code>NSNotificationQueue</code> object) to hold any notifications that are received on incorrect threads and then process them on the correct thread. This technique works as follows. You register for a notification normally. When a notification arrives, you test whether the current thread is the thread that should handle the notification. If it is the wrong thread, you store the notification in a queue and then send a signal to the correct thread, indicating that a notification needs processing. The other thread receives the signal, removes the notification from the queue, and processes the notification.</p><p>To implement this technique, your observer object needs to have instance variables for the following values: a <span class="pediaLink" data-header="Object mutability" data-contents="Most Cocoa objects are mutable—meaning you can change their encapsulated values—but some are immutable, and you cannot change their encapsulated values after they are created. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ObjectMutability.html#//apple_ref/doc/uid/TP40008195-CH42" data-renderer-version="1" target="_self">mutable</a></span> array to hold the notifications, a communication port for signaling the correct thread (a Mach port), a lock to prevent multithreading conflicts with the notification array, and a value that identifies the correct thread (an <code>NSThread</code> object). You also need methods to setup the variables, to process the notifications, and to receive the Mach messages. Here are the necessary definitions to add to the class of your observer object.</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface MyThreadedClass: NSObject<span></span></pre></td></tr><tr><td scope="row"><pre>/* Threaded notification support. */<span></span></pre></td></tr><tr><td scope="row"><pre>@property NSMutableArray *notifications;<span></span></pre></td></tr><tr><td scope="row"><pre>@property NSThread *notificationThread;<span></span></pre></td></tr><tr><td scope="row"><pre>@property NSLock *notificationLock;<span></span></pre></td></tr><tr><td scope="row"><pre>@property NSMachPort *notificationPort;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>- (void) setUpThreadingSupport;<span></span></pre></td></tr><tr><td scope="row"><pre>- (void) handleMachMessage:(void *)msg;<span></span></pre></td></tr><tr><td scope="row"><pre>- (void) processNotification:(NSNotification *)notification;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>Before registering for any notifications, you need to <span class="pediaLink" data-header="Initialization" data-contents="Initialization is the stage of object creation that makes a newly allocated object usable by setting its state to reasonable initial values. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Initialization.html#//apple_ref/doc/uid/TP40008195-CH21" data-renderer-version="1" target="_self">initialize</a></span> the properties. The following method initializes the queue and lock objects, keeps a reference to the current thread object, and creates a Mach communication port, which it adds to the current thread’s run loop.</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void) setUpThreadingSupport {<span></span></pre></td></tr><tr><td scope="row"><pre>    if (self.notifications) {<span></span></pre></td></tr><tr><td scope="row"><pre>        return;<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>    self.notifications      = [[NSMutableArray alloc] init];<span></span></pre></td></tr><tr><td scope="row"><pre>    self.notificationLock   = [[NSLock alloc] init];<span></span></pre></td></tr><tr><td scope="row"><pre>    self.notificationThread = [NSThread currentThread];<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    self.notificationPort = [[NSMachPort alloc] init];<span></span></pre></td></tr><tr><td scope="row"><pre>    [self.notificationPort setDelegate:self];<span></span></pre></td></tr><tr><td scope="row"><pre>    [[NSRunLoop currentRunLoop] addPort:self.notificationPort<span></span></pre></td></tr><tr><td scope="row"><pre>            forMode:(NSString __bridge *)kCFRunLoopCommonModes];<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>After this method runs, any messages sent to <code>notificationPort</code> are received in the run loop of the thread that first ran this method. If the receiving thread’s run loop is not running when the Mach message arrives, the kernel holds on to the message until the next time the run loop is entered. The receiving thread’s run loop sends the incoming messages to the <code>handleMachMessage:</code> method of the port’s <span class="pediaLink" data-header="Delegation" data-contents="Delegation is a simple and powerful pattern in which one object in a program acts on behalf of, or in coordination with, another object. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Delegation.html#//apple_ref/doc/uid/TP40008195-CH14" data-renderer-version="1" target="_self">delegate</a></span>.</p><p>In this implementation, no information is contained in the messages sent to <code>notificationPort</code>. Instead, the information passed between threads is contained in the notification array. When a Mach message arrives, the <code>handleMachMessage:</code> method ignores the contents of the message and just checks the  <code>notifications</code> array for any notifications that need processing. The notifications are removed from the array and forwarded to the real notification processing method. Because port messages may get dropped if too many are sent simultaneously, the <code>handleMachMessage:</code> method <span class="pediaLink" data-header="Enumeration" data-contents="Enumeration is the process of sequentially operating on elements of an object—typically a collection—each at most once, one at a time in turn. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Enumeration.html#//apple_ref/doc/uid/TP40008195-CH17" data-renderer-version="1" target="_self">iterates</a></span> over the array until it is empty. The method must acquire a lock when accessing the notification array to prevent conflicts between one thread adding notifications and another removing notifications from the array.</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void) handleMachMessage:(void *)msg {<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    [self.notificationLock lock];<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    while ([self.notifications count]) {<span></span></pre></td></tr><tr><td scope="row"><pre>        NSNotification *notification = [self.notifications objectAtIndex:0];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notifications removeObjectAtIndex:0];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notificationLock unlock];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self processNotification:notification];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notificationLock lock];<span></span></pre></td></tr><tr><td scope="row"><pre>    };<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    [self.notificationLock unlock];<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>When a notification is delivered to your object, the method that receives the notification must identify whether it is running in the correct thread or not. If it is the correct thread, the notification is processed normally. If it is the wrong thread, the notification is added to the queue and the notification port signaled.</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void)processNotification:(NSNotification *)notification {<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    if ([NSThread currentThread] != notificationThread) {<span></span></pre></td></tr><tr><td scope="row"><pre>        // Forward the notification to the correct thread.<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notificationLock lock];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notifications addObject:notification];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notificationLock unlock];<span></span></pre></td></tr><tr><td scope="row"><pre>        [self.notificationPort sendBeforeDate:[NSDate date]<span></span></pre></td></tr><tr><td scope="row"><pre>                components:nil<span></span></pre></td></tr><tr><td scope="row"><pre>                from:nil<span></span></pre></td></tr><tr><td scope="row"><pre>                reserved:0];<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>    else {<span></span></pre></td></tr><tr><td scope="row"><pre>        // Process the notification here;<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>Finally, to register for a notification that you want delivered on the current thread, regardless of the thread in which it may be posted, you must initialize your object’s notification properties by invoking <code>setUpThreadingSupport</code> and then register for the notification normally, specifying the special notification processing method as the <span class="pediaLink" data-header="Selector" data-contents="A selector is the name used to select a method to execute for an object, or the unique identifier that replaces the name when the source code is compiled. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Selector.html#//apple_ref/doc/uid/TP40008195-CH48" data-renderer-version="1" target="_self">selector</a></span>.</p><div class="codesample clear"><table><tr><td scope="row"><pre>[self setupThreadingSupport];<span></span></pre></td></tr><tr><td scope="row"><pre>[[NSNotificationCenter defaultCenter]<span></span></pre></td></tr><tr><td scope="row"><pre>        addObserver:self<span></span></pre></td></tr><tr><td scope="row"><pre>        selector:@selector(processNotification:)<span></span></pre></td></tr><tr><td scope="row"><pre>        name:@"NotificationName"<span></span></pre></td></tr><tr><td scope="row"><pre>        object:nil];<span></span></pre></td></tr></table></div><p>This implementation is limited in several aspects. First, all threaded notifications processed by this object must pass through the same method  (<code>processNotification:</code>). Second, each object must provide its own implementation and communication port. A better, but more complex, implementation would generalize the behavior into either a subclass of <code>NSNotificationCenter</code> or a separate class that would have one notification queue for each thread and be able to deliver notifications to multiple observer objects and methods.</p>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='Posting.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-08-18</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

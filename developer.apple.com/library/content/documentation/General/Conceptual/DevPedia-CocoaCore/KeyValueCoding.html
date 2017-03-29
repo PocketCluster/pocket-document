@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Key-value coding</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta id="book-resource-type" name="book-resource-type" content="DevPedia">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40008195">
+    <meta id="document-version" name="document-version" content="5.3.10">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40008195-CH25">
+    <meta id="date" name="date" content="2015-10-21">
+    <meta id="description" name="description" content="A collection of short articles on the core concepts, patterns, and mechanisms in Cocoa programming. ">
+    <meta id="book-title" name="book-title" content="Cocoa Core Competencies">
+    <meta id="book-root" name="book-root" content="./">
+    <meta id="book-doc-type" name="book-doc-type" content="Pedia">
+    <meta id="book-json" name="book-json" content="book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/DevPedia}, {Topic/General}">
+    <link id="book-index-page" rel="Start" title="Cocoa Core Competencies" type="text/html" href="index.html">
+    <link id="next-page" rel="Next" type="text/html" href="KVO.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="Introspection.html">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Cocoa Core Competencies: Key-value coding">
+    <meta id="resources-uri" name="resources-uri" content="../../../../Resources/1260">
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/screen.css">
+    <link rel='stylesheet' type='text/css' href='../../../../Resources/1260/CSS/pedia.css' />
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/feedback.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40008195-CH25" title="Key-value coding"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Cocoa Core Competencies</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+    <!-- CONTENTS -->
+    <article id="contents" role='main'>
+        <section id="pediaContents" class='twoColumnRecipe'>
+            
+            <a name="//apple_ref/doc/uid/TP40008195-CH25-SW1" title="Key-value coding"></a><h1 id="pageTitle">Key-value coding</h1><p>Key-value coding is a mechanism for indirectly accessing an object’s attributes and relationships using string identifiers. It underpins or is related to several mechanisms and technologies special to Cocoa programming, among them Core Data, application scriptability, the bindings technology, and the language feature of declared properties. (Scriptability and bindings are specific to Cocoa on OS X.) You can also use key-value coding to simplify your program code. </p><section><a name="//apple_ref/doc/uid/TP40008195-CH25-SW3" title="Object Properties and KVC"></a><h2 class="jump">Object Properties and KVC</h2><p>Central to key-value coding (or KVC) is the general notion of properties. A property refers to a unit of state that an object encapsulates. A property can be one of two general types: an attribute (for example, <code>name</code>, <code>title</code>,  <code>subtotal</code>, or <code>textColor</code>) or a relationship to other objects. Relationships can be either to-one or to-many. The value for a to-many relationship is typically an array or set, depending on whether the relationship is ordered or unordered. </p><p>KVC locates an object’s property through a key, which is a string identifier. A key usually corresponds to the name of an accessor method or instance variable defined by the object. The key must conform to certain conventions: It must be ASCII encoded, begin with a lowercase letter, and have no whitespace. A key path is a string of dot-separated keys that is used to specify a sequence of object properties to traverse. The property of the first key in the sequence is relative to a specific object (<code>employee1</code> in the following diagram), and each subsequent key is evaluated relative to the value of the previous property.</p><figure class="figure"><img src="Art/key_value_coding_2x.png" alt="Key-value coding" width="543" height="175"></figure></section><section><a name="//apple_ref/doc/uid/TP40008195-CH25-SW2" title="Making a Class KVC Compliant"></a><h2 class="jump">Making a Class KVC Compliant</h2><p>The <code>NSKeyValueCoding</code> informal protocol makes KVC possible. Two of its methods—<code><a href="https://developer.apple.com/reference/objectivec/nsobject/1412591-value" target="_self" class="urlLink">valueForKey:</a></code> and <code><a href="https://developer.apple.com/reference/objectivec/nsobject/1415969-setvalue" target="_self" class="urlLink">setValue:forKey:</a></code>—are particularly important because they fetch and set a property’s value when given its key. <code>NSObject</code> provides a default implementation of these methods, and if a class is compliant with key-value coding, it can rely on this implementation. </p><p>How you make a property KVC compliant depends on whether that property is an attribute, a to-one relationship, or a to-many relationship. For attributes and to-one relationships, a class must implement at least one of the following in the given order of preference (<em>key</em> refers to the property key):</p><ol class="ol"><li class="li"><p>The class has a declared property with the name <em>key</em>.</p></li><li class="li"><p>It implements accessor methods named <em>key</em> and, if the property is mutable, <code>set</code><em>Key</em><code>:</code>. (If the property is a Boolean attribute, the getter accessor method has the form <code>is</code><em>Key</em>.)</p></li><li class="li"><p>It declares an instance variable of the form <em>key</em> or <code>_</code><em>key</em>.</p></li></ol><p>Implementing KVC compliance for a to-many relationship is a more complicated procedure. Refer to the document that definitively describes key-value coding to learn what this procedure is.</p></section><div id="seeAlsoSection"><div class="pediaPrerequisites"><a name="//apple_ref/doc/uid/TP40008195-CH25-DontLinkElementID_84" title="Prerequisite Articles"></a><h3>Prerequisite Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Object modeling" data-contents="Object modeling is the process of designing the objects or classes through which an object-oriented application examines and manipulates some service. "><a href="ObjectModeling.html#//apple_ref/doc/uid/TP40008195-CH41-SW1" data-renderer-version="1">Object modeling</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Accessor method" data-contents="An accessor method is an instance method that gets or sets the value of a property of an object. "><a href="AccessorMethod.html#//apple_ref/doc/uid/TP40008195-CH2-SW1" data-renderer-version="1">Accessor method</a></span></li></ul></div><div class="pediaRelated"><a name="//apple_ref/doc/uid/TP40008195-CH25-DontLinkElementID_85" title="Related Articles"></a><h3>Related Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Declared property" data-contents="A declared property provides a syntactical shorthand for declaring a class’s accessor methods and, optionally, implementing them. "><a href="DeclaredProperty.html#//apple_ref/doc/uid/TP40008195-CH13-SW1" data-renderer-version="1">Declared property</a></span></li></ul></div><div class="pediaDefinitiveDiscussion"><a name="//apple_ref/doc/uid/TP40008195-CH25-DontLinkElementID_86" title="Definitive Discussion"></a><h3>Definitive Discussion</h3><ul class="tooltip"><em><a href="../../../Cocoa/Conceptual/KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i" data-renderer-version="2" target="_self">Key-Value Coding Programming Guide</a></em></ul></div></div>
+        </section>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2015 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2015-10-21</p></div></div>
+
+    </article>
+    <!-- /CONTENTS -->
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    <script type="text/javascript" src="../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

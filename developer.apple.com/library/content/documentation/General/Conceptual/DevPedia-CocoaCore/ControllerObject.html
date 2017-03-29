@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Controller object</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta id="book-resource-type" name="book-resource-type" content="DevPedia">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40008195">
+    <meta id="document-version" name="document-version" content="5.3.10">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40008195-CH11">
+    <meta id="date" name="date" content="2015-10-21">
+    <meta id="description" name="description" content="A collection of short articles on the core concepts, patterns, and mechanisms in Cocoa programming. ">
+    <meta id="book-title" name="book-title" content="Cocoa Core Competencies">
+    <meta id="book-root" name="book-root" content="./">
+    <meta id="book-doc-type" name="book-doc-type" content="Pedia">
+    <meta id="book-json" name="book-json" content="book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/DevPedia}, {Topic/General}">
+    <link id="book-index-page" rel="Start" title="Cocoa Core Competencies" type="text/html" href="index.html">
+    <link id="next-page" rel="Next" type="text/html" href="DeclaredProperty.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="Collection.html">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Cocoa Core Competencies: Controller object">
+    <meta id="resources-uri" name="resources-uri" content="../../../../Resources/1260">
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/screen.css">
+    <link rel='stylesheet' type='text/css' href='../../../../Resources/1260/CSS/pedia.css' />
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/feedback.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40008195-CH11" title="Controller object"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Cocoa Core Competencies</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+    <!-- CONTENTS -->
+    <article id="contents" role='main'>
+        <section id="pediaContents" class='twoColumnRecipe'>
+            
+            <a name="//apple_ref/doc/uid/TP40008195-CH11-SW1" title="Controller object"></a><h1 id="pageTitle">Controller object</h1><p>A controller object acts as a coordinator or as an intermediary between one or more view objects and one or more model objects. In the Model-View-Controller design pattern, a controller object (or, simply, a <em>controller</em>) interprets user actions and intentions made in view objects—such as when the user taps or clicks a button or enters text in a text field—and communicates new or changed data to the model objects. When model objects change—for example, the user opens a document stored in the file system—it communicates that new model data to the view objects so that they can display it. Controllers are thus the conduit through which view objects learn about changes in model objects and vice versa. Controller objects can also set up and coordinate tasks for an application and manage the life cycles of other objects. The Cocoa frameworks offer three main controller types: coordinating controllers, view controllers (on iOS), and mediating controllers (on OS X).</p><figure class="figure"><img src="Art/controller_object_2x.png" alt="Art/controller_object_2x.png" width="493" height="274"></figure><section><a name="//apple_ref/doc/uid/TP40008195-CH11-SW2" title="Coordinating Controllers"></a><h2 class="jump">Coordinating Controllers</h2><p>Coordinating controllers oversee and manage the functioning of an entire application, or part of one. They are often the places where application-specific logic is injected into the application. A coordinating controller fulfills a variety of functions, including:</p><ul class="ul"><li class="li"><p>Responding to delegation messages and observing notifications</p></li><li class="li"><p>Responding to action messages (which are are sent by controls such as buttons when users tap or click them)</p></li><li class="li"><p>Establishing connections between objects and performing other setup tasks, such as when the application launches</p></li><li class="li"><p>Managing the life cycle of “owned” objects</p></li></ul><p>A coordinating controller is often an instance of a custom subclass of <code>NSObject</code>. In OS X, if a Cocoa application takes advantage of the document architecture, the coordinating controller is often an <code><a href="https://developer.apple.com/reference/appkit/nswindowcontroller" target="_self" class="urlLink">NSWindowController</a></code> or <code><a href="https://developer.apple.com/reference/appkit/nsdocumentcontroller" target="_self" class="urlLink">NSDocumentController</a></code> object. In iOS applications, view controllers often subsume the role of coordinating controller.</p></section><section><a name="//apple_ref/doc/uid/TP40008195-CH11-SW3" title="View Controllers"></a><h2 class="jump">View Controllers</h2><p>The UIKit and AppKit frameworks both provide view controller classes (for iOS and OS X, respectively) but these classes have different characteristics. In AppKit, a view controller is an instance of a custom subclass of the <code><a href="https://developer.apple.com/reference/appkit/nsviewcontroller" target="_self" class="urlLink">NSViewController</a></code> class. The view controller owns a view archived in a nib file, and that view represents a data object. The view controller manages connections and updates to subviews of its view.</p><p>In UIKit, a view controller manages a view displaying a screenful of content; it keeps a reference to this view and may create or load it from a nib file. The controller manages the presentation of this view and the transition to any subsequent view in the app. (In most cases, the next view slides in from the right.) The navigation bar and the tab bar, and all their associated presentation behavior, are managed and implemented by view controller objects. View controllers can also display modal views, respond to low-memory warnings, and rotate views when the orientation changes.</p><p>A view controller in iOS is an instance of a subclass of <code><a href="https://developer.apple.com/reference/uikit/uiviewcontroller" target="_self" class="urlLink">UIViewController</a></code>. The UIKit provides several special-purpose subclasses of <code>UIViewController</code>, such as <code>UITableViewController</code>. You must extend the framework view-controller classes to have the controller mediate the data between models and views. View controllers are typically the delegate or data source objects for many types of framework objects.</p></section><section><a name="//apple_ref/doc/uid/TP40008195-CH11-SW4" title="Mediating Controllers (OS X)"></a><h2 class="jump">Mediating Controllers (OS X)</h2><p>A mediating controller facilitates the flow of data between view objects and model objects. When users change a value displayed in a view object, the mediating controller automatically communicates the new value to a model object for storage; and when a property of a model changes its value, the mediating controller ensures that the appropriate view object displays the changed value. Unlike other types of controller objects, they are highly reusable. For these and other reasons, mediating controllers are a central component of the Cocoa bindings technology. You drag a mediating controller from the Interface Builder library and then configure these objects to establish bindings between the controller and its view objects and its model objects. A mediating controller is typically an instance of a concrete subclass of the abstract <code><a href="https://developer.apple.com/reference/appkit/nscontroller" target="_self" class="urlLink">NSController</a></code> class. </p></section><div id="seeAlsoSection"><div class="pediaPrerequisites"><a name="//apple_ref/doc/uid/TP40008195-CH11-DontLinkElementID_43" title="Prerequisite Articles"></a><h3>Prerequisite Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Model-View-Controller" data-contents="The Model-View-Controller (MVC) design pattern assigns objects in an application one of three roles: model, view, or controller.  "><a href="MVC.html#//apple_ref/doc/uid/TP40008195-CH32-SW1" data-renderer-version="1">Model-View-Controller</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Message" data-contents="A message is the name of a method, and any parameters associated with it, that are sent to, and executed by, an object. "><a href="Message.html#//apple_ref/doc/uid/TP40008195-CH59-SW1" data-renderer-version="1">Message</a></span></li></ul></div><div class="pediaRelated"><a name="//apple_ref/doc/uid/TP40008195-CH11-DontLinkElementID_44" title="Related Articles"></a><h3>Related Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Model object" data-contents="A model object is a type of object that contains the data of an application, provides access to that data, and implements logic to manipulate the data. "><a href="ModelObject.html#//apple_ref/doc/uid/TP40008195-CH31-SW1" data-renderer-version="1">Model object</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Delegation" data-contents="Delegation is a simple and powerful pattern in which one object in a program acts on behalf of, or in coordination with, another object. "><a href="Delegation.html#//apple_ref/doc/uid/TP40008195-CH14-SW1" data-renderer-version="1">Delegation</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Notification" data-contents="A notification is a message sent to one or more observing objects to inform them of an event in a program. "><a href="Notification.html#//apple_ref/doc/uid/TP40008195-CH35-SW1" data-renderer-version="1">Notification</a></span></li></ul></div><div class="pediaDefinitiveDiscussion"><a name="//apple_ref/doc/uid/TP40008195-CH11-DontLinkElementID_45" title="Definitive Discussion"></a><h3>Definitive Discussion</h3><ul class="tooltip"><span class="content_text"><a href="../CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html#//apple_ref/doc/uid/TP40010810-CH14" data-renderer-version="1" target="_self">Model-View-Controller</a></span></ul></div></div>
+        </section>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2015 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2015-10-21</p></div></div>
+
+    </article>
+    <!-- /CONTENTS -->
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    <script type="text/javascript" src="../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

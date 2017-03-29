@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notification Queues</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/10000043i">
+    <meta id="document-version" name="document-version" content="2.7.3">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="20000217">
+    <meta id="date" name="date" content="2009-08-18">
+    <meta id="description" name="description" content="Explains how to send and receive information about events in Cocoa programs.">
+    <meta id="book-title" name="book-title" content="Notification Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Core Services Layer/Foundation}, {Topic/Data Management/Event Handling}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Notification Programming Topics: Notification Queues">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Notification Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="Registering.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="NotificationCenters.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/20000217" title="Notification Queues"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Notification Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='Registering.html'>Next</a><a class='previousLink' rel='prev' href='NotificationCenters.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/20000217-CJBCECJC" title="Notification Queues"></a><h1 id="pageTitle">Notification Queues</h1>
+
+<p><code>NSNotificationQueue</code> objects, or simply, <em class="newTerm">notification queues</em>, act as buffers for notification centers (instances of <code>NSNotificationCenter</code>). The <code>NSNotificationQueue</code> class contributes two important features to the Foundation Kit’s notification mechanism: the coalescing of notifications and asynchronous posting. </p><section><a name="//apple_ref/doc/uid/20000217-SW1" title="Notification Queue Basics"></a><h2 class="jump">Notification Queue Basics</h2><p>Using the <code>NSNotificationCenter</code>’s <code><a href="https://developer.apple.com/reference/foundation/nsnotificationcenter/1410472-postnotification" target="_self" class="urlLink">postNotification:</a></code> method and its variants, you can post a notification to a notification center. However, the invocation of the method is synchronous: before the posting object can resume its thread of execution, it must wait until the notification center dispatches the notification to all observers and returns. A notification queue, on the other hand, maintains notifications (instances of <code>NSNotification</code>) generally in a First In First Out (FIFO) order. When a notification rises to the front of the queue, the queue posts it to the notification center, which in turn dispatches the notification to all objects registered as observers.</p><p>Every thread has a default notification queue, which is associated with the default notification center for the process. You can <span class="pediaLink" data-header="Object creation" data-contents="An object comes into runtime existence through a two-step process that allocates memory for the object and sets its state to reasonable initial values. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ObjectCreation.html#//apple_ref/doc/uid/TP40008195-CH39" data-renderer-version="1" target="_self">create</a></span> your own notification queues and have multiple queues per center and thread.</p></section>
+<section><a name="//apple_ref/doc/uid/20000217-73924" title="Posting Notifications Asynchronously"></a><h2 class="jump">Posting Notifications Asynchronously</h2>
+<p>With <code>NSNotificationQueue</code>’s <code><a href="https://developer.apple.com/reference/foundation/notificationqueue/1416340-enqueue" target="_self" class="urlLink">enqueueNotification:postingStyle:</a></code> and <code><a href="https://developer.apple.com/reference/foundation/nsnotificationqueue/1413873-enqueuenotification" target="_self" class="urlLink">enqueueNotification:postingStyle:coalesceMask:forModes:</a></code> methods, you can post a notification asynchronously to the current thread by putting it in a queue. These methods immediately return to the invoking object after putting the notification in the queue.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/20000217-SW2" title="Note"></a><p><strong>Note:</strong>&nbsp;When the thread where a notification is enqueued terminates before the notification queue posts the notification to its notification center, the notification is not posted. See <span class="content_text"><a href="Threading.html#//apple_ref/doc/uid/20001289-CEGJFDFG" data-renderer-version="1">Delivering Notifications To Particular Threads</a></span> to learn how to post a notification to a different thread.</p><p></p></aside></div>
+<p>The notification queue is emptied and its notifications posted based on the posting style and run loop mode specified in the enqueuing method. The mode argument specifies the run loop mode in which the queue will be emptied. For example, if you specify <code><!--a  -->NSModalPanelRunLoopMode<!--/a--></code>, the notifications will be posted only when the run loop is in this mode. If the run loop is not currently in this mode, the notifications wait until the next time that mode is entered. See <span class="content_text"><a href="../../Multithreading/RunLoopManagement/RunLoopManagement.html#//apple_ref/doc/uid/10000057i-CH16-SW12" data-renderer-version="1" target="_self">Run Loop Modes</a></span> for more information.</p>
+<p>Posting to a notification queue can occur in one of three different styles: <code><!--a  -->NSPostASAP<!--/a--></code>, <code><!--a  -->NSPostWhenIdle<!--/a--></code>, and <code><!--a  -->NSPostNow<!--/a--></code>. These styles are described in the following sections. </p>
+<section><a name="//apple_ref/doc/uid/20000217-115502" title="Posting As Soon As Possible"></a><a name="//apple_ref/doc/uid/20000217-115502-CJBGDGCC" title="Posting As Soon As Possible"></a><h3 class="jump">Posting As Soon As Possible</h3>
+<p>Any notification queued with the <code><!--a  -->NSPostASAP<!--/a--></code> style is posted to the notification center when the current iteration of the run loop completes, assuming the current run loop mode matches the requested mode. (If the requested and current modes are different, the notification is posted when the requested mode is entered.) Because the run loop can make multiple callouts during each iteration, the notification may or may not get delivered as soon as the current callout exits and control returns to the run loop. Other callouts may take place first, such as a timer or source firing or other asynchronous notifications being delivered.</p>
+<p>You typically use the <code><!--a  -->NSPostASAP<!--/a--></code> posting style for an expensive resource, such as the display server. When many clients draw on the window buffer during a callout from the run loop, it is expensive to flush the buffer to the display server after every draw operation. In this situation, each <code>draw...</code> method enqueues some notification such as “FlushTheServer” with coalescing on name and object specified and with a posting style of <code>NSPostASAP</code>. As a result, only one of those notifications is dispatched at the end of the run loop and the window buffer is flushed only once.</p></section>
+<section><a name="//apple_ref/doc/uid/20000217-115535" title="Posting When Idle"></a><h3 class="jump">Posting When Idle</h3>
+<p>A notification queued with the <code><!--a  -->NSPostWhenIdle<!--/a--></code> style is posted only when the run loop is in a wait state. In this state, there’s nothing in the run loop’s input channels, be it timers or other asynchronous events. A typical example of queuing with the <code><!--a  -->NSPostWhenIdle<!--/a--></code> style occurs when the user types text, and the program displays the size of the text in bytes somewhere. It would be very expensive (and not very useful) to update the text field size after each character the user types, especially if the user types quickly. In this case, the program queues a notification, such as “ChangeTheDisplayedSize,” with coalescing turned on and a posting style of <code><!--a  -->NSPostWhenIdle<!--/a--></code> after each character typed. When the user stops typing, the single “ChangeTheDisplayedSize” notification in the queue (due to coalescing) is posted when the run loop enters its wait state and the display is updated. Note that a run loop that is about to exit (which occurs when all of the input channels have expired) is not in a wait state and thus will not post a notification.</p></section>
+<section><a name="//apple_ref/doc/uid/20000217-114874" title="Posting Immediately"></a><h3 class="jump">Posting Immediately</h3>
+<p>A notification queued with <code><!--a  -->NSPostNow<!--/a--></code> is posted immediately after coalescing to the notification center. You queue a notification with <code><!--a  -->NSPostNow<!--/a--></code> (or post one with <code><a href="https://developer.apple.com/reference/foundation/nsnotificationcenter/1410472-postnotification" target="_self" class="urlLink">postNotification:</a></code>) when you do not require asynchronous calling behavior. For many programming situations, synchronous behavior is not only allowable but desirable: You want the notification center to return after dispatching so you can be sure that observing objects have received and processed the notification. Of course, you should use <code>enqueueNotification... </code> with <code><!--a  -->NSPostNow<!--/a--></code> rather than use <code>postNotification:</code> when there are similar notifications in the queue that you want to remove through coalescing.</p></section></section>
+<section><a name="//apple_ref/doc/uid/20000217-73865" title="Coalescing Notifications"></a><h2 class="jump">Coalescing Notifications</h2><p>In some situations, you may want to post a notification if a given event occurs at least once, but you want to post no more than one notification even if the event occurs multiple times. For example, in an application that receives data in discrete packets, upon receipt of a packet you may wish to post a notification to signify that the data needs to be processed. If multiple packets arrive within a given time period, however, you do not want to post multiple notifications. Moreover, the object that posts these notifications may not have any way of knowing whether more packets are coming or not, whether the posting method is called in a loop or not.</p><p>In some situations it may be possible to simply set a Boolean flag (whether an instance variable of an object or a global variable) to denote that an event has occurred and to suppress posting of further notifications until the flag is cleared. If this is not possible, however, in this situation you cannot directly use <code>NSNotificationCenter</code> since its behavior is synchronous—notifications are posted before returning, thus there is no opportunity for "ignoring” duplicate notifications; moreover, an <code>NSNotificationCenter</code> instance has no way of knowing whether more notifications are coming or not.</p><p>Rather than posting a notification to a notification center, therefore, you can add the notification to an <code>NSNotificationQueue</code> instance specifying an appropriate option for <em class="newTerm">coalescing</em>. Coalescing is a process that removes from a queue notifications that are similar in some way to a notification that was queued earlier. You indicate the criteria for similarity by specifying one or more of the following constants in the third argument of the <code><a href="https://developer.apple.com/reference/foundation/nsnotificationqueue/1413873-enqueuenotification" target="_self" class="urlLink">enqueueNotification:postingStyle:coalesceMask:forModes:</a></code> method.</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><td scope="row"><code><a href="https://developer.apple.com/reference/foundation/notificationqueue.notificationcoalescing/1415826-none" target="_self" class="urlLink">NSNotificationNoCoalescing</a></code></td><td class="content_text"></td></tr><tr><td scope="row"><code><a href="https://developer.apple.com/reference/foundation/notificationqueue.notificationcoalescing/1410633-onname" target="_self" class="urlLink">NSNotificationCoalescingOnName</a></code></td><td class="content_text"></td></tr><tr><td scope="row"><code><a href="https://developer.apple.com/reference/foundation/notificationqueue.notificationcoalescing/1413642-onsender" target="_self" class="urlLink">NSNotificationCoalescingOnSender</a></code></td><td class="content_text"></td></tr></table></div>
+<p>You can perform a bitwise-OR operation with the <code>NSNotificationCoalescingOnName</code> and <code>NSNotificationCoalescingOnSender</code> constants to specify coalescing using both the notification name and notification object. The following example illustrates how you might use a queue to ensure that, within a given event loop cycle, all notifications named <code>MyNotificationName</code> are coalesced into a single notification. </p><div class="codesample clear"><table><tr><td scope="row"><pre>// MyNotificationName defined globally<span></span></pre></td></tr><tr><td scope="row"><pre>NSString *MyNotificationName = @"MyNotification";<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>id object = &lt;#The object associated with the notification#>;<span></span></pre></td></tr><tr><td scope="row"><pre>NSNotification *myNotification =<span></span></pre></td></tr><tr><td scope="row"><pre>        [NSNotification notificationWithName:MyNotificationName object:object]<span></span></pre></td></tr><tr><td scope="row"><pre>[[NSNotificationQueue defaultQueue]<span></span></pre></td></tr><tr><td scope="row"><pre>        enqueueNotification:myNotification<span></span></pre></td></tr><tr><td scope="row"><pre>        postingStyle:NSPostWhenIdle<span></span></pre></td></tr><tr><td scope="row"><pre>        coalesceMask:NSNotificationCoalescingOnName<span></span></pre></td></tr><tr><td scope="row"><pre>        forModes:nil];<span></span></pre></td></tr></table></div></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='Registering.html'>Next</a><a class='previousLink' rel='prev' href='NotificationCenters.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-08-18</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

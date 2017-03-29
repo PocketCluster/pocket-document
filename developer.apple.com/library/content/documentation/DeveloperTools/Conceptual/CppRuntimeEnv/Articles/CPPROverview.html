@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Overview of the C++ Runtime Environment</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40001666">
+    <meta id="document-version" name="document-version" content="1.7.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40001667">
+    <meta id="date" name="date" content="2009-10-09">
+    <meta id="description" name="description" content="Provides information about how to create and deploy C++ binaries.">
+    <meta id="book-title" name="book-title" content="C++ Runtime Environment Programming Guide">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Xcode/Compiler Tools}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="C++ Runtime Environment Programming Guide: Overview of the C++ Runtime Environment">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="C++ Runtime Environment Programming Guide" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="LibCPPDeployment.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../CPPRuntimeEnv.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40001667" title="Overview of the C++ Runtime Environment"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>C++ Runtime Environment Programming Guide</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='LibCPPDeployment.html'>Next</a><a class='previousLink' rel='prev' href='../CPPRuntimeEnv.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40001667-BCIFHCHA" title="Overview of the C++ Runtime Environment"></a><h1 id="pageTitle">Overview of the C++ Runtime Environment</h1>
+
+<p>The C++ runtime environment has evolved over the course of OS X development. Early versions of the library were shipped as a static archive file while the latest version is delivered as a dynamic shared library. The following is a summary of the history of the runtime: </p><ul class="ul"><li class="li"><p><strong>OS X v10.3.8 and earlier</strong> - the C++ standard library is available only as a static archive file. It can be compiled using GCC 3.3. </p></li><li class="li"><p><strong>OS X v10.3.9 and later</strong> - the runtime is delivered as a dynamic shared library. System frameworks are modified to use the dynamic library but the static library is also available. </p></li></ul><p>The following sections provide more detailed information about the dynamic and static C++ runtimes. An additional section provides information about checking the version numbers of the runtime.</p><section><a name="//apple_ref/doc/uid/TP40001667-SW1" title="Targeting OS X v10.3.8 and Earlier"></a><h2 class="jump">Targeting OS X v10.3.8 and Earlier</h2><p>In OS X v10.3.8 and earlier, the standard C++ library is packaged as the static archive file <a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_5"></a><code>libstdc++.a</code>. This library is designed with multiple clients in mind and provides syncing of I/O streams as well as hidden symbols to alleviate namespace conflicts. Symbols in the library are marked <code>__private_extern__</code> to prevent them from being exported to other code modules. Versions of this library are available in all versions of OS X but programs must be built using the GCC 3.3 compiler.</p></section><section><a name="//apple_ref/doc/uid/TP40001667-SW2" title="Targeting OS X v10.3.9 and Later"></a><h2 class="jump">Targeting OS X v10.3.9 and Later</h2><p>In OS X v10.3.9 and later, you have the option of linking against a static or dynamic version of the C++ runtime.</p><section><a name="//apple_ref/doc/uid/TP40001667-SW3" title="The Static C++ Runtime"></a><h3 class="jump">The Static C++ Runtime</h3><p>With the introduction of Xcode Tools 2.3, a new version of the standard C++ library is made available in the static archive file <a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_6"></a><code>libstdc++-static.a</code>. This new static library is closer in nature to the dynamic shared library introduced in OS X v10.3.9 than to the previous static library. It conforms to the Itanium C++ ABI and requires the use of GCC 4.0 for compilation. Programs linking to the library must run in OS X v10.3.9 or later.  For more information, see <span class="content_text"><a href="LibCPPDeployment.html#//apple_ref/doc/uid/TP40001668-SW1" data-renderer-version="1">Deploying With the New Static Runtime</a></span>.</p></section><section><a name="//apple_ref/doc/uid/TP40001667-SW4" title="The Dynamic C++ Runtime"></a><h3 class="jump">The Dynamic C++ Runtime</h3><p>In OS X v10.3.9 and later, the C++ runtime is available as a dynamic shared library <a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_7"></a><code>libstdc++.dylib</code>. This change in packaging brings the C++ runtime in line with the C runtime, which has always been packaged as part of the dynamic shared library <code>libSystem.dylib</code>. The dynamic library conforms to the Itanium C++ ABI, which is a standard for compiled C++ code that provides better link-compatibility between C++ binaries. Because it is shared, the namespace limitations present with static versions of the library are gone and symbols are no longer marked <code>__private_extern__</code>. For information about designing and using C++–based dynamic libraries, see <em><a href="../../DynamicLibraries/000-Introduction/Introduction.html#//apple_ref/doc/uid/TP40001869" data-renderer-version="1" target="_self">Dynamic Library Programming Topics</a></em>.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40001667-SW5" title="Note"></a><p><strong>Note:</strong>&nbsp;To build programs that link to <code>libstdc++.dylib</code>, you must have GCC 4.0, which is provided with Xcode Tools in OS X v10.4. You use this compiler along with the SDKs provided by Apple to build your binary for 10.3.9. For more information, see <span class="content_text"><a href="LibCPPDeployment.html#//apple_ref/doc/uid/TP40001668-BCIFHCHA" data-renderer-version="1">Deploying Applications With the C++ Runtime</a></span>. </p><p></p></aside></div><section><a name="//apple_ref/doc/uid/TP40001667-97487" title="Advantages of a Shared C++ Runtime "></a><h4 class="jump">Advantages of a Shared C++ Runtime </h4><p><a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_8"></a><a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_9"></a>Packaging the standard C++ library as a dynamic shared library is important for ensuring performance and correctness of your program. If your executable links to <code>libstdc++.a</code> and to several dynamic shared libraries, and one or more of those shared libraries also links to <code>libstdc++.a</code>, then multiple copies of the library are loaded into memory at runtime. </p><p>For correctness, all components of a program should use the exact same copy of the standard C++ library. The reason is that some data in the C++ runtime must be shared by all components or unexpected results may occur. For example, if two components both use the C++ I/O mechanism to write to standard output, the results can become garbled if they use different buffers.</p><p>For performance, having multiple copies of the same library leads to increased disk activity as each copy is read into memory. The extra copies can also lead to increased paging and cache misses due to the increased memory footprint of the application. Eliminating the duplicated libraries can reduce the footprint of your application dramatically. For example, consider the following “hello world” program compiled with <code>libstdc++.a</code> and GCC 3.3:</p><div class="codesample clear"><table><tr><td scope="row"><pre>int main ()<span></span></pre></td></tr><tr><td scope="row"><pre>{<span></span></pre></td></tr><tr><td scope="row"><pre>    std::cout &lt;&lt; "Hello, World!\n" &lt;&lt; std::endl;<span></span></pre></td></tr><tr><td scope="row"><pre>    return 0;<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>The size of the resulting binary on an OS X v10.4 system is 650 KB. The same program compiled on the same system using GCC 4.0 and <code>libstdc++.dylib</code> is 17 KB. </p></section><section><a name="//apple_ref/doc/uid/TP40001667-96960" title="Binary Compatibility"></a><h4 class="jump">Binary Compatibility</h4><p><a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_10"></a>GCC 4.0 conforms to the Itanium C++ ABI<a name="//apple_ref/doc/uid/TP40001667-DontLinkElementID_11"></a>, which is a standard for compiled C++ code. The specifications for this standard are maintained by a multi-vendor consortium and cover issues such as name mangling, class member layout, virtual method invocation protocols, exception handling, and runtime type information (RTTI) formats. You can find the latest version of this specification at <span class="content_text"><a href="http://www.codesourcery.com/cxx-abi/abi.html" class="urlLink" rel="external">http://www.codesourcery.com/cxx-abi/abi.html</a></span>. </p><p>Because GCC 4.0 conforms to the Itanium C++ ABI, C++ objects are link-compatible with objects built by other OS X compilers that conform to this specification. Apple guarantees that future releases of GCC for OS X will also conform to the Itanium C++ ABI. This means that developers may safely ship dynamic shared libraries whose interfaces involve C++ classes, albeit with some caveats:</p><ul class="ul"><li class="li"><p>Apple guarantees ABI stability only for core language features. It does not guarantee stability for library classes, including <code>std::string</code>, <code>std::map&lt;T></code>, and <code>std::ostream</code> among others.</p></li><li class="li"><p>Apple does not guarantee binary compatibility between different major versions of <code>libstdc++</code>. GCC 4.0 ships with version 6.0.3 of the library. If a new major version (version 7.0.0) is released in the future, that library is not guaranteed to be compatible with 6.x versions. </p></li><li class="li"><p>Binary compatibility between different versions of a third-party dynamic shared library also depends on the design of the library, not just on the compiler support for a standard ABI. You must ensure that you do not introduce compatibility issues.</p></li></ul><p>If you are designing a dynamic shared library for distribution, it is still your responsibility to ensure that you do not create binary compatibility problems. For example, you should not introduce member variables or virtual methods to a base class. Doing so causes a fragile base class problem and requires clients of the library to be recompiled. </p><p>For more information on binary compatibility, see <span class="content_text"><a href="CompatibleLibs.html#//apple_ref/doc/uid/TP40001669-BBCEJBEG" data-renderer-version="1">Creating Compatible Libraries</a></span>. </p></section></section></section><section><a name="//apple_ref/doc/uid/TP40001667-SW6" title="Checking Version Numbers"></a><h2 class="jump">Checking Version Numbers</h2><p>Traditionally, Xcode has shipped with matching versions of the GCC compiler and the C++ runtime. However, Xcode 3.0 broke with this tradition by shipping version 4.2 of GCC with version 4.0 of the runtime. You may need to check for this configuration to write portable code. The compiler macros <code>__GNUC__</code> and <code>__GNUC_MINOR__</code> are defined as the major and minor version numbers of the compiler itself. In the SDKs included in Xcode 3.2 and later, the macros <code>__GNUC_LIBSTD__</code> and <code>__GNUC_LIBSTD_MINOR__</code> are defined as the major and minor version numbers of the runtime. All four macros are defined at compile time only, not at run time.</p><p>The following example shows how to use macros to check the version of the C++ runtime:
+</p><div class="codesample clear"><table><tr><td scope="row"><pre>#if (__GNUC_LIBSTD__ > 4) || ((__GNUC_LIBSTD__ == 4) &amp;&amp; (__GNUC_LIBSTD_MINOR__ >= 2))<span></span></pre></td></tr><tr><td scope="row"><pre>#include &lt;ext/atomicity.h><span></span></pre></td></tr><tr><td scope="row"><pre>#else<span></span></pre></td></tr><tr><td scope="row"><pre>#include &lt;bits/atomicity.h><span></span></pre></td></tr><tr><td scope="row"><pre>#endif<span></span></pre></td></tr></table></div></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='LibCPPDeployment.html'>Next</a><a class='previousLink' rel='prev' href='../CPPRuntimeEnv.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2005, 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-10-09</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

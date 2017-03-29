@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Conventions</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40011210">
+    <meta id="document-version" name="document-version" content="2.7.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40011210-CH10">
+    <meta id="date" name="date" content="2014-09-17">
+    <meta id="description" name="description" content="Describes elements of best practice when writing code with Objective-C using ARC.">
+    <meta id="book-title" name="book-title" content="Programming with Objective-C">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Languages & Utilities/Objective-C}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Programming with Objective-C: Conventions">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Programming with Objective-C" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../RevisionHistory.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../ErrorHandling/ErrorHandling.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40011210-CH10" title="Conventions"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Programming with Objective-C</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='../ErrorHandling/ErrorHandling.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40011210-CH10-SW1" title="Conventions"></a><h1 id="pageTitle">Conventions</h1><p>When you’re working with the framework classes, you’ll notice that Objective-C code is very easy to read. Class and method names are much more descriptive than you might find with general C code functions or the C Standard Library, and camel case is used for names with multiple words. You should follow the same conventions used by Cocoa and Cocoa Touch when you’re writing your own classes to make your code more readable, both for you and for other Objective-C developers that may need to work with your projects, and to keep your codebase consistent.</p><p>In addition, many Objective-C and framework features require you to follow strict naming conventions in order for various mechanisms to work correctly. Accessor method names, for example, must follow the conventions in order to work with techniques such as <span class="pediaLink" data-header="Key-value coding" data-contents="Key-value coding is a mechanism for indirectly accessing an object’s attributes and relationships using string identifiers. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/KeyValueCoding.html#//apple_ref/doc/uid/TP40008195-CH25" data-renderer-version="1" target="_self">Key-Value Coding</a></span> (KVC) or <span class="pediaLink" data-header="Key-value observing" data-contents="Key-value observing is a mechanism that enables an object to be notified directly when a property of another object changes. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/KVO.html#//apple_ref/doc/uid/TP40008195-CH16" data-renderer-version="1" target="_self">Key-Value Observing</a></span> (KVO).</p><p>This chapter covers some of the most common conventions used in Cocoa and Cocoa Touch code, and explains the situations when it’s necessary for names to be unique across an entire app project, including its linked frameworks.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW2" title="Some Names Must Be Unique Across Your App"></a><h2 class="jump">Some Names Must Be Unique Across Your App</h2><p>Each time you create a new type, symbol, or identifier, you should first consider the scope in which the name must be unique. Sometimes this scope might be the entire application, including its linked frameworks; sometimes the scope is limited just to an enclosing class or even just a block of code.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW4" title="Class Names Must Be Unique Across an Entire App"></a><h3 class="jump">Class Names Must Be Unique Across an Entire App</h3><p>Objective-C classes must be named uniquely not only within the code that you’re writing in a project, but also across any frameworks or bundles you might be including. As an example, you should avoid using generic class names like <code>ViewController</code> or <code>TextParser</code> because it’s possible a framework you include in your app may fail to follow conventions and create classes with the same names.</p><p>In order to keep class names unique, the convention is to use prefixes on all classes. You’ll have noticed that Cocoa and Cocoa Touch class names typically start either with <code>NS</code> or <code>UI</code>. Two-letter prefixes like these are reserved by Apple for use in framework classes. As you learn more about Cocoa and Cocoa Touch, you’ll encounter a variety of other prefixes that relate to specific frameworks:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><th scope="col" class="TableHeading_TableRow_TableCell"><p>Prefix</p></th><th scope="col" class="TableHeading_TableRow_TableCell"><p>Framework</p></th></tr><tr><td  scope="row"><p><code>NS</code></p></td><td ><p>Foundation (OS X and iOS) and Application Kit (OS X)</p></td></tr><tr><td  scope="row"><p><code>UI</code></p></td><td ><p>UIKit (iOS)</p></td></tr><tr><td  scope="row"><p><code>AB</code></p></td><td ><p>Address Book</p></td></tr><tr><td  scope="row"><p><code>CA</code></p></td><td ><p>Core Animation</p></td></tr><tr><td  scope="row"><p><code>CI</code></p></td><td ><p>Core Image</p></td></tr></table></div><p>Your own classes should use three letter prefixes. These might relate to a combination of your company name and your app name, or even a specific component within your app. As an example, if your company were called Whispering Oak, and you were developing a game called Zebra Surprise, you might choose <code>WZS</code> or <code>WOZ</code> as your class prefix.</p><p>You should also name your classes using a noun that makes it clear what the class represents, like these examples from Cocoa and Cocoa Touch:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><td  scope="row"><p><code>NSWindow</code></p></td><td ><p><code>CAAnimation</code></p></td><td ><p><code>NSWindowController</code></p></td><td ><p><code>NSManagedObjectContext</code></p></td></tr></table></div><p>If multiple words are needed in a class name, you should use <em class="newTerm">camel case</em> by capitalizing the first letter of each subsequent word.</p></section><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW5" title="Method Names Should Be Expressive and Unique Within a Class"></a><h3 class="jump">Method Names Should Be Expressive and Unique Within a Class</h3><p>Once you’ve chosen a unique name for a class, the methods that you declare need only be unique within that class. It’s common to use the same name as a method in another class, for example, either to override a superclass method, or take advantage of polymorphism. Methods that perform the same task in multiple classes should have the same name, return type and parameter types.</p><p>Method names do not have a prefix, and should start with a lowercase letter; camel case is used again for multiple words, like these examples from the <code>NSString</code> class:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><td  scope="row"><p><code>length</code></p></td><td ><p><code>characterAtIndex:</code></p></td><td ><p><code>lengthOfBytesUsingEncoding:</code></p></td></tr></table></div><p>If a method takes one or more arguments, the name of the method should indicate each parameter:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><td  scope="row"><p><code>substringFromIndex:</code></p></td><td ><p><code>writeToURL:atomically:encoding:error:</code></p></td><td ><p><code>enumerateSubstringsInRange:options:usingBlock:</code></p></td></tr></table></div><p>The first portion of the method name should indicate the primary intent or result of calling the method. If a method returns a value, for example, the first word normally indicates what will be returned, like the <code>length</code>, <code>character...</code> and <code>substring...</code> methods shown above. Multiple words are used if you need to indicate something important about the return value, as with the <code>mutableCopy</code>, <code>capitalizedString</code> or <code>lastPathComponent</code> methods from the <code>NSString</code> class. If a method performs an action, such as writing to disk or enumerating the contents, the first word should indicate that action, as shown by the <code>write...</code> and <code>enumerate...</code> methods.</p><p>If a method includes an <em>error</em> pointer parameter to be set if an error occurred, this should be the last parameter to the method. If a method takes a <em>block</em>, the block parameter should be the last parameter in order to make any method invocations as readable as possible when specifying a block inline. For the same reason, it’s best to avoid methods that take multiple block arguments, wherever possible.</p><p>It’s also important to aim for clear but concise method names. Clarity doesn’t necessarily mean verbosity but brevity doesn’t necessarily result in clarity, so it’s best to aim for a happy medium:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><td  scope="row"><p><code>stringAfterFindingAndReplacingAllOccurrencesOfThisString:withThisString:</code></p></td><td ><p>Too verbose</p></td></tr><tr><td  scope="row"><p><code>strReplacingStr:str:</code></p></td><td ><p>Too concise</p></td></tr><tr><td  scope="row"><p><code>stringByReplacingOccurrencesOfString:withString:</code></p></td><td ><p>Just right</p></td></tr></table></div><p>You should avoid abbreviating words in method names unless you are sure that the abbreviation is well known across multiple languages and cultures. A list of common abbreviations is given in <span class="content_text"><a href="../../CodingGuidelines/Articles/APIAbbreviations.html#//apple_ref/doc/uid/20001285" data-renderer-version="1" target="_self">Acceptable Abbreviations and Acronyms</a></span>.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW7" title="Always Use a Prefix for Method Names in Categories on Framework Classes"></a><h4 class="jump">Always Use a Prefix for Method Names in Categories on Framework Classes</h4><p>When using a category to add methods to an existing framework class, you should include a prefix on the method name to avoid clashes, as described in <span class="content_text"><a href="../CustomizingExistingClasses/CustomizingExistingClasses.html#//apple_ref/doc/uid/TP40011210-CH6-SW4" data-renderer-version="1">Avoid Category Method Name Clashes</a></span>.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW6" title="Local Variables Must Be Unique Within The Same Scope"></a><h3 class="jump">Local Variables Must Be Unique Within The Same Scope</h3><p>Because Objective-C is a superset of the C language, the C variable scope rules also apply to Objective-C. A local variable name must not clash with any other variables declared within the same scope:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void)someMethod {<span></span></pre></td></tr><tr><td scope="row"><pre>    int interestingNumber = 42;<span></span></pre></td></tr><tr><td scope="row"><pre>    ...<span></span></pre></td></tr><tr><td scope="row"><pre>    int interestingNumber = 44; // not allowed<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>Although the C language does allow you to declare a new local variable with the same name as one declared in the <em>enclosing</em> scope, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void)someMethod {<span></span></pre></td></tr><tr><td scope="row"><pre>    int interestingNumber = 42;<span></span></pre></td></tr><tr><td scope="row"><pre>    ...<span></span></pre></td></tr><tr><td scope="row"><pre>    for (NSNumber *eachNumber in array) {<span></span></pre></td></tr><tr><td scope="row"><pre>        int interestingNumber = [eachNumber intValue]; // not advisable<span></span></pre></td></tr><tr><td scope="row"><pre>        ...<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><p>it makes the code confusing and less readable, so it’s best practice to avoid this wherever possible.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW3" title="Some Method Names Must Follow Conventions"></a><h2 class="jump">Some Method Names Must Follow Conventions</h2><p>In addition to considering uniqueness, it’s also essential for a few important method types to follow strict conventions. These conventions are used by some of the underlying mechanisms of Objective-C, the compiler and runtime, in addition to behavior that is required by classes in Cocoa and Cocoa Touch.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW8" title="Accessor Method Names Must Follow Conventions"></a><h3 class="jump">Accessor Method Names Must Follow Conventions</h3><p>When you use the <code>@property</code> syntax to declare properties on an object, as described in <span class="content_text"><a href="../EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW1" data-renderer-version="1">Encapsulating Data</a></span>, the compiler automatically synthesizes the relevant getter and setter methods (unless you indicate otherwise). If you need to provide your own accessor method implementations for any reason, it’s important to make sure that you use the right method names for a property in order for your methods to be called through dot syntax, for example.</p><p>Unless specified otherwise, a getter method should use the same name as the property. For a property called <code>firstName</code>, the accessor method should also be called <code>firstName</code>. The exception to this rule is for Boolean properties, for which the getter method should start with <code>is</code>. For a property called <code>paused</code>, for example, the getter method should be called <code>isPaused</code>.</p><p>The setter method for a property should use the form <code>setPropertyName:</code>. For a property called <code>firstName</code>, the setter method should be called <code>setFirstName:</code>; for a Boolean property called <code>paused</code>, the setter method should be called <code>setPaused:</code>.</p><p>Although the <code>@property</code> syntax allows you to specify different accessor method names, you should only do so for situations like a Boolean property. It’s essential to follow the conventions described here, otherwise techniques like Key Value Coding (the ability to get or set a property using <code>valueForKey:</code> and <code>setValue:forKey:</code>) won’t work. For more information on KVC, see <em><a href="../../KeyValueCoding/index.html#//apple_ref/doc/uid/10000107i" data-renderer-version="2" target="_self">Key-Value Coding Programming Guide</a></em>.</p></section><section><a name="//apple_ref/doc/uid/TP40011210-CH10-SW9" title="Object Creation Method Names Must Follow Conventions"></a><h3 class="jump">Object Creation Method Names Must Follow Conventions</h3><p>As you’ve seen in earlier chapters, there are often multiple ways to create instances of a class. You might use a combination of allocation and initialization, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSMutableArray *array = [[NSMutableArray alloc] init];<span></span></pre></td></tr></table></div><p>or use the <code>new</code> convenience method as an alternative to calling <code>alloc</code> and <code>init</code> explicitly:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSMutableArray *array = [NSMutableArray new];<span></span></pre></td></tr></table></div><p>Some classes also offer class factory methods:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSMutableArray *array = [NSMutableArray array];<span></span></pre></td></tr></table></div><p>Class factory methods should always start with the name of the class (without the prefix) that they create, with the exception of subclasses of classes with existing factory methods. In the case of the <code>NSArray</code> class, for example, the factory methods start with <code>array</code>. The <code>NSMutableArray</code> class doesn’t define any of its own class-specific factory methods, so the factory methods for a mutable array still begin with <code>array</code>.</p><p>There are various memory management rules underpinning Objective-C, which the compiler uses to ensure objects are kept alive as long as necessary. Although you typically don’t need to worry too much about these rules, the compiler judges which rule it should follow based on the name of the creation method. Objects created via factory methods are managed slightly differently from objects that are created through traditional allocation and initialization or <code>new</code> because of the use of autorelease pool blocks. For more information on autorelease pool blocks and memory management in general, see <em><a href="../../MemoryMgmt/Articles/MemoryMgmt.html#//apple_ref/doc/uid/10000011i" data-renderer-version="1" target="_self">Advanced Memory Management Programming Guide</a></em>.</p></section></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='../ErrorHandling/ErrorHandling.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2014 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2014-09-17</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

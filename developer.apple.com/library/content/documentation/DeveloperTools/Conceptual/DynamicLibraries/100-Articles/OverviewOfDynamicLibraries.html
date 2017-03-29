@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Overview of Dynamic Libraries</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40001869">
+    <meta id="document-version" name="document-version" content="1.10.0">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40001873">
+    <meta id="date" name="date" content="2012-07-23">
+    <meta id="description" name="description" content="Explains how to design, implement, and use dynamic libraries.">
+    <meta id="book-title" name="book-title" content="Dynamic Library Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/General}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Dynamic Library Programming Topics: Overview of Dynamic Libraries">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Dynamic Library Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="DynamicLibraryDesignGuidelines.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../000-Introduction/Introduction.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40001873" title="Overview of Dynamic Libraries"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Dynamic Library Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='DynamicLibraryDesignGuidelines.html'>Next</a><a class='previousLink' rel='prev' href='../000-Introduction/Introduction.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40001873-SW1" title="Overview of Dynamic Libraries"></a><h1 id="pageTitle">Overview of Dynamic Libraries</h1><p>Two important factors that determine the performance of apps are their launch times and their memory footprints. Reducing the size of an app’s executable file and minimizing its use of memory once it’s launched make the app launch faster and use less memory once it’s launched. Using dynamic libraries instead of static libraries reduces the executable file size of an app. They also allow apps to delay loading libraries with special functionality only when they’re needed instead of at launch time. This feature contributes further to reduced launch times and efficient memory use.</p><p>This article introduces dynamic libraries and shows how using dynamic libraries instead of static libraries reduces both the file size and initial memory footprint of the apps that use them. This article also provides an overview of the dynamic loader compatibility functions apps use to work with dynamic libraries at runtime.</p><section><a name="//apple_ref/doc/uid/TP40001873-SW2" title="What Are Dynamic Libraries?"></a><h2 class="jump">What Are Dynamic Libraries?</h2><p>Most of an app’s functionality is implemented in libraries of executable code. When an app is linked with a library using a static linker, the code that the app uses is copied to the generated executable file. A <em class="newTerm">static linker</em> collects compiled source code, known as object code, and library code into one executable file that is loaded into memory in its entirety at runtime. The kind of library that becomes part of an app’s executable file is known as a static library. <em class="newTerm">Static libraries</em> are collections or archives of object files.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40001873-SW4" title="Note"></a><p><strong>Note:</strong>&nbsp;Static libraries are also known as <em>static archive libraries</em> and <em>static linked shared libraries</em>.</p><p></p></aside></div><p>When an app is launched, the app’s code—which includes the code of the static libraries it was linked with—is loaded into the app’s address space. Linking many static libraries into an app produces large app executable files. <span class="content_text">Figure 1</span> shows the memory usage of an app that uses functionality implemented in static libraries. Applications with large executables suffer from slow launch times and large memory footprints. Also, when a static library is updated, its client apps don’t benefit from the improvements made to it. To gain access to the improved functionality, the app’s developer must link the app's object files with the new version of the library. And the apps users would have to replace their copy of the app with the latest version. Therefore, keeping an app up to date with the latest functionality provided by static libraries requires disruptive work by both developers and end users.</p><figure class="figure"><a name="//apple_ref/doc/uid/TP40001873-GB101376993" title="Figure 1App using static libraries"></a><figcaption><strong class="caption_number">Figure 1</strong>&nbsp;&nbsp;App using static libraries</figcaption><img src="../art/address_space1_2x.png" alt="" width="597" height="402"></figure><p>A better approach is for an app to load code into its address space when it’s actually needed, either at launch time or at runtime. The type of library that provides this flexibility is called <em class="newTerm">dynamic library</em>. Dynamic libraries are not statically linked into client apps; they don't become part of the executable file. Instead, dynamic libraries can be loaded (and linked) into an app either when the app is launched or as it runs.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40001873-SW5" title="Note"></a><p><strong>Note:</strong>&nbsp;Dynamic libraries are also known as <em>dynamic shared libraries</em>, <em>shared objects</em>, or <em>dynamically linked libraries</em>.</p><p></p></aside></div><p><span class="content_text">Figure 2</span> shows how implementing some functionality as dynamic libraries instead of as static libraries reduces the memory used by the app after launch.</p><figure class="figure"><a name="//apple_ref/doc/uid/TP40001873-GB97417073" title="Figure 2App using dynamic libraries"></a><figcaption><strong class="caption_number">Figure 2</strong>&nbsp;&nbsp;App using dynamic libraries</figcaption><img src="../art/address_space2_2x.png" alt="" width="597" height="367"></figure><p>Using dynamic libraries, programs can benefit from improvements to the libraries they use automatically because their link to the libraries is dynamic, not static. That is, the functionality of the client apps can be improved and extended without requiring app developers to recompile the apps. Apps written for OS X benefit from this feature because all system libraries in OS X are dynamic libraries. This is how apps that use Carbon or Cocoa technologies benefit from improvements to OS X.</p><p>Another benefit dynamic libraries offer is that they can be initialized when they are loaded and can perform clean-up tasks when the client app terminates normally. Static libraries don’t have this feature. For details, see <span class="content_text"><a href="DynamicLibraryDesignGuidelines.html#//apple_ref/doc/uid/TP40002013-SW17" data-renderer-version="1">Module Initializers and Finalizers</a></span>.</p><p>One issue that developers must keep in mind when developing dynamic libraries is maintaining compatibility with client apps as a library is updated. Because a library can be updated without the knowledge of the client-app’s developer, the app must be able to use the new version of the library without changes to its code. To that end, the library’s API should not change. However, there are times when improvements require API changes. In that case, the previous version of the library must remain in the user’s computer for the client app to run properly. <span class="content_text"><a href="DynamicLibraryDesignGuidelines.html#//apple_ref/doc/uid/TP40002013-SW19" data-renderer-version="1">Dynamic Library Design Guidelines</a></span> explores the subject of managing compatibility with client apps as a dynamic library evolves.</p></section><section><a name="//apple_ref/doc/uid/TP40001873-SW3" title="How Dynamic Libraries Are Used"></a><h2 class="jump">How Dynamic Libraries Are Used</h2><p>When an app is launched, the OS X kernel loads the app’s code and data into the address space of a new process. The kernel also loads the dynamic loader ( <code>/usr/lib/dyld</code> ) into the process and passes control to it. The dynamic loader then loads the app’s <em class="newTerm">dependent libraries</em>. These are the dynamic libraries the app was linked with. The static linker records the filenames of each of the dependent libraries at the time the app is linked. This filename is known as the dynamic library’s <em class="newTerm">install name</em>. The dynamic loader uses the app’s dependent libraries’ install names to locate them in the file system. If the dynamic loader doesn’t find all the app’s dependent libraries at launch time or if any of the libraries is not compatible with the app, the launch process is aborted. For more information on dependent-library compatibility, see <span class="content_text"><a href="DynamicLibraryDesignGuidelines.html#//apple_ref/doc/uid/TP40002013-SW20" data-renderer-version="1">Managing Client Compatibility With Dependent Libraries</a></span>. Dynamic library developers can set a different install name for a library when they compile it using the <code>gcc -install_name</code> option. See the <code><!--a target="_self" -->gcc<!--/a--></code> man page for details.</p><p>The dynamic loader resolves only the undefined external symbols the app actually uses during the launch process. Other symbols remain unresolved until the app uses them. For details on the process the dynamic loader goes when an app is launched, see “<span class="content_text"><a href="../../MachOTopics/1-Articles/executing_files.html#//apple_ref/doc/uid/TP40001829" data-renderer-version="1" target="_self">Executing Mach-O Files</a></span>” in <em><a href="../../MachOTopics/0-Introduction/introduction.html#//apple_ref/doc/uid/TP40001519" data-renderer-version="1" target="_self">Mach-O Programming Topics</a></em>.</p><p>The dynamic loader—in addition to automatically loading dynamic libraries at launch time—loads dynamic libraries at runtime, at the app’s request. That is, if an app doesn't require that a dynamic library be loaded when it launches, developers can choose to not link the app’s object files with the dynamic library, and, instead, load the dynamic library only in the parts of the app that require it. Using dynamic libraries this way speeds up the launch process. Dynamic libraries loaded at runtime are known as <em class="newTerm">dynamically loaded libraries</em>. To load libraries at runtime, apps can use functions that interact with the dynamic loader for the platform under which they're running.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40001873-SW6" title="Note"></a><p><strong>Note:</strong>&nbsp;The target architecture of the client and the dynamic library must be the same. Otherwise, the dynamic loader doesn’t load the library.</p><p></p></aside></div><p>Different platforms implement their dynamic loaders differently. They may also have custom dynamic code-loading interfaces that make code difficult to port across platforms. To facilitate porting an app from UNIX to Linux, for example, Jorge Acereda and Peter O'Gorman developed the <em class="newTerm">dynamic loader compatibility (DLC)</em> functions. They offer developers a standard, portable way to use dynamic libraries in their apps.</p><p>The DLC functions are declared in <code>/usr/include/dlfcn.h</code>. There are five of them:</p><ul class="ul"><li class="li"><p><code><!--a target="_self" -->dlopen(3) OS X Developer Tools  Manual Page<!--/a--></code>: Opens a dynamic library. An app calls this function before using any of the library’s exported symbols. If the dynamic library hasn’t been opened by the current process, the library is loaded into the process’s address space. The function returns a handle that’s used to refer to the opened library in calls to <code>dlsym</code> and <code>dlclose</code>. This handle is known as the <em class="newTerm">dynamic library handle</em>. This function maintains a reference count that indicates the number of times the current process has used <code>dlopen</code> to open a particular dynamic library.</p></li><li class="li"><p><code><!--a target="_self" -->dlsym(3) OS X Developer Tools  Manual Page<!--/a--></code>: Returns the address of a symbol exported by a dynamically loaded library. An app calls this function after obtaining a handle to the library through a call to <code>dlopen</code>. The <code>dlsym</code> function takes as parameters the handle returned by <code>dlopen</code> or a constant specifying the symbol search scope and the symbol name.</p></li><li class="li"><p><code><!--a target="_self" -->dladdr(3) OS X Developer Tools  Manual Page<!--/a--></code>: Returns information on the address provided. If the address corresponds to a dynamically loaded library within the app’s address space, this function returns information on the address. This information is returned in a <code>Dl_info</code> structure, which encapsulates the pathname of the dynamic library, the library’s base address, and the address and value of the nearest symbol to the address provided. If no dynamic library is found at the address provided, the function returns no information.</p></li><li class="li"><p><code><!--a target="_self" -->dlclose(3) OS X Developer Tools  Manual Page<!--/a--></code>: Closes a dynamically loaded library. This function takes as a parameter a handle returned by <code>dlopen</code>. When the reference count for that handle reaches 0, the library is unloaded from the current process’s address space.</p></li><li class="li"><p><code><!--a target="_self" -->dlerror(3) OS X Developer Tools  Manual Page<!--/a--></code>: Returns a string that describes an error condition encountered by the last call to <code>dlopen</code>, <code>dlsym</code>, or <code>dlclose</code>.</p></li></ul><p>For more information on the DLC functions, see <em><!--a target="_self" -->OS X ABI Dynamic Loader Reference<!--/a--></em>.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='DynamicLibraryDesignGuidelines.html'>Next</a><a class='previousLink' rel='prev' href='../000-Introduction/Introduction.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2012 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2012-07-23</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

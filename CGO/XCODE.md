@@ -30,7 +30,9 @@ To get filenames, class names and line numbers in the crash reports, you need to
 
 - - -
 
-More Symbol strip policies from [Symbol stripping tips + handy script](Symbol stripping tips + handy script.pdf). This should be tentatively & accordingly applied to final application target.
+More Symbol strip policies from [Symbol stripping tips + handy script](Symbol stripping tips + handy script.pdf). Also, read SymbolVisibility of [CppRuntimeEnv](/developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/CppRuntimeEnv/index.html)
+
+<sup>*</sup>This should be tentatively & accordingly applied to final application target.
 
 Recommended Xcode build settings
 

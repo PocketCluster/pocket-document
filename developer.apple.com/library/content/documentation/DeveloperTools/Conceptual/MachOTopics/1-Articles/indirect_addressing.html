@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Indirect Addressing</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40001519">
+    <meta id="document-version" name="document-version" content="3.3.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40004919">
+    <meta id="date" name="date" content="2009-02-04">
+    <meta id="description" name="description" content="Explains the use of the OS X runtime architecture, including program types, loading and executing code, and using libraries and plug-ins.">
+    <meta id="book-title" name="book-title" content="Mach-O Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/General}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Mach-O Programming Topics: Indirect Addressing">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Mach-O Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="dynamic_code.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="loading_code.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40004919" title="Indirect Addressing"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Mach-O Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='dynamic_code.html'>Next</a><a class='previousLink' rel='prev' href='loading_code.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40004919-SW1" title="Indirect Addressing"></a><h1 id="pageTitle">Indirect Addressing</h1><p><em class="newTerm">Indirect addressing</em> is the name of the code generation technique that allows symbols defined in one file to be referenced from another file, without requiring the referencing file to have explicit knowledge of the layout of the file that defines the symbol. Therefore, the defining file can be modified independently of the referencing file. Indirect addressing minimizes the number of locations that must be modified by the dynamic linker, which facilitates code sharing and improves performance.</p><p>When a file uses data that is defined in another file, it creates symbol references. A <em class="newTerm">symbol reference</em> identifies the file from which a symbol is imported and the referenced symbol. There are two types of symbol references: non lazy and lazy.</p><ul class="ul"><li class="li"><p><em class="newTerm">Non-lazy symbol references</em> are resolved (bound to their definitions) by the dynamic linker when a module is loaded.</p><p>A non-lazy symbol reference is essentially a <em class="newTerm">symbol pointer</em>—a pointer-sized piece of data. The compiler generates non-lazy symbol references for data symbols or function addresses.</p></li><li class="li"><p><em class="newTerm">Lazy symbol references</em> are resolved by the dynamic linker the first time they are used (not at load time). Subsequent calls to the referenced symbol jump directly to the symbol’s definition.</p><p>Lazy symbol references are made up of a symbol pointer and a <em class="newTerm">symbol stub</em>, a small amount of code that directly dereferences and jumps through the symbol pointer. The compiler generates lazy symbol references when it encounters a call to a function defined in another file.</p></li></ul><p>The following sections describe how symbol references are implemented for the PowerPC and IA-32 architectures. For detailed information on the PowerPC and IA-32 symbol stubs, see <em><a href="../../../Reference/Assembler/000-Introduction/introduction.html#//apple_ref/doc/uid/TP30000851" data-renderer-version="1" target="_self">OS X Assembler Reference</a></em>.</p><section><a name="//apple_ref/doc/uid/TP40004919-SW9" title="PowerPC Symbol References"></a><h2 class="jump">PowerPC Symbol References</h2><p>In the PowerPC architecture, when generating calls to functions that are defined in other files, the compiler creates a symbol stub and a lazy symbol pointer. The <em class="newTerm">lazy symbol pointer</em> is an address that is initially set to glue code that calls the linker glue function <code><!--a-->dyld_stub_binding_helper<!--/a--></code>. <code><!--a--><!--/a--></code>This glue function calls the dynamic linker function that performs the actual work of binding the stub. On return from <code><!--a-->dyld_stub_binding_helper<!--/a--></code>, the lazy pointer points to the actual address of the external function.</p><p>The simple code example in <span class="content_text">Listing 1</span> might produce two different types of symbol stubs, depending on whether it is compiled with position-independent code generation. <span class="content_text">Listing 2</span> shows indirect addressing without position-independent code, and <span class="content_text"><a href="#//apple_ref/doc/uid/TP40004919-SW6" data-renderer-version="1">Listing 3</a></span> shows both indirect addressing and position-independent code.</p><a name="//apple_ref/doc/uid/TP40004919-SW4" title="Listing 1C code example for indirect function calls"></a><p class="codesample clear"><strong class="caption_number">Listing 1</strong>&nbsp;&nbsp;C code example for indirect function calls</p><div class="codesample clear"><table><tr><td scope="row"><pre>extern void bar(void);<span></span></pre></td></tr><tr><td scope="row"><pre>void foo(void)<span></span></pre></td></tr><tr><td scope="row"><pre>{<span></span></pre></td></tr><tr><td scope="row"><pre>    bar();<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><a name="//apple_ref/doc/uid/TP40004919-SW5" title="Listing 2Example of an indirect function call"></a><p class="codesample clear"><strong class="caption_number">Listing 2</strong>&nbsp;&nbsp;Example of an indirect function call</p><div class="codesample clear"><table><tr><td scope="row"><pre>.text<span></span></pre></td></tr><tr><td scope="row"><pre>        ; The function foo<span></span></pre></td></tr><tr><td scope="row"><pre>        .align 2<span></span></pre></td></tr><tr><td scope="row"><pre>        .globl _foo<span></span></pre></td></tr><tr><td scope="row"><pre>_foo:<span></span></pre></td></tr><tr><td scope="row"><pre>        mflr r0         ; move the link register into r0<span></span></pre></td></tr><tr><td scope="row"><pre>        stw r0,8(r1)    ; save the link register value on the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        stwu r1,-64(r1) ; set up the frame on the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        bl L_bar$stub   ; branch and link to the symbol stub for _bar<span></span></pre></td></tr><tr><td scope="row"><pre>        lwz r0,72(r1)   ; load the link register value from the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        addi r1,r1,64   ; removed the frame from the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        mtlr r0         ; restore the link register<span></span></pre></td></tr><tr><td scope="row"><pre>        blr             ; branch to the link register to return<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>.symbol_stub            ; the standard symbol stub section<span></span></pre></td></tr><tr><td scope="row"><pre>L_bar$stub:<span></span></pre></td></tr><tr><td scope="row"><pre>        .indirect_symbol _bar               ; identify this symbol stub for the<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ;  symbol _bar<span></span></pre></td></tr><tr><td scope="row"><pre>        lis r11,ha16(L_bar$lazy_ptr)        ; load r11 with the high 16 bits of the<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ;  address of bar’s lazy pointer<span></span></pre></td></tr><tr><td scope="row"><pre>        lwz r12,lo16(L_bar$lazy_ptr)(r11)   ; load the value of bar’s lazy pointer<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ;  into r12<span></span></pre></td></tr><tr><td scope="row"><pre>        mtctr r12                           ; move r12 to the count register<span></span></pre></td></tr><tr><td scope="row"><pre>        addi r11,r11,lo16(L_bar$lazy_ptr)   ; load r11 with the address of bars lazy<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ; pointer<span></span></pre></td></tr><tr><td scope="row"><pre>        bctr                                ; jump to the value in bar’s lazy pointer<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>.lazy_symbol_pointer    ; the lazy pointer section<span></span></pre></td></tr><tr><td scope="row"><pre>L_bar$lazy_ptr:<span></span></pre></td></tr><tr><td scope="row"><pre>        .indirect_symbol _bar               ; identify this lazy pointer for symbol<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ;  _bar<span></span></pre></td></tr><tr><td scope="row"><pre>        .long dyld_stub_binding_helper      ; initialize the lazy pointer to the stub<span></span></pre></td></tr><tr><td scope="row"><pre>                                            ;  binding helper address<span></span></pre></td></tr></table></div>	<a name="//apple_ref/doc/uid/TP40004919-SW6" title="Listing 3Example of a position-independent, indirect function call"></a><p class="codesample clear"><strong class="caption_number">Listing 3</strong>&nbsp;&nbsp;Example of a position-independent, indirect function call</p><div class="codesample clear"><table><tr><td scope="row"><pre>.text<span></span></pre></td></tr><tr><td scope="row"><pre>        ; The function foo<span></span></pre></td></tr><tr><td scope="row"><pre>        .align 2<span></span></pre></td></tr><tr><td scope="row"><pre>        .globl _foo<span></span></pre></td></tr><tr><td scope="row"><pre>_foo:<span></span></pre></td></tr><tr><td scope="row"><pre>        mflr r0         ; move the link register into r0<span></span></pre></td></tr><tr><td scope="row"><pre>        stw r0,8(r1)    ; save the link register value on the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        stwu r1,-80(r1) ; set up the frame on the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        bl L_bar$stub   ; branch and link to the symbol stub for _bar<span></span></pre></td></tr><tr><td scope="row"><pre>        lwz r0,88(r1)   ; load the link register value from the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        addi r1,r1,80   ; removed the frame from the stack<span></span></pre></td></tr><tr><td scope="row"><pre>        mtlr r0         ; restore the link register<span></span></pre></td></tr><tr><td scope="row"><pre>        blr             ; branch to the link register to return<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>.picsymbol_stub         ; the standard pic symbol stub section<span></span></pre></td></tr><tr><td scope="row"><pre>L_bar$stub:<span></span></pre></td></tr><tr><td scope="row"><pre>        .indirect_symbol _bar       ; identify this symbol stub for the symbol _bar<span></span></pre></td></tr><tr><td scope="row"><pre>        mflr r0                     ; save the link register (LR)<span></span></pre></td></tr><tr><td scope="row"><pre>        bcl 20,31,L0$_bar           ; Use the branch-always instruction that does not<span></span></pre></td></tr><tr><td scope="row"><pre>                                    ;  affect the link register stack to get the<span></span></pre></td></tr><tr><td scope="row"><pre>                                    ;  address of L0$_bar into the LR.<span></span></pre></td></tr><tr><td scope="row"><pre>L0$_bar:<span></span></pre></td></tr><tr><td scope="row"><pre>        mflr r11                                ; then move LR to r11<span></span></pre></td></tr><tr><td scope="row"><pre>                                                ; bar’s lazy pointer is located at<span></span></pre></td></tr><tr><td scope="row"><pre>                                                ;  L0$_bar + distance<span></span></pre></td></tr><tr><td scope="row"><pre>        addis r11,r11,ha16(L_bar$lazy_ptr-L0$_bar); L0$_bar plus high 16 bits of<span></span></pre></td></tr><tr><td scope="row"><pre>                                                ;  distance<span></span></pre></td></tr><tr><td scope="row"><pre>        mtlr r0                                 ; restore the previous LR<span></span></pre></td></tr><tr><td scope="row"><pre>        lwz r12,lo16(L_bar$lazy_ptr-L0$_bar)(r11); ...plus low 16 of distance<span></span></pre></td></tr><tr><td scope="row"><pre>        mtctr r12                               ; move r12 to the count register<span></span></pre></td></tr><tr><td scope="row"><pre>        addi r11,r11,lo16(L_bar$lazy_ptr-L0$_bar); load r11 with the address of bar’s<span></span></pre></td></tr><tr><td scope="row"><pre>                                                ; lazy pointer<span></span></pre></td></tr><tr><td scope="row"><pre>        bctr                                    ; jump to the value in bar’s lazy<span></span></pre></td></tr><tr><td scope="row"><pre>                                                ;  pointer<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>.lazy_symbol_pointer    ; the lazy pointer section<span></span></pre></td></tr><tr><td scope="row"><pre>L_bar$lazy_ptr:<span></span></pre></td></tr><tr><td scope="row"><pre>        .indirect_symbol _bar           ; identify this lazy pointer for symbol bar<span></span></pre></td></tr><tr><td scope="row"><pre>        .long dyld_stub_binding_helper  ; initialize the lazy pointer to the stub<span></span></pre></td></tr><tr><td scope="row"><pre>                                        ;  binding helper address.<span></span></pre></td></tr></table></div>	<p>As you can see, the <code>__picsymbol_stub</code> code in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40004919-SW6" data-renderer-version="1">Listing 3</a></span> resembles the position-independent code generated for <span class="content_text"><a href="dynamic_code.html#//apple_ref/doc/uid/TP40002528-BAJCEGDA" data-renderer-version="1">Listing 2</a></span>. For any position-independent Mach-O file, symbol stubs must obviously be position independent, too.</p><p>The static linker performs two optimizations when writing output files:</p><ul class="ul"><li class="li"><p>It removes symbol stubs for references to symbols that are defined in the same module, modifying branch instructions that were calling through stubs to branch directly to the call.</p></li><li class="li"><p>It removes duplicates of the same symbol stub, updating branch instructions as necessary.</p></li></ul><p>Note that a routine that branches indirectly to another routine must store the target of the call in GPR11 or GPR12. Standardizing the registers used by the compiler to store the target address makes it possible to optimize dynamic code generation. Because the target address needs to be stored in a register in any event, this convention standardizes what register to use. Routines that may have been called directly should not depend on the value of GR12 because, in the case of a direct call, its value is not defined.</p></section><section><a name="//apple_ref/doc/uid/TP40004919-SW10" title="IA-32 Symbol References"></a><h2 class="jump">IA-32 Symbol References</h2><p>In the IA-32 architecture, symbol references are implemented as a symbol stub and a lazy symbol pointer combined into one <code>JMP</code> instruction. Initially, such instructions point to the dynamic linker. When the dynamic linker encounters such an instruction, it locates the referenced symbol and modifies the <code>JMP</code> instruction to point directly to this symbol. Therefore, subsequent executions of the <code>JMP</code> instruction jump directly to the referenced symbol.</p><p><span class="content_text">Listing 4</span> and <span class="content_text">Listing 5</span> show a simple C program and the IA-32 assembly generated highlighting the symbol stub and non-lazy pointer for an imported symbol.</p><a name="//apple_ref/doc/uid/TP40004919-SW2" title="Listing 4C program using an imported symbol"></a><p class="codesample clear"><strong class="caption_number">Listing 4</strong>&nbsp;&nbsp;C program using an imported symbol</p><div class="codesample clear"><table><tr><td scope="row"><pre>#include &lt;stdio.h><span></span></pre></td></tr><tr><td scope="row"><pre>main( int arc, char *argv[])<span></span></pre></td></tr><tr><td scope="row"><pre>{<span></span></pre></td></tr><tr><td scope="row"><pre>  fprintf(stdout, "hello, world!\n") ;<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div><a name="//apple_ref/doc/uid/TP40004919-SW3" title="Listing 5IA-32 symbol reference in assembly"></a><p class="codesample clear"><strong class="caption_number">Listing 5</strong>&nbsp;&nbsp;IA-32 symbol reference in assembly</p><div class="codesample clear"><table><tr><td scope="row"><pre>        .cstring<span></span></pre></td></tr><tr><td scope="row"><pre>LC0:<span></span></pre></td></tr><tr><td scope="row"><pre>        .ascii "hello, world!\12\0"<span></span></pre></td></tr><tr><td scope="row"><pre>        .text<span></span></pre></td></tr><tr><td scope="row"><pre>.globl _main<span></span></pre></td></tr><tr><td scope="row"><pre>_main:<span></span></pre></td></tr><tr><td scope="row"><pre>        pushl   %ebp<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    %esp, %ebp<span></span></pre></td></tr><tr><td scope="row"><pre>        subl    $24, %esp<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    L___sF$non_lazy_ptr, %eax<span></span></pre></td></tr><tr><td scope="row"><pre>        addl    $88, %eax<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    %eax, 12(%esp)<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    $14, 8(%esp)<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    $1, 4(%esp)<span></span></pre></td></tr><tr><td scope="row"><pre>        movl    $LC0, (%esp)<span></span></pre></td></tr><tr><td scope="row"><pre>        call    L_fwrite$stub                         ; call to imported symbol<span></span></pre></td></tr><tr><td scope="row"><pre>        leave<span></span></pre></td></tr><tr><td scope="row"><pre>        ret<span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        .section __IMPORT,__jump_table,symbol_stubs,self_modifying_code+pure_instructions,5</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">L_fwrite$stub:                                        ; symbol stub</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        .indirect_symbol _fwrite</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        hlt ; hlt ; hlt ; hlt ; hlt</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        .section __IMPORT,__pointers,non_lazy_symbol_pointers</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">L___sF$non_lazy_ptr:                                  ; nonlazy pointer</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        .indirect_symbol ___sF</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre class="bold">        .long   0</pre><pre><span></span></pre></td></tr><tr><td scope="row"><pre>        .subsections_via_symbols<span></span></pre></td></tr></table></div></section><section><a name="//apple_ref/doc/uid/TP40004919-SW8" title="x86-64 Symbol References"></a><h2 class="jump">x86-64 Symbol References</h2><p>This section describes deviations from the System V x85-64 environment in the area of symbol references.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40004919-SW11" title="Note"></a><p><strong>Note:</strong>&nbsp;The OS X x86-64 environment uses Mach-O (not ELF) as its executable file format.</p><p></p></aside></div><p>The static linker is responsible for generating all stub functions, stub helper functions, lazy and non-lazy pointers, as well as the indirect symbol table needed by the dynamic loader (<code><!--a target="_self" -->dyld<!--/a--></code>).</p><p>For reference, <span class="content_text">Listing 6</span> shows how a a stub, helper, and lazy pointer are generated.</p><a name="//apple_ref/doc/uid/TP40004919-SW7" title="Listing 6Generating a stub, helper and lazy pointer"></a><p class="codesample clear"><strong class="caption_number">Listing 6</strong>&nbsp;&nbsp;Generating a stub, helper and lazy pointer</p><div class="codesample clear"><table><tr><td scope="row"><pre>_foo$stub:            jmp     *_foo$lazy_pointer(%rip)<span></span></pre></td></tr><tr><td scope="row"><pre>_foo$stub_helper:     leaq     _foo$lazy_pointer(%rip),%r11<span></span></pre></td></tr><tr><td scope="row"><pre>                      jmp      dyld_stub_binding_helper<span></span></pre></td></tr><tr><td scope="row"><pre>_foo$lazy_pointer:    .quad    _foo$stub_helper<span></span></pre></td></tr></table></div></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='dynamic_code.html'>Next</a><a class='previousLink' rel='prev' href='loading_code.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2003, 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-02-04</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Customizing Existing Classes</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40011210">
+    <meta id="document-version" name="document-version" content="2.7.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40011210-CH6">
+    <meta id="date" name="date" content="2014-09-17">
+    <meta id="description" name="description" content="Describes elements of best practice when writing code with Objective-C using ARC.">
+    <meta id="book-title" name="book-title" content="Programming with Objective-C">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Languages & Utilities/Objective-C}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Programming with Objective-C: Customizing Existing Classes">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Programming with Objective-C" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../WorkingwithProtocols/WorkingwithProtocols.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../EncapsulatingData/EncapsulatingData.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40011210-CH6" title="Customizing Existing Classes"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Programming with Objective-C</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../WorkingwithProtocols/WorkingwithProtocols.html'>Next</a><a class='previousLink' rel='prev' href='../EncapsulatingData/EncapsulatingData.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40011210-CH6-SW1" title="Customizing Existing Classes"></a><h1 id="pageTitle">Customizing Existing Classes</h1><p>Objects should have clearly-defined tasks, such as modeling specific information, displaying visual content or controlling the flow of information. As you’ve already seen, a class interface defines the ways in which others are expected to interact with an object to help it accomplish those tasks.</p><p>Sometimes, you may find that you wish to extend an existing class by adding behavior that is useful only in certain situations. As an example, you might find that your application often needs to display a string of characters in a visual interface. Rather than creating some string-drawing object to use every time you need to display a string, it would make more sense if it was possible to give the <code>NSString</code> class itself the ability to draw its own characters on screen.</p><p>In situations like this, it doesn’t always make sense to add the utility behavior to the original, primary class interface. Drawing abilities are unlikely to be needed the majority of times any string object is used in an application, for example, and in the case of <code>NSString</code>, you can’t modify the original interface or implementation because it’s a framework class.</p><p>Furthermore, it might not make sense to subclass the existing class, because you may want your drawing behavior available not only to the original <code>NSString</code> class but also any subclasses of that class, like <code>NSMutableString</code>. And, although <code>NSString</code> is available on both OS X and iOS, the drawing code would need to be different for each platform, so you’d need to use a different subclass on each platform.</p><p>Instead, Objective-C allows you to add your own methods to existing classes through categories and class extensions.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW2" title="Categories Add Methods to Existing Classes"></a><h2 class="jump">Categories Add Methods to Existing Classes</h2><p>If you need to add a method to an existing class, perhaps to add functionality to make it easier to do something in your own application, the easiest way is to use a category.</p><p>The syntax to declare a <em class="newTerm">category</em> uses the <code>@interface</code> keyword, just like a standard Objective-C class description, but does not indicate any inheritance from a subclass. Instead, it specifies the name of the category in parentheses, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface ClassName (CategoryName)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>A category can be declared for any class, even if you don’t have the original implementation source code (such as for standard Cocoa or Cocoa Touch classes). Any methods that you declare in a category will be available to all instances of the original class, as well as any subclasses of the original class. At runtime, there’s no difference between a method added by a category and one that is implemented by the original class.</p><p>Consider the <code>XYZPerson</code> class from the previous chapters, which has properties for a person’s first and last name. If you’re writing a record-keeping application, you may find that you frequently need to display a list of people by last name, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>Appleseed, John<span></span></pre></td></tr><tr><td scope="row"><pre>Doe, Jane<span></span></pre></td></tr><tr><td scope="row"><pre>Smith, Bob<span></span></pre></td></tr><tr><td scope="row"><pre>Warwick, Kate<span></span></pre></td></tr></table></div><p>Rather than having to write code to generate a suitable <code>lastName, firstName</code> string each time you wanted to display it, you could add a category to the <code>XYZPerson</code> class, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>#import "XYZPerson.h"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>@interface XYZPerson (XYZPersonNameDisplayAdditions)<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSString *)lastNameFirstNameString;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>In this example, the <code>XYZPersonNameDisplayAdditions</code> category declares one additional method to return the necessary string.</p><p>A category is usually declared in a separate header file and implemented in a separate source code file. In the case of <code>XYZPerson</code>, you might declare the category in a header file called <code>XYZPerson+XYZPersonNameDisplayAdditions.h</code>.</p><p>Even though any methods added by a category are available to all instances of the class and its subclasses, you’ll need to import the category header file in any source code file where you wish to use the additional methods, otherwise you’ll run into compiler warnings and errors.</p><p>The category implementation might look like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>#import "XYZPerson+XYZPersonNameDisplayAdditions.h"<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>@implementation XYZPerson (XYZPersonNameDisplayAdditions)<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSString *)lastNameFirstNameString {<span></span></pre></td></tr><tr><td scope="row"><pre>    return [NSString stringWithFormat:@"%@, %@", self.lastName, self.firstName];<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>Once you’ve declared a category and implemented the methods, you can use those methods from any instance of the class, as if they were part of the original class interface:</p><div class="codesample clear"><table><tr><td scope="row"><pre>#import "XYZPerson+XYZPersonNameDisplayAdditions.h"<span></span></pre></td></tr><tr><td scope="row"><pre>@implementation SomeObject<span></span></pre></td></tr><tr><td scope="row"><pre>- (void)someMethod {<span></span></pre></td></tr><tr><td scope="row"><pre>    XYZPerson *person = [[XYZPerson alloc] initWithFirstName:@"John"<span></span></pre></td></tr><tr><td scope="row"><pre>                                                    lastName:@"Doe"];<span></span></pre></td></tr><tr><td scope="row"><pre>    XYZShoutingPerson *shoutingPerson =<span></span></pre></td></tr><tr><td scope="row"><pre>                        [[XYZShoutingPerson alloc] initWithFirstName:@"Monica"<span></span></pre></td></tr><tr><td scope="row"><pre>                                                            lastName:@"Robinson"];<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    NSLog(@"The two people are %@ and %@",<span></span></pre></td></tr><tr><td scope="row"><pre>         [person lastNameFirstNameString], [shoutingPerson lastNameFirstNameString]);<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>As well as just adding methods to existing classes, you can also use categories to split the implementation of a complex class across multiple source code files. You might, for example, put the drawing code for a custom user interface element in a separate file to the rest of the implementation if the geometrical calculations, colors, and gradients, etc, are particularly complicated. Alternatively, you could provide different implementations for the category methods, depending on whether you were writing an app for OS X or iOS.</p><p>Categories can be used to declare either instance methods or class methods but are not usually suitable for declaring additional properties. It’s valid syntax to include a property declaration in a category interface, but it’s not possible to declare an additional instance variable in a category. This means the compiler won’t synthesize any instance variable, nor will it synthesize any property accessor methods. You can write your own accessor methods in the category implementation, but you won’t be able to keep track of a value for that property unless it’s already stored by the original class.</p><p>The only way to add a traditional property—backed by a new instance variable—to an existing class is to use a class extension, as described in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40011210-CH6-SW3" data-renderer-version="1">Class Extensions Extend the Internal Implementation</a></span>.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH6-SW5" title="Note"></a><p><strong>Note:</strong>&nbsp;Cocoa and Cocoa Touch include a variety of categories for some of the primary framework classes.</p><p>The string-drawing functionality mentioned in the introduction to this chapter is in fact already provided for <code>NSString</code> by the <code>NSStringDrawing</code> category for OS X, which includes the <code>drawAtPoint:withAttributes:</code> and <code>drawInRect:withAttributes:</code> methods. For iOS, the <code>UIStringDrawing</code> category includes methods such as <code>drawAtPoint:withFont:</code> and <code>drawInRect:withFont:</code>.</p><p></p></aside></div><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW4" title="Avoid Category Method Name Clashes"></a><h3 class="jump">Avoid Category Method Name Clashes</h3><p>Because the methods declared in a category are added to an existing class, you need to be very careful about method names.</p><p>If the name of a method declared in a category is the same as a method in the original class, or a method in another category on the same class (or even a superclass), the behavior is undefined as to which method implementation is used at runtime. This is less likely to be an issue if you’re using categories with your own classes, but can cause problems when using categories to add methods to standard Cocoa or Cocoa Touch classes.</p><p>An application that works with a remote web service, for example, might need an easy way to encode a string of characters using Base64 encoding. It would make sense to define a category on <code>NSString</code> to add an instance method to return a Base64-encoded version of a string, so you might add a convenience method called <code>base64EncodedString</code>. </p><p>A problem arises if you link to another framework that also happens to define its own category on <code>NSString</code>, including its own method called <code>base64EncodedString</code>. At runtime, only one of the method implementations will “win” and be added to <code>NSString</code>, but which one is undefined.</p><p>Another problem can arise if you add convenience methods to Cocoa or Cocoa Touch classes that are then added to the original classes in later releases. The <code>NSSortDescriptor</code> class, for example, which describes how a collection of objects should be ordered, has always had an <code>initWithKey:ascending:</code> initialization method, but didn’t offer a corresponding class factory method under early OS X and iOS versions.</p><p>By convention, the class factory method should be called <code>sortDescriptorWithKey:ascending:</code>, so you might have chosen to add a category on <code>NSSortDescriptor</code> to provide this method for convenience. This would have worked as you’d expect under older versions of OS X and iOS, but with the release of Mac OS X version 10.6 and iOS 4.0, a <code>sortDescriptorWithKey:ascending:</code> method was added to the original <code>NSSortDescriptor</code> class, meaning you’d now end up with a naming clash when your application was run on these or later platforms.</p><p>In order to avoid undefined behavior, it’s best practice to add a prefix to method names in categories on framework classes, just like you should add a prefix to the names of your own <em>classes</em>. You might choose to use the same three letters you use for your class prefixes, but lowercase to follow the usual convention for method names, then an underscore, before the rest of the method name. For the <code>NSSortDescriptor</code> example, your own category might look like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface NSSortDescriptor (XYZAdditions)<span></span></pre></td></tr><tr><td scope="row"><pre>+ (id)xyz_sortDescriptorWithKey:(NSString *)key ascending:(BOOL)ascending;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>This means you can be sure that your method will be used at runtime. The ambiguity is removed because your code now looks like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSSortDescriptor *descriptor =<span></span></pre></td></tr><tr><td scope="row"><pre>               [NSSortDescriptor xyz_sortDescriptorWithKey:@"name" ascending:YES];<span></span></pre></td></tr></table></div></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW3" title="Class Extensions Extend the Internal Implementation"></a><h2 class="jump">Class Extensions Extend the Internal Implementation</h2><p>A class extension bears some similarity to a category, but it can only be added to a class for which you have the source code at compile time (the class is compiled at the same time as the class extension). The methods declared by a class extension are implemented in the <code>@implementation</code> block for the original class so you can’t, for example, declare a class extension on a framework class, such as a Cocoa or Cocoa Touch class like <code>NSString</code>.</p><p>The syntax to declare a class extension is similar to the syntax for a category, and looks like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface ClassName ()<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>Because no name is given in the parentheses, class extensions are often referred to as <em>anonymous categories</em>.</p><p>Unlike regular categories, a class extension can add its own properties and instance variables to a class. If you declare a property in a class extension, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface XYZPerson ()<span></span></pre></td></tr><tr><td scope="row"><pre>@property NSObject *extraProperty;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>the compiler will automatically synthesize the relevant accessor methods, as well as an instance variable, inside the primary class implementation.</p><p>If you add any <em>methods</em> in a class extension, these must be implemented in the primary implementation for the class.</p><p>It’s also possible to use a class extension to add custom instance variables. These are declared inside braces in the class extension interface:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface XYZPerson () {<span></span></pre></td></tr><tr><td scope="row"><pre>    id _someCustomInstanceVariable;<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW6" title="Use Class Extensions to Hide Private Information"></a><h3 class="jump">Use Class Extensions to Hide Private Information</h3><p>The primary interface for a class is used to define the way that other classes are expected to interact with it. In other words, it’s the <em>public</em> interface to the class.</p><p>Class extensions are often used to extend the public interface with additional <em>private</em> methods or properties for use within the implementation of the class itself. It’s common, for example, to define a property as <code>readonly</code> in the interface, but as <code>readwrite</code> in a class extension declared above the implementation, in order that the internal methods of the class can change the property value directly.</p><p>As an example, the <code>XYZPerson</code> class might add a property called <code>uniqueIdentifier</code>, designed to keep track of information like a Social Security Number in the US.</p><p>It usually requires a large amount of paperwork to have a unique identifier assigned to an individual in the real world, so the <code>XYZPerson</code> class interface might declare this property as <code>readonly</code>, and provide some method that requests an identifier be assigned, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface XYZPerson : NSObject<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@property (readonly) NSString *uniqueIdentifier;<span></span></pre></td></tr><tr><td scope="row"><pre>- (void)assignUniqueIdentifier;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>This means that it’s not possible for the <code>uniqueIdentifier</code> to be set directly by another object. If a person doesn’t already have one, a request must be made to assign an identifier by calling the <code>assignUniqueIdentifier</code> method.</p><p>In order for the <code>XYZPerson</code> class to be able to change the property internally, it makes sense to redeclare the property in a class extension that’s defined at the top of the implementation file for the class:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface XYZPerson ()<span></span></pre></td></tr><tr><td scope="row"><pre>@property (readwrite) NSString *uniqueIdentifier;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>@implementation XYZPerson<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH6-SW8" title="Note"></a><p><strong>Note:</strong>&nbsp;The <code>readwrite</code> attribute is optional, because it’s the default. You may like to use it when redeclaring a property, for clarity.</p><p></p></aside></div><p>This means that the compiler will now also synthesize a setter method, so any method inside the <code>XYZPerson</code> implementation will be able to set the property directly using either the setter or dot syntax.</p><p>By declaring the class extension inside the source code file for the <code>XYZPerson</code> implementation, the information stays private to the <code>XYZPerson</code> class. If another type of object tries to set the property, the compiler will generate an error.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH6-SW7" title="Note"></a><p><strong>Note:</strong>&nbsp;By adding the class extension shown above, redeclaring the <code>uniqueIdentifier</code> property as a <code>readwrite</code> property, a <code>setUniqueIdentifier:</code> method will exist at runtime on every <code>XYZPerson</code> object, regardless of whether other source code files were aware of the class extension or not.</p><p>The compiler will complain if code in one of those other source code files attempts to call a private method or set a <code>readonly</code> property, but it’s possible to avoid compiler errors and leverage dynamic runtime features to call those methods in other ways, such as by using one of the <code>performSelector:...</code> methods offered by <code>NSObject</code>. You should avoid a class hierarchy or design where this is necessary; instead, the primary class interface should always define the correct “public” interactions. </p><p>If you intend to make “private” methods or properties available to select other classes, such as related classes within a framework, you can declare the class extension in a separate header file and import it in the source files that need it. It’s not uncommon to have two header files for a class, for example, such as <code>XYZPerson.h</code> and <code>XYZPersonPrivate.h</code>. When you release the framework, you only release the public <code>XYZPerson.h</code> header file.</p><p></p></aside></div></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW9" title="Consider Other Alternatives for Class Customization"></a><h2 class="jump">Consider Other Alternatives for Class Customization</h2><p>Categories and class extensions make it easy to add behavior directly to an existing class, but sometimes this isn’t the best option.</p><p>One of the primary goals of object-oriented programming is to write reusable code, which means that classes should be reusable in a variety of situations, wherever possible. If you’re creating a view class to describe an object that displays information on screen, for example, it’s a good idea to think whether the class could be usable in multiple situations.</p><p>Rather than hard-coding decisions about layout or content, one alternative is to leverage inheritance and leave those decisions in methods specifically designed to be overridden by subclasses. Although this does make it relatively easy to reuse the class, you still need to create a new subclass every time you want to make use of that original class.</p><p>Another alternative is for a class to use a <em class="newTerm">delegate</em> object. Any decisions that might limit reusability can be delegated to another object, which is left to make those decisions at runtime. One common example is a standard table view class (<code>NSTableView</code> for OS X and <code>UITableView</code> for iOS). In order for a generic table view (an object that displays information using one or more columns and rows) to be useful, it leaves decisions about its content to be decided by another object at runtime. Delegation is covered in detail in the next chapter, <span class="content_text"><a href="../WorkingwithProtocols/WorkingwithProtocols.html#//apple_ref/doc/uid/TP40011210-CH11-SW1" data-renderer-version="1">Working with Protocols</a></span>.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW10" title="Interact Directly with the Objective-C Runtime"></a><h3 class="jump">Interact Directly with the Objective-C Runtime</h3><p>Objective-C offers its dynamic behavior through the Objective-C runtime system.</p><p>Many decisions, such as which methods are called when messages are sent, aren’t made at compile-time but are instead determined when the application is run. Objective-C is more than just a language that is compiled down to machine code. Instead, it requires a runtime system in place to execute that code.</p><p>It’s possible to interact directly with this runtime system, such as by adding <em class="newTerm">associative references</em> to an object. Unlike class extensions, associated references do not affect the original class declaration and implementation, which means you can use them with framework classes for which you don’t have access to the original source code. </p><p>An associative reference links one object with another, in a similar way to a property or instance variable. For more information, see <span class="content_text"><!--a target="_self" -->Associative References<!--/a--></span>. To learn more about the Objective-C Runtime in general, see <em><a href="../../ObjCRuntimeGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008048" data-renderer-version="1" target="_self">Objective-C Runtime Programming Guide</a></em>.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH6-SW11" title="Exercises"></a><h2 class="jump">Exercises</h2><ol class="ol"><li class="li"><p>Add a category to the <code>XYZPerson</code> class to declare and implement additional behavior, such as displaying a person’s name in different ways.</p></li><li class="li"><p>Add a category to <code>NSString</code> in order to add a method to draw the uppercase version of a string at a given point, calling through to one of the existing <code>NSStringDrawing</code> category methods to perform the actual drawing. These methods are documented in <em><!--a target="_self" -->NSString UIKit Additions Reference<!--/a--></em> for iOS and <em><!--a target="_self" -->NSString Application Kit Additions Reference<!--/a--></em> for OS X.</p></li><li class="li"><p>Add two <code>readonly</code> properties to the original <code>XYZPerson</code> class implementation to represent a person’s height and weight, along with methods to <code>measureWeight</code> and <code>measureHeight</code>.</p><p>Use a class extension to redeclare the properties as <code>readwrite</code>, and implement the methods to set the properties to suitable values.</p></li></ol></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../WorkingwithProtocols/WorkingwithProtocols.html'>Next</a><a class='previousLink' rel='prev' href='../EncapsulatingData/EncapsulatingData.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2014 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2014-09-17</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

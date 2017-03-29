@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Object copying</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta id="book-resource-type" name="book-resource-type" content="DevPedia">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40008195">
+    <meta id="document-version" name="document-version" content="5.3.10">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40008195-CH38">
+    <meta id="date" name="date" content="2015-10-21">
+    <meta id="description" name="description" content="A collection of short articles on the core concepts, patterns, and mechanisms in Cocoa programming. ">
+    <meta id="book-title" name="book-title" content="Cocoa Core Competencies">
+    <meta id="book-root" name="book-root" content="./">
+    <meta id="book-doc-type" name="book-doc-type" content="Pedia">
+    <meta id="book-json" name="book-json" content="book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/DevPedia}, {Topic/General}">
+    <link id="book-index-page" rel="Start" title="Cocoa Core Competencies" type="text/html" href="index.html">
+    <link id="next-page" rel="Next" type="text/html" href="ObjectCreation.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="ObjectComparison.html">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Cocoa Core Competencies: Object copying">
+    <meta id="resources-uri" name="resources-uri" content="../../../../Resources/1260">
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/screen.css">
+    <link rel='stylesheet' type='text/css' href='../../../../Resources/1260/CSS/pedia.css' />
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../Resources/1260/CSS/feedback.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40008195-CH38" title="Object copying"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Cocoa Core Competencies</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+    <!-- CONTENTS -->
+    <article id="contents" role='main'>
+        <section id="pediaContents" class='twoColumnRecipe'>
+            
+            <a name="//apple_ref/doc/uid/TP40008195-CH38-SW1" title="Object copying"></a><h1 id="pageTitle">Object copying</h1><p>Copying an object creates a new object with the same class and properties as the original object. You copy an object when you want your own version of the data that the object contains. If you receive an object from elsewhere in an application but do not copy it, you share the object with its owner (and perhaps others), who might change the encapsulated contents. If you are creating a subclass, you might consider making it possible for others to copy instances of your class. Generally, an object should be “copyable” when it is a value object—an object whose main purpose is to encapsulate some data. </p><section><a name="//apple_ref/doc/uid/TP40008195-CH38-SW2" title="Requirements for Object Copying"></a><h2 class="jump">Requirements for Object Copying</h2><p>An object can be copied if its class adopts the <code>NSCopying</code> protocol and implements its single method, <code><a href="https://developer.apple.com/reference/foundation/nscopying/1410311-copy" target="_self" class="urlLink">copyWithZone:</a></code>. If a class has mutable and immutable variants, the mutable class should adopt the <code><a href="https://developer.apple.com/reference/foundation/nsmutablecopying" target="_self" class="urlLink">NSMutableCopying</a></code> protocol (instead of <code>NSCopying</code>) and implement the <code><a href="https://developer.apple.com/reference/foundation/nsmutablecopying/1414175-mutablecopywithzone" target="_self" class="urlLink">mutableCopyWithZone:</a></code> method to ensure that copied objects remain mutable. You make a duplicate of an object by sending it a <code><a href="https://developer.apple.com/reference/objectivec/nsobject/1418807-copy" target="_self" class="urlLink">copy</a></code> or <code><a href="https://developer.apple.com/reference/objectivec/nsobject/1418978-mutablecopy" target="_self" class="urlLink">mutableCopy</a></code> message. These messages result in the invocation of the appropriate <code>NSCopying</code> or <code>NSMutableCopying</code> method.</p><p>Copies of objects can be shallow or deep. Both shallow- and deep-copy approaches directly duplicate scalar properties but differ on how they handle pointer references, particularly references to objects (for example, <code>NSString *str</code>). A deep copy duplicates the objects referenced while a shallow copy duplicates only the references to those objects. So if object A is shallow-copied to object B, object B refers to the same instance variable (or property) that object A refers to. Deep-copying objects is preferred to shallow-copying, especially with value objects.</p><figure class="figure"><img src="Art/object_copying_2x.png" alt="Shallow and deep copies of an object" width="663" height="227"></figure></section><section><a name="//apple_ref/doc/uid/TP40008195-CH38-SW3" title="Memory-Management Implications"></a><h2 class="jump">Memory-Management Implications</h2><p>Like object creation, object copying returns an object with a retain count of 1. In memory-managed code, the client copying the object is responsible for releasing the copied object. Copying an object is similar in purpose to retaining an object in that both express an ownership  in the object. However, a copied object belongs exclusively to the new owner, who can mutate it freely, while a retained object is shared between the owners of the original object and clients who have retained the object.</p></section><div id="seeAlsoSection"><div class="pediaPrerequisites"><a name="//apple_ref/doc/uid/TP40008195-CH38-DontLinkElementID_115" title="Prerequisite Articles"></a><h3>Prerequisite Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Object creation" data-contents="An object comes into runtime existence through a two-step process that allocates memory for the object and sets its state to reasonable initial values.  "><a href="ObjectCreation.html#//apple_ref/doc/uid/TP40008195-CH39-SW1" data-renderer-version="1">Object creation</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Protocol" data-contents="A protocol declares a programmatic interface that any class may choose to implement. "><a href="Protocol.html#//apple_ref/doc/uid/TP40008195-CH45-SW1" data-renderer-version="1">Protocol</a></span></li></ul></div><div class="pediaRelated"><a name="//apple_ref/doc/uid/TP40008195-CH38-DontLinkElementID_116" title="Related Articles"></a><h3>Related Articles</h3><ul class="tooltip"><li class="tooltip"><span class="pediaLink" data-header="Memory management" data-contents="Memory management is the programming discipline of managing the life cycles of objects and freeing them when they are no longer needed. "><a href="MemoryManagement.html#//apple_ref/doc/uid/TP40008195-CH27-SW1" data-renderer-version="1">Memory management</a></span></li><li class="tooltip"><span class="pediaLink" data-header="Object life cycle" data-contents="An object’s life cycle—that is, its runtime life from its creation to its destruction—is marked or determined by various messages it receives. "><a href="ObjectLifeCycle.html#//apple_ref/doc/uid/TP40008195-CH55-SW1" data-renderer-version="1">Object life cycle</a></span></li></ul></div><div class="pediaDefinitiveDiscussion"><a name="//apple_ref/doc/uid/TP40008195-CH38-DontLinkElementID_117" title="Definitive Discussion"></a><h3>Definitive Discussion</h3><ul class="tooltip"><em><a href="https://developer.apple.com/reference/foundation/nscopying" target="_self" class="urlLink">NSCopying Protocol Reference</a></em></ul></div></div>
+        </section>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2015 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2015-10-21</p></div></div>
+
+    </article>
+    <!-- /CONTENTS -->
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    <script type="text/javascript" src="../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

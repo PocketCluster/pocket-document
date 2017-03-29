@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dealing with Errors</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40011210">
+    <meta id="document-version" name="document-version" content="2.7.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40011210-CH9">
+    <meta id="date" name="date" content="2014-09-17">
+    <meta id="description" name="description" content="Describes elements of best practice when writing code with Objective-C using ARC.">
+    <meta id="book-title" name="book-title" content="Programming with Objective-C">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Languages & Utilities/Objective-C}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Programming with Objective-C: Dealing with Errors">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Programming with Objective-C" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../Conventions/Conventions.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../WorkingwithBlocks/WorkingwithBlocks.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40011210-CH9" title="Dealing with Errors"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Programming with Objective-C</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../Conventions/Conventions.html'>Next</a><a class='previousLink' rel='prev' href='../WorkingwithBlocks/WorkingwithBlocks.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40011210-CH9-SW1" title="Dealing with Errors"></a><h1 id="pageTitle">Dealing with Errors</h1><p>Almost every app encounters errors. Some of these errors will be outside of your control, such as running out of disk space or losing network connectivity. Some of these errors will be recoverable, such as invalid user input. And, while all developers strive for perfection, the occasional programmer error may also occur.</p><p>If you’re coming from other platforms and languages, you may be used to working with exceptions for the majority of error handling. When you’re writing code with Objective-C, exceptions are used solely for programmer errors, like out-of-bounds array access or invalid method arguments. These are the problems that you should find and fix during testing before you ship your app.</p><p>All other errors are represented by instances of the <code>NSError</code> class. This chapter gives a brief introduction to using <code>NSError</code> objects, including how to work with framework methods that may fail and return errors. For further information, see <em><a href="../../ErrorHandlingCocoa/ErrorHandling/ErrorHandling.html#//apple_ref/doc/uid/TP40001806" data-renderer-version="1" target="_self">Error Handling Programming Guide</a></em>.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW2" title="Use NSError for Most Errors"></a><h2 class="jump">Use NSError for Most Errors</h2><p>Errors are an unavoidable part of any app’s lifecycle. If you need to request data from a remote web service, for example, there are a variety of potential problems that may arise, including:</p><ul class="ul"><li class="li"><p>No network connectivity</p></li><li class="li"><p>The remote web service may be inaccessible</p></li><li class="li"><p>The remote web service may not be able to serve the information you request</p></li><li class="li"><p>The data you receive may not match what you were expecting</p></li></ul><p>Sadly, it’s not possible to build contingency plans and solutions for every conceivable problem. Instead, you must plan for errors and know how to deal with them to give the best possible user experience.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW4" title="Some Delegate Methods Alert You to Errors"></a><h3 class="jump">Some Delegate Methods Alert You to Errors</h3><p>If you’re implementing a delegate object for use with a framework class that performs a certain task, like downloading information from a remote web service, you’ll typically find that you need to implement at least one error-related method. The <code>NSURLConnectionDelegate</code> protocol, for example, includes a <code>connection:didFailWithError:</code> method:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;<span></span></pre></td></tr></table></div><p>If an error occurs, this delegate method will be called to provide you with an <code>NSError</code> object to describe the problem. </p><p>An <code>NSError</code> object contains a numeric error code, domain and description, as well as other relevant information packaged in a user info dictionary.</p><p>Rather than making the requirement that every possible error have a unique numeric code, Cocoa and Cocoa Touch errors are divided into domains. If an error occurs in an <code>NSURLConnection</code>, for example, the <code>connection:didFailWithError:</code> method above will provide an error from <code>NSURLErrorDomain</code>.</p><p>The error object also includes a localized description, such as “A server with the specified hostname could not be found.”</p></section><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW5" title="Some Methods Pass Errors by Reference"></a><h3 class="jump">Some Methods Pass Errors by Reference</h3><p>Some Cocoa and Cocoa Touch API pass back errors by reference. As an example, you might decide to store the data that you receive from a web service by writing it to disk, using the <code>NSData</code> method <code>writeToURL:options:error:</code>. The last parameter to this method is a reference to an <code>NSError</code> pointer:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (BOOL)writeToURL:(NSURL *)aURL<span></span></pre></td></tr><tr><td scope="row"><pre>           options:(NSDataWritingOptions)mask<span></span></pre></td></tr><tr><td scope="row"><pre>             error:(NSError **)errorPtr;<span></span></pre></td></tr></table></div><p>Before you call this method, you’ll need to create a suitable pointer so that you can pass its address:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSError *anyError;<span></span></pre></td></tr><tr><td scope="row"><pre>    BOOL success = [receivedData writeToURL:someLocalFileURL<span></span></pre></td></tr><tr><td scope="row"><pre>                                    options:0<span></span></pre></td></tr><tr><td scope="row"><pre>                                      error:&amp;anyError];<span></span></pre></td></tr><tr><td scope="row"><pre>    if (!success) {<span></span></pre></td></tr><tr><td scope="row"><pre>        NSLog(@"Write failed with error: %@", anyError);<span></span></pre></td></tr><tr><td scope="row"><pre>        // present error to user<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr></table></div><p>If an error occurs, the <code>writeToURL:...</code> method will return <code><!--a  -->NO<!--/a--></code>, and update your <code>anyError</code> pointer to point to an error object describing the problem.</p><p>When dealing with errors passed by reference, it’s important to test the return value of the method to see whether an error occurred, as shown above. Don’t just test to see whether the error pointer was set to point to an error.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH9-SW6" title="Tip"></a><p><strong>Tip:</strong>&nbsp;If you’re not interested in the error object, just pass <code>NULL</code> for the <code>error:</code> parameter.</p><p></p></aside></div></section><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW7" title="Recover if Possible or Display the Error to the User"></a><h3 class="jump">Recover if Possible or Display the Error to the User</h3><p>The best user experience is for your app to recover transparently from an error. If you’re making a remote web request, for example, you might try making the request again with a different server. Alternatively, you might need to request additional information from the user such as valid username or password credentials before trying again.</p><p>If it’s not possible to recover from an error, you should alert the user. If you’re developing with Cocoa Touch for iOS, you’ll need to create and configure a <code>UIAlertView</code> to display the error. If you’re developing with Cocoa for OS X, you can call <code>presentError:</code> on any <code>NSResponder</code> object (like a view, window or even the application object itself) and the error will propagate up the responder chain for further configuration or recovery. When it reaches the application object, the application presents the error to the user through an alert panel.</p><p>For more information on presenting errors to the user, see <span class="content_text"><a href="../../ErrorHandlingCocoa/CreateCustomizeNSError/CreateCustomizeNSError.html#//apple_ref/doc/uid/TP40001806-CH204-BAJCIGIA" data-renderer-version="1" target="_self">Displaying Information From Error Objects</a></span>.</p></section><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW8" title="Generating Your Own Errors"></a><h3 class="jump">Generating Your Own Errors</h3><p>In order to create your own <code>NSError</code> objects you’ll need to define your own error domain, which should be of the form:</p><div class="codesample clear"><table><tr><td scope="row"><pre>com.companyName.appOrFrameworkName.ErrorDomain<span></span></pre></td></tr></table></div><p>You’ll also need to pick a unique error code for each error that may occur in your domain, along with a suitable description, which is stored in the user info dictionary for the error, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSString *domain = @"com.MyCompany.MyApplication.ErrorDomain";<span></span></pre></td></tr><tr><td scope="row"><pre>    NSString *desc = NSLocalizedString(@"Unable to…", @"");<span></span></pre></td></tr><tr><td scope="row"><pre>    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : desc };<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>    NSError *error = [NSError errorWithDomain:domain<span></span></pre></td></tr><tr><td scope="row"><pre>                                         code:-101<span></span></pre></td></tr><tr><td scope="row"><pre>                                     userInfo:userInfo];<span></span></pre></td></tr></table></div><p>This example uses the <code>NSLocalizedString</code> function to look up a localized version of the error description from a <code>Localizable.strings</code> file, as described in <span class="content_text"><!--a target="_self" -->Localizing String Resources<!--/a--></span>.</p><p>If you need to pass back an error by reference as described earlier, your method signature should include a parameter for a pointer to a pointer to an <code>NSError</code> object. You should also use the return value to indicate success or failure, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (BOOL)doSomethingThatMayGenerateAnError:(NSError **)errorPtr;<span></span></pre></td></tr></table></div><p>If an error occurs, you should start by checking whether a non-<code>NULL</code> pointer was provided for the error parameter before you attempt to dereference it to set the error, before returning <code><!--a  -->NO<!--/a--></code> to indicate failure, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>- (BOOL)doSomethingThatMayGenerateAnError:(NSError **)errorPtr {<span></span></pre></td></tr><tr><td scope="row"><pre>    ...<span></span></pre></td></tr><tr><td scope="row"><pre>    // error occurred<span></span></pre></td></tr><tr><td scope="row"><pre>    if (errorPtr) {<span></span></pre></td></tr><tr><td scope="row"><pre>        *errorPtr = [NSError errorWithDomain:...<span></span></pre></td></tr><tr><td scope="row"><pre>                                        code:...<span></span></pre></td></tr><tr><td scope="row"><pre>                                    userInfo:...];<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>    return NO;<span></span></pre></td></tr><tr><td scope="row"><pre>}<span></span></pre></td></tr></table></div></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH9-SW3" title="Exceptions Are Used for Programmer Errors"></a><h2 class="jump">Exceptions Are Used for Programmer Errors</h2><p>Objective-C supports exceptions in much the same way as other programming languages, with a similar syntax to Java or C++. As with <code>NSError</code>, exceptions in Cocoa and Cocoa Touch are objects, represented by instances of the <code>NSException</code> class</p><p>If you need to write code that might cause an exception to be thrown, you can enclose that code inside a try-catch block:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    @try {<span></span></pre></td></tr><tr><td scope="row"><pre>        // do something that might throw an exception<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>    @catch (NSException *exception) {<span></span></pre></td></tr><tr><td scope="row"><pre>        // deal with the exception<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr><tr><td scope="row"><pre>    @finally {<span></span></pre></td></tr><tr><td scope="row"><pre>        // optional block of clean-up code<span></span></pre></td></tr><tr><td scope="row"><pre>        // executed whether or not an exception occurred<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr></table></div><p>If an exception is thrown by the code inside the <code>@try</code> block, it will be caught by the <code>@catch</code> block so that you can deal with it. If you’re working with a low-level C++ library that uses exceptions for error handling, for example, you might catch its exceptions and generate suitable <code>NSError</code> objects to display to the user.</p><p>If an exception is thrown and not caught, the default uncaught exception handler logs a message to the console and terminates the application.</p><p>You should not use a try-catch block in place of standard programming checks for Objective-C methods. In the case of an <code>NSArray</code>, for example, you should always check the array’s <code>count</code> to determine the number of items before trying to access an object at a given index. The <code>objectAtIndex:</code> method throws an exception if you make an out-of-bounds request so that you can find the bug in your code early in the development cycle—you should avoid throwing exceptions in an app that you ship to users.</p><p>For more information on exceptions in Objective-C applications, see <em><a href="../../Exceptions/Exceptions.html#//apple_ref/doc/uid/10000012i" data-renderer-version="1" target="_self">Exception Programming Topics</a></em>.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../Conventions/Conventions.html'>Next</a><a class='previousLink' rel='prev' href='../WorkingwithBlocks/WorkingwithBlocks.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2014 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2014-09-17</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>
