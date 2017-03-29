@@ -1,11 +1,5 @@
 # Cocoa <-> GO
 
-(03/29/2017) Go static library is built without helper Cocoa counter parts  
-
-1. to modularize build process  
-2. to simplify & speed up compiling  
-3. to leave room for more static C library such as sqlite encryptor
-
 ### Static GO object file symbol checker
 
 In Linux there are nm, readelf, objdump. you can install 

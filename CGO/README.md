@@ -1,5 +1,13 @@
 # Go / Object-C Static Library
 
+(03/29/2017) Go static library is built without helper Cocoa counter parts  (static-core project)
+
+1. to modularize build process 
+2. to simplify & speed up compiling Go lib
+3. to leave room for more static C library such as sqlite encryptor to Go lib
+4. `-ObjC` flag tries to load all the symbols, and it finds go built library isn't Mach-O compatible.<br/>Once go lib is wrapped in a static lib project, compiler does not complain.
+   
+
 - [Go Static Library Building](Go-Static.md)
 - [Xcode Static Library Integration](Xcode.md)
 
