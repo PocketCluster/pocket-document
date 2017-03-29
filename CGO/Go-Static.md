@@ -6,6 +6,18 @@
 2. to simplify & speed up compiling  
 3. to leave room for more static C library such as sqlite encryptor
 
+### Static GO object file symbol checker
+
+In Linux there are nm, readelf, objdump. you can install 
+
+>  brew install binutils
+
+On OSX, however, we have `otool`, `dwarftool` as well as `nm`.
+
+> References
+
+- <https://superuser.com/questions/206547/how-can-i-install-objdump-on-mac-os-x>
+- <http://stackoverflow.com/questions/3286675/readelf-like-tool-for-mac-os-x>
 
 ### Static GO archive -> Xcode Binary
 

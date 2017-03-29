@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Implementing the Full-Screen Experience</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40010543">
+    <meta id="document-version" name="document-version" content="5.2.0">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40010543-CH6">
+    <meta id="date" name="date" content="2015-03-09">
+    <meta id="description" name="description" content="Introduces the development process for Mac apps.">
+    <meta id="book-title" name="book-title" content="Mac App Programming Guide">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Cocoa Layer/AppKit}, {Topic/General}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Mac App Programming Guide: Implementing the Full-Screen Experience">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Mac App Programming Guide" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../CommonAppBehaviors/CommonAppBehaviors.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../CoreAppDesign/CoreAppDesign.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40010543-CH6" title="Implementing the Full-Screen Experience"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Mac App Programming Guide</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../CommonAppBehaviors/CommonAppBehaviors.html'>Next</a><a class='previousLink' rel='prev' href='../CoreAppDesign/CoreAppDesign.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40010543-CH6-SW1" title="Implementing the Full-Screen Experience"></a><h1 id="pageTitle">Implementing the Full-Screen Experience</h1><p>Enabling a window of your app to assume full-screen mode, taking over the entire screen, provides users with a more immersive, cinematic experience. Full-screen appearance can be striking and can make your app stand out. From a practical standpoint, full-screen mode presents a better view of users’ data, enabling them to concentrate fully on their content without the distractions of other apps or the desktop.</p><p>In full-screen mode, by default, the menu bar and Dock are autohidden; that is, they are normally hidden but reappear when the user moves the pointer to the top or bottom of the screen. A full-screen window does not draw its titlebar and may have special handling for its toolbar.</p><p>The full-screen experience makes sense for many apps but not for all. For example, the Finder, Address Book, and Calculator would not provide any benefit to users by assuming full-screen mode. The same is probably true for most utility apps. Media-rich apps, on the other hand, can often benefit from full-screen presentation.</p><p>Beginning with OS X v10.7, Cocoa includes support for full-screen mode through APIs in <code>NSApplication</code>, <code>NSWindow</code>, and <code>NSWindowDelegate</code> protocol. When the user chooses to enter full-screen mode, Cocoa dynamically creates a space and puts the window into that space. This behavior enables the user to have one window of an app running in full-screen mode in one space, while using other windows of that app, as well as other apps, on the desktop in other spaces. While in full-screen mode, the user can switch between windows in the current app or switch apps.</p><p>Apps that have implemented full-screen user interfaces in previous versions of OS X should consider standardizing on the full-screen APIs in OS X v10.7.</p><section><a name="//apple_ref/doc/uid/TP40010543-CH6-SW2" title="Full-Screen API in NSApplication"></a><h2 class="jump">Full-Screen API in NSApplication</h2><p>Full-screen support in <code>NSApplication</code> is provided by the presentation option <code>NSApplicationPresentationFullScreen</code>. You can find the current presentation mode via the <code>NSApplication</code> method <code><a href="https://developer.apple.com/reference/appkit/nsapplication/1428717-currentsystempresentationoptions" target="_self" class="urlLink">currentSystemPresentationOptions</a></code>, which is also key-value observable. You can set the presentation options using the <code>NSApplication</code> method <code><a href="https://developer.apple.com/reference/appkit/nsapplication/1428664-presentationoptions" target="_self" class="urlLink">setPresentationOptions:</a></code>. (Be sure to observe the restrictions on presentation option combinations documented with <code>NSApplicationPresentationOptions</code>, and set the presentation options in a try-catch block to ensure that your program does not crash from an invalid combination of options.)</p><p>A window delegate may also specify that the window toolbar be removed from the window in full-screen mode and be shown automatically with the menu bar by including <code>NSApplicationPresentationAutoHideToolbar</code> in the presentation options returned from the <code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419144-window" target="_self" class="urlLink">window:willUseFullScreenPresentationOptions:</a></code> method of <code>NSWindowDelegate</code>.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH6-SW3" title="Full-Screen API in NSWindow"></a><h2 class="jump">Full-Screen API in NSWindow</h2><p></p><p>The app must specify whether a given window can enter full-screen mode. Apps can set collection behavior using the <code><a href="https://developer.apple.com/reference/appkit/nswindow/1419471-collectionbehavior" target="_self" class="urlLink">setCollectionBehavior:</a></code> method by passing in various constants, and the current options may be accessed via the <code><a href="https://developer.apple.com/reference/appkit/nswindow/1419471-collectionbehavior" target="_self" class="urlLink">collectionBehavior</a></code> method. You can choose between two constants to override the window collection behavior, as shown in the following table:</p><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><tr><th scope="col" class="TableHeading_TableRow_TableCell"><p>Constant</p></th><th scope="col" class="TableHeading_TableRow_TableCell"><p>Behavior</p></th></tr><tr><td  scope="row"><p><code>NSWindowCollectionBehaviorFullScreenPrimary</code></p></td><td ><p>The frontmost window with this collection behavior
+becomes the full-screen window. A window with this collection behavior has a full-screen button in the upper right of its titlebar.</p></td></tr><tr><td  scope="row"><p><code>NSWindowCollectionBehaviorFullScreenAuxiliary</code></p></td><td ><p>Windows with this collection behavior can be shown in the same space with the full-screen window.</p></td></tr></table></div><p>When a window goes into full-screen mode, the <code>styleMask</code> changes to <code>NSFullScreenWindowMask</code> to reflect the state of the window.The setting of the <code>styleMask</code> goes through the <code>setStyleMask:</code> method. As a result, a window can override this method if it has customization to do when entering or exiting full-screen. </p><p>A window can be taken into or out of full-screen mode using the <code><a href="https://developer.apple.com/reference/appkit/nswindow/1419527-togglefullscreen" target="_self" class="urlLink">toggleFullScreen:</a></code> method. If an app supports full-screen mode, it should add a menu item to the View menu with <code>toggleFullScreen:</code> as the action, and <code>nil</code> as the target.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH6-SW4" title="Full-Screen API in NSWindowDelegate Protocol"></a><h2 class="jump">Full-Screen API in NSWindowDelegate Protocol</h2><p>The following notifications are sent before and after the window enters and exits full-screen mode:</p><div class="codesample clear"><table><tr><td scope="row"><pre>NSWindowWillEnterFullScreenNotification<span></span></pre></td></tr><tr><td scope="row"><pre>NSWindowDidEnterFullScreenNotification<span></span></pre></td></tr><tr><td scope="row"><pre>NSWindowWillExitFullScreenNotification<span></span></pre></td></tr><tr><td scope="row"><pre>NSWindowDidExitFullScreenNotification<span></span></pre></td></tr></table></div><p>The window delegate has the following corresponding window delegate notification methods:</p><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419563-windowwillenterfullscreen" target="_self" class="urlLink">windowWillEnterFullScreen:</a></code></p><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419116-windowdidenterfullscreen" target="_self" class="urlLink">windowDidEnterFullScreen:</a></code></p><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419332-windowwillexitfullscreen" target="_self" class="urlLink">windowWillExitFullScreen:</a></code></p><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419146-windowdidexitfullscreen" target="_self" class="urlLink">windowDidExitFullScreen:</a></code></p><p>The <code>NSWindowDelegate</code> protocol methods supporting full-screen mode are listed in <span class="content_text">Table 3-1</span>.</p><a name="//apple_ref/doc/uid/TP40010543-CH6-SW5" title="Table 3-1Window delegate methods supporting full-screen mode"></a><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><caption class="tablecaption"><strong class="caption_number">Table 3-1</strong>&nbsp;&nbsp;Window delegate methods supporting full-screen mode</caption><tr><th scope="col" class="TableHeading_TableRow_TableCell"><p>Method</p></th><th scope="col" class="TableHeading_TableRow_TableCell"><p>Description</p></th></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419282-window" target="_self" class="urlLink">window:willUseFullScreenContentSize:</a></code></p></td><td ><p>Invoked to allow the delegate to modify the full-screen content size.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419144-window" target="_self" class="urlLink">window:willUseFullScreenPresentationOptions:</a></code></p></td><td ><p>Returns the presentation options the window will use when transitioning to full-screen mode.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419521-customwindowstoenterfullscreenfo" target="_self" class="urlLink">customWindowsToEnterFullScreenForWindow:</a></code></p></td><td ><p>Invoked when the window is about to enter full-screen mode. The window delegate can implement this method to customize the animation by returning a custom window or array of windows containing layers or other effects.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419406-window" target="_self" class="urlLink">window:startCustomAnimationToEnterFullScreenWithDuration:</a></code></p></td><td ><p>The system has started its animation into full-screen mode, including transitioning into a new space. You can implement this method to perform custom animation with the given duration to be in sync with the system animation.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419591-windowdidfailtoenterfullscreen" target="_self" class="urlLink">windowDidFailToEnterFullScreen:</a></code></p></td><td ><p>Invoked if the window failed to enter full-screen mode.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419070-customwindowstoexitfullscreen" target="_self" class="urlLink">customWindowsToExitFullScreenForWindow:</a></code></p></td><td ><p>Invoked when the window is about to exit full-screen mode. The window delegate can implement this method to customize the animation when the window is about to exit full-screen by returning a custom window or array of windows containing layers or other effects.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419705-window" target="_self" class="urlLink">window:startCustomAnimationToExitFullScreenWithDuration:</a></code></p></td><td ><p>The system has started its animation out of full-screen, including transitioning back to the desktop space. You can implement this method to perform custom animation with the given duration to be in sync with the system animation.</p></td></tr><tr><td  scope="row"><p><code><a href="https://developer.apple.com/reference/appkit/nswindowdelegate/1419573-windowdidfailtoexitfullscreen" target="_self" class="urlLink">windowDidFailToExitFullScreen:</a></code></p></td><td ><p>Invoked if the window failed to exit full-screen mode.</p></td></tr></table></div><p>For more information about full-screen mode, see <em><a href="https://developer.apple.com/reference/appkit/nswindowdelegate" target="_self" class="urlLink">NSWindowDelegate Protocol Reference</a></em> and the <em><a href="../../../../UserExperience/Conceptual/OSXHIGuidelines/index.html#//apple_ref/doc/uid/20000957" data-renderer-version="2" target="_self">macOS Human Interface Guidelines</a></em>.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../CommonAppBehaviors/CommonAppBehaviors.html'>Next</a><a class='previousLink' rel='prev' href='../CoreAppDesign/CoreAppDesign.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2015 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2015-03-09</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>
