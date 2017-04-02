@@ -544,6 +544,11 @@ github.com/armon/go-radix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/armon && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/armon && git clone https://github.com/armon/go-radix && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/armon/go-radix && git checkout e39d623f12e8e41c7b5529e9a9dd67a1e2261f80
 
+github.com/getsentry/raven-go
+	b68337dbf03e7fbb53d9fd9b63fd09b28e8f13f7	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/getsentry && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/getsentry && git clone https://github.com/getsentry/raven-go && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/getsentry/raven-go && git checkout b68337dbf03e7fbb53d9fd9b63fd09b28e8f13f7
+
 github.com/RackSec/srslog
 	456df3a81436d29ba874f3590eeeee25d666f8a5	 -> 	docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -

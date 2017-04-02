@@ -33,3 +33,9 @@ import:
 # cloudflare cfssl depedendency
 - package: github.com/jmoiron/sqlx
   version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
+# for crash log
+- package: github.com/getsentry/raven-go
+  version: b68337dbf03e7fbb53d9fd9b63fd09b28e8f13f7
+# (03/31/2017) this is a very good CA package. Nontheless, we'll not going to use it for now
+# - package: github.com/certifi/gocertifi
+#  version: 03be5e6bb9874570ea7fb0961225d193cbc374c5

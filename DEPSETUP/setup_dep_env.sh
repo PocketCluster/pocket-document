@@ -194,6 +194,22 @@ else
     popd
 fi
 
+if [[ ! -d "${GOREPO}/src/github.com/getsentry/raven-go" ]]; then
+    echo "Senty.io raven-go is not present!!!"
+    exit 1
+else
+    echo "[2ND DEP] Setup raven-go dep"
+    pushd ${WORK_ROOT}
+    if [[ ! -d "${GOREPO}/src/github.com/getsentry/raven-go/vendor/github.com/certifi/gocertifi" ]]; then
+        mkdir -p "${GOREPO}/src/github.com/getsentry/raven-go/vendor/github.com/certifi"
+        cd "${GOREPO}/src/github.com/getsentry/raven-go/vendor/github.com/certifi"
+        git clone https://github.com/certifi/gocertifi
+    fi
+    cd "${GOREPO}/src/github.com/getsentry/raven-go/vendor/github.com/certifi/gocertifi"
+    git checkout 03be5e6bb9874570ea7fb0961225d193cbc374c5
+    popd
+fi
+
 if [[ ${TESTGO} -eq 1 ]]; then
 source ${WORK_ROOT}/test_dep.sh
 fi

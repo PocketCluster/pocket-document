@@ -179,6 +179,7 @@ function clean_gopath() {
 	rm -rf github.com/spf13/afero && (rmdir github.com/spf13 > /dev/null 2>&1 || true)
 	rm -rf google.golang.org/cloud && (rmdir google.golang.org > /dev/null 2>&1 || true)
 	rm -rf github.com/armon/go-radix && (rmdir github.com/armon > /dev/null 2>&1 || true)
+	rm -rf github.com/getsentry/raven-go && (rmdir github.com/getsentry > /dev/null 2>&1 || true)
 	rm -rf github.com/RackSec/srslog && (rmdir github.com/RackSec > /dev/null 2>&1 || true)
 	rm -rf github.com/buger/goterm && (rmdir github.com/buger > /dev/null 2>&1 || true)
 }
