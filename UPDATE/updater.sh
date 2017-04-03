@@ -2,15 +2,18 @@
 
 DMG_PATH=${1}
 DMG_URL=${2}
-NOTE_URL=${3}
+BUNDLE_VER=${3}
 
+if [[ -z ${DMG_PATH} ]]; then
+    echo "[ERR] empty dmg image path"
+    exit
+fi
 if [[ -z ${DMG_URL} ]]; then
     echo "[ERR] empty dmg image url."
     exit
 fi
-
-if [[ -z ${DMG_PATH} ]]; then
-    echo "[ERR] empty dmg image path"
+if [[ -z ${BUNDLE_VER} ]]; then
+    echo "[ERR] empty bundle version"
     exit
 fi
 
@@ -34,11 +37,12 @@ HASH=$(../APPCERT/SparkleSigningTools/sign_update.rb ${DMG_PATH} ../APPCERT/Spar
 
 echo "<item>
     <title>${TITLE}</title>
-    <sparkle:releaseNotesLink>${NOTE_URL}</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink>https://raw.githubusercontent.com/stkim1/pocketcluster/update/release-notes/${VERSION}.html</sparkle:releaseNotesLink>
     <pubDate>${MODIFIED}</pubDate>
     <enclosure
     url=\"${DMG_URL}\" 
-    sparkle:version=\"${VERSION}\" 
+    sparkle:shortVersionString=\"${VERSION}\"
+    sparkle:version=\"${BUNDLE_VER}\"
     length=\"${FILESIZE}\" 
     type=\"application/octet-stream\" 
     sparkle:dsaSignature=\"${HASH}\" />
