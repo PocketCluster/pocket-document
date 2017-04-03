@@ -25,6 +25,8 @@ LAST_PART=${DMG_DIRS[$LAST_POSITION]}
 
 TITLE=${LAST_PART/.dmg/}
 TITLE=${TITLE/-/ }
+VERSION=($TITLE)
+VERSION=${VERSION[1]}
 MODIFIED=$(/usr/local/bin/python -c "import os,time; print time.ctime(os.path.getmtime('${DMG_PATH}'))")
 #MODIFIED=$(/usr/bin/stat ${DMG_PATH} | /usr/bin/cut -d' ' -f9 ${FILE_STAT})
 FILESIZE=$(/usr/bin/stat ${DMG_PATH} | /usr/bin/cut -d' ' -f8 ${FILE_STAT})
@@ -36,8 +38,8 @@ echo "<item>
     <pubDate>${MODIFIED}</pubDate>
     <enclosure
     url=\"${DMG_URL}\" 
-    sparkle:version=\"1.17.0\" 
+    sparkle:version=\"${VERSION}\" 
     length=\"${FILESIZE}\" 
     type=\"application/octet-stream\" 
-    sparkle:dsaSignature=\"$HASH\" />
+    sparkle:dsaSignature=\"${HASH}\" />
 </item>"
