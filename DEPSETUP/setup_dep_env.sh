@@ -137,7 +137,7 @@ else
     if [[ -d "${ETCD}/vendor/" ]]; then
         cd "${ETCD}/vendor/" && clean_vendor
     else
-        #cd ${ETCD} && ${GOREPO}/bin/glide up
+        #cd ${ETCD} && ${GOREPO}/bin/glide install
         echo "!!! SETUP ETCD VENDOR WITH GLIDE FIRST !!!"
     fi
     popd
