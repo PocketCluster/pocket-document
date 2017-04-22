@@ -1,7 +1,5 @@
 package: github.com/coreos/etcd
 import:
-- package: github.com/cpuguy83/go-md2man
-  version: a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa
 - package: github.com/bgentry/speakeasy
   version: 36e9cfdd690967f4f690c6edcc9ffacd006014a0
 - package: github.com/boltdb/bolt
@@ -105,6 +103,7 @@ import:
   - assert
 - package: github.com/karlseguin/ccache
   version: v2.0.2
+# (04/22/2017) Added laster for missing deps. Unfortunately, all these deps from prometheus conflict with Docker
 - package: github.com/prometheus/client_model
   version: fa8ad6fec33561be4280a8f0514318c79d7f6cb6
 - package: github.com/prometheus/common
@@ -115,3 +114,5 @@ import:
   version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
 - package: github.com/matttproud/golang_protobuf_extensions
   version: c12348ce28de40eed0136aa2b644d0ee0650e56c
+- package: github.com/cpuguy83/go-md2man
+  version: a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa

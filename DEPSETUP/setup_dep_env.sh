@@ -85,7 +85,7 @@ if [[ ${COPY_DEP_REPO} -eq 1 ]]; then
     else
         mkdir -p ${ETCD}
     fi
-    cp -rf ${GOREPO}/DEPREPO/etcd/* ${ETCD}/ && (rm ${ETCD}/*.iml || true)
+    cp -rf ${GOREPO}/DEPREPO/etcd/* ${ETCD}/ && cd "${ETCD}/vendor/" && clean_vendor && (rm ${ETCD}/*.iml || true)
     popd
 
 else
@@ -133,6 +133,12 @@ else
     if [[ ! -d ${ETCD} ]] || [[ ${LINK} != "../../../DEPREPO/etcd" ]]; then
         echo "cleanup old link ${ETCD} and rebuild..."
         cd ${COREOS} && (rm ${ETCD} || true) && ln -s ../../../DEPREPO/etcd ./etcd
+    fi
+    if [[ -d "${ETCD}/vendor/" ]]; then
+        cd "${ETCD}/vendor/" && clean_vendor
+    else
+        #cd ${ETCD} && ${GOREPO}/bin/glide up
+        echo "!!! SETUP ETCD VENDOR WITH GLIDE FIRST !!!"
     fi
     popd
 
