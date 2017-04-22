@@ -14,7 +14,7 @@ export PATH=$GEM_HOME/ruby/2.0.0/bin:$HOME/.util:$GOROOT/bin:$GOREPO/bin:$GOWORK
 export WORK_ROOT="${GOREPO}/DEPSETUP"
 
 # main component to unpack
-MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "etcd-3.1.1" "docker-c8388a-2016_11_22")
+MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "docker-c8388a-2016_11_22")
 
 # TESTING
 TESTGO=${TESTGO:-0}
@@ -76,6 +76,18 @@ if [[ ${COPY_DEP_REPO} -eq 1 ]]; then
     cp -rf ${GOREPO}/DEPREPO/libcompose/* ${LIBCOMPOSE}/ && cd "${LIBCOMPOSE}/vendor/" && clean_vendor && (rm ${LIBCOMPOSE}/*.iml || true)
     popd
 
+    # setup etcd
+    pushd ${WORK_ROOT}
+    echo "setting up etcd..."
+    ETCD="${GOREPO}/src/github.com/coreos/etcd"
+    if [[ -d ${ETCD} ]]; then
+        rm -rf ${ETCD}/*
+    else
+        mkdir -p ${ETCD}
+    fi
+    cp -rf ${GOREPO}/DEPREPO/etcd/* ${ETCD}/ && (rm ${ETCD}/*.iml || true)
+    popd
+
 else
 
     # setup teleport
@@ -110,20 +122,21 @@ else
     cd "${LIBCOMPOSE}/vendor/" && clean_vendor
     popd
 
-fi
+    pushd ${WORK_ROOT}
+    echo "setting up etcd..."
+    COREOS="${GOREPO}/src/github.com/coreos"
+    if [[ ! -d ${COREOS} ]]; then
+        mkdir -p "${COREOS}"
+    fi
+    ETCD="${COREOS}/etcd"
+    LINK=$(readlink "${ETCD}")
+    if [[ ! -d ${ETCD} ]] || [[ ${LINK} != "../../../DEPREPO/etcd" ]]; then
+        echo "cleanup old link ${ETCD} and rebuild..."
+        cd ${COREOS} && (rm ${ETCD} || true) && ln -s ../../../DEPREPO/etcd ./etcd
+    fi
+    popd
 
-
-# setup etcd
-pushd ${WORK_ROOT}
-echo "setting up etcd..."
-if [[ -d "${GOREPO}/src/github.com/coreos/etcd" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/coreos/etcd"
-    rm "${GOREPO}/src/github.com/coreos/etcd"
-else
-    mkdir -p "${GOREPO}/src/github.com/coreos"
 fi
-cd "${GOREPO}/src/github.com/coreos" && ln -s "../../../MAINCOMP/etcd-3.1.1" "./etcd"
-popd
 
 # setup swarm
 pushd ${WORK_ROOT}
