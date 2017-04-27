@@ -150,7 +150,7 @@ else
     fi
     GRACEFUL="${TYLERB}/graceful.v1"
     LINK=$(readlink "${GRACEFUL}")
-    if [[ -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
+    if [[ ! -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
         echo "cleanup old link ${GRACEFUL} and rebuild..."
         cd ${TYLERB} && (rm ${GRACEFUL} || true) && ln -s ../../../DEPREPO/graceful ./graceful.v1
     fi
