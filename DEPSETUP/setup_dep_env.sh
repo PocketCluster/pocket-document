@@ -142,6 +142,20 @@ else
     fi
     popd
 
+    pushd ${WORK_ROOT}
+    echo "setting up gopkg.in/tylerb/graceful.v1 ..."
+    TYLERB="${GOREPO}/src/gopkg.in/tylerb"
+    if [[ ! -d ${TYLERB} ]]; then
+        mkdir -p "${TYLERB}"
+    fi
+    GRACEFUL="${TYLERB}/graceful.v1"
+    LINK=$(readlink "${GRACEFUL}")
+    if [[ -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
+        echo "cleanup old link ${GRACEFUL} and rebuild..."
+        cd ${TYLERB} && (rm ${GRACEFUL} || true) && ln -s ../../../DEPREPO/graceful ./graceful.v1
+    fi
+    popd
+
 fi
 
 # setup swarm
