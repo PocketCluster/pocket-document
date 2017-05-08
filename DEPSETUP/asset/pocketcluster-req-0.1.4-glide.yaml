@@ -39,3 +39,5 @@ import:
 # (03/31/2017) this is a very good CA package. Nontheless, we'll not going to use it for now
 # - package: github.com/certifi/gocertifi
 #  version: 03be5e6bb9874570ea7fb0961225d193cbc374c5
+- package: github.com/mitchellh/go-ps
+  version: 4fdf99ab29366514c69ccccddab5dc58b8d84062

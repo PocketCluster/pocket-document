@@ -107,6 +107,7 @@ function clean_gopath() {
 	rm -rf github.com/coreos/go-oidc && (rmdir github.com/coreos > /dev/null 2>&1 || true)
 	rm -rf bitbucket.org/ww/goautoneg && (rmdir bitbucket.org/ww > /dev/null 2>&1 || true)
 	rm -rf github.com/flynn/go-shlex && (rmdir github.com/flynn > /dev/null 2>&1 || true)
+	rm -rf github.com/mitchellh/go-ps && (rmdir github.com/mitchellh > /dev/null 2>&1 || true)
 	rm -rf github.com/google/btree && (rmdir github.com/google > /dev/null 2>&1 || true)
 	rm -rf rsc.io/letsencrypt && (rmdir rsc.io > /dev/null 2>&1 || true)
 	rm -rf github.com/alecthomas/template && (rmdir github.com/alecthomas > /dev/null 2>&1 || true)
