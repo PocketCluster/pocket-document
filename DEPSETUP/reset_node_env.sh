@@ -26,3 +26,5 @@ reset_ssh_command pocket@192.168.1.163 "$(cmd_reset_hostname pc-node3)"
 reset_ssh_command pocket@192.168.1.164 "$(cmd_reset_hostname pc-node4)"
 reset_ssh_command pocket@192.168.1.165 "$(cmd_reset_hostname pc-node5)"
 reset_ssh_command pocket@192.168.1.166 "$(cmd_reset_hostname pc-node6)"
+
+rm -rf ${HOME}/.pocket/*
