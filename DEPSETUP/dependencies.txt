@@ -709,6 +709,7 @@ github.com/coreos/go-systemd
 	v14                                     	 -> 	2016-11-14 12:22:54+00:00 : etcd-3.1.1
 	7b2428fec40033549c68f54e26e89e7ca9a9ce31	 -> 	2016-02-02 22:14:25+01:00 : Teleport-1.2.0
 	v4                                      	 -> 	2015-11-04 11:42:51-08:00 : docker-c8388a-2016_11_22
+	1f9909e51b2dab2487c26d64c8f2e7e580e4c9f5	 -> 	2000-01-01 00:00:00+00:00 : pocketcluster-req-0.1.4
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos && /usr/local/bin/git clone https://github.com/coreos/go-systemd && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/coreos/go-systemd
 
