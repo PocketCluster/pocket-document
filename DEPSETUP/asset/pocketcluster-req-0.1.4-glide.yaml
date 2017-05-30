@@ -42,4 +42,6 @@ import:
 - package: github.com/mitchellh/go-ps
   version: 4fdf99ab29366514c69ccccddab5dc58b8d84062
 - package: github.com/coreos/go-systemd
-  version: 1f9909e51b2dab2487c26d64c8f2e7e580e4c9f5
+  version: v14
+- package: github.com/godbus/dbus
+  version: v4.0.0
