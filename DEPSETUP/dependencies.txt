@@ -504,11 +504,6 @@ github.com/aanand/compose-file
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/aanand && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/aanand && git clone https://github.com/aanand/compose-file && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/aanand/compose-file && git checkout a70cb6ea5c403c383b5117dcd1dea78880a47824
 
-github.com/miekg/dns
-	75e6e86cc601825c5dbcd4e0c209eab180997cd7	 -> 	docker-c8388a-2016_11_22
-	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg && git clone https://github.com/miekg/dns && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg/dns && git checkout 75e6e86cc601825c5dbcd4e0c209eab180997cd7
-
 github.com/tonistiigi/fifo
 	1405643975692217d6720f8b54aeee1bf2cd5cf4	 -> 	docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -988,6 +983,13 @@ github.com/godbus/dbus
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/godbus && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/godbus && /usr/local/bin/git clone https://github.com/godbus/dbus && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/godbus/dbus
 
+github.com/miekg/dns
+----------------- !!!CONFLICT!!! --------------------- 
+	75e6e86cc601825c5dbcd4e0c209eab180997cd7	 -> 	2015-12-02 10:57:14+00:00 : docker-c8388a-2016_11_22
+	75e6e86cc601825c5dbcd4e0c209eab180997cd7	 -> 	2015-12-02 10:57:14+00:00 : pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg && /usr/local/bin/git clone https://github.com/miekg/dns && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/miekg/dns
+
 github.com/davecgh/go-spew
 ----------------- !!!CONFLICT!!! --------------------- 
 	6d212800a42e8ab5c146b8ace3490ee17e5225f9	 -> 	2016-09-07 11:21:46-05:00 : docker-c8388a-2016_11_22
@@ -1092,6 +1094,7 @@ github.com/xeipuuv/gojsonpointer
 	rm -rf github.com/xeipuuv/gojsonschema && (rmdir github.com/xeipuuv > /dev/null 2>&1 || true)
 	rm -rf github.com/xeipuuv/gojsonreference && (rmdir github.com/xeipuuv > /dev/null 2>&1 || true)
 	rm -rf github.com/godbus/dbus && (rmdir github.com/godbus > /dev/null 2>&1 || true)
+	rm -rf github.com/miekg/dns && (rmdir github.com/miekg > /dev/null 2>&1 || true)
 	rm -rf github.com/davecgh/go-spew && (rmdir github.com/davecgh > /dev/null 2>&1 || true)
 	rm -rf github.com/Microsoft/go-winio && (rmdir github.com/Microsoft > /dev/null 2>&1 || true)
 	rm -rf github.com/boltdb/bolt && (rmdir github.com/boltdb > /dev/null 2>&1 || true)
