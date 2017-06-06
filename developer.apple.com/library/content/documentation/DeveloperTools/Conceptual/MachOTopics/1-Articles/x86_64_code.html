@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>x86-64 Code Model</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40001519">
+    <meta id="document-version" name="document-version" content="3.3.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40005044">
+    <meta id="date" name="date" content="2009-02-04">
+    <meta id="description" name="description" content="Explains the use of the OS X runtime architecture, including program types, loading and executing code, and using libraries and plug-ins.">
+    <meta id="book-title" name="book-title" content="Mach-O Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/General}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Mach-O Programming Topics: x86-64 Code Model">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Mach-O Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../9-Revision-3.1/history.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="dynamic_code.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40005044" title="x86-64 Code Model"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Mach-O Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../9-Revision-3.1/history.html'>Next</a><a class='previousLink' rel='prev' href='dynamic_code.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40005044-SW1" title="x86-64 Code Model"></a><h1 id="pageTitle">x86-64 Code Model</h1><p>This article describes differences in the OS X x86-64 user-space code model from the code model described in <em>System V Application Binary Interface AMD64 Architecture Processor Supplement</em>, at <span class="content_text"><a href="http://www.x86-64.org/documentation" class="urlLink" rel="external">http://www.x86-64.org/documentation</a></span>.</p><p>The x86-64 environment in OS X has only one code model for user-space code. It’s most similar to the small PIC model defined by the x86-64 System V ABI. Under Mach-O, all static initialized storage (both code and data) must fit within a 4GB Mach-O file. Uninitialized (zero-fill) data may be any size, although there is a practical limit imposed by OS X.</p><p>All local and small data is accessed directly using addressing that’s relative to the instruction pointer (RIP-relative addressing). All large or possibly nonlocal data is accessed indirectly through a global offset table (GOT) entry. The GOT entry is accessed directly using RIP-relative addressing.</p><p><span class="content_text">Listing 1</span> shows sample C code and corresponding assemble code.</p><a name="//apple_ref/doc/uid/TP40005044-SW2" title="Listing 1C code and the corresponding assembly code"></a><p class="codesample clear"><strong class="caption_number">Listing 1</strong>&nbsp;&nbsp;C code and the corresponding assembly code</p><div class="codesample clear"><table><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>extern int src[];<span></span></pre></td></tr><tr><td scope="row"><pre>extern int dst[];<span></span></pre></td></tr><tr><td scope="row"><pre>extern int* ptr;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>static int lsrc[500];<span></span></pre></td></tr><tr><td scope="row"><pre>static int ldst[500];<span></span></pre></td></tr><tr><td scope="row"><pre>static int bsrc[500000];<span></span></pre></td></tr><tr><td scope="row"><pre>static int bdst[500000];<span></span></pre></td></tr><tr><td scope="row"><pre>static int* lptr;<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>dst[0] = src[0];        movq _src@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl (%rax), %edx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq _dst@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl %edx, (%rax)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>ptr = dst;              movq _dst@GOTPCREL(%rip), %rdx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq _ptr@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq %rdx, (%rax)<span></span></pre></td></tr><tr><td scope="row"><pre>                        ret<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>*ptr = src[0];          movq  _ptr@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq   (%rax), %rdx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq   _src@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl   (%rax), %eax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl   %eax, (%rdx)<span></span></pre></td></tr><tr><td scope="row"><pre>                        ret<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>ldst[0] = lsrc[0];      movl _lsrc(%rip), %eax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl %eax, _ldst(%rip)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>lptr = ldst;            lea  _ldst(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq %rax, _lptr(%rip)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>*lptr = lsrc[0];        movl _lsrc(%rip), %edx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq _lptr(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl %edx, (%rax)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>bdst[0] = bsrc[0];      movq _bsrc@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl (%rax), %edx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq _bdst@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl %edx, (%rax)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>lptr = bdst;            movq _bdst@GOTPCREL(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq %rax, _lptr(%rip)<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>*lptr = bsrc[0];        movq _bsrc@GOTPCREL(%rip), %rdx<span></span></pre></td></tr><tr><td scope="row"><pre>                        movq _lptr(%rip), %rax<span></span></pre></td></tr><tr><td scope="row"><pre>                        movl (%rdx), %edx<span></span></pre></td></tr></table></div><p>The OS X x86-64 code-generation model accesses large local data through the GOT, which is different from the way the small PIC model works in the System V x86-64 environment. Indirection through the GOT obviates the need for a medium code model. This behavior stems from the fact that, when the linker lays out data, it places data that is accessed directly (small local data and the GOT itself) within 2 GB of the code. Other data can be placed farther away because these data are accessed only through the GOT. This behavior enables large (greater than 4 GB) and small executables to be built using the same code model.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40005044-SW4" title="Note"></a><p><strong>Note:</strong>&nbsp;It is acceptable for the compiler to access static data through a GOT entry. The linker preserves the static semantics of the symbol.</p><p></p></aside></div><p>The code model for function calls is very simple, as shown in <span class="content_text">Listing 2</span>.</p><a name="//apple_ref/doc/uid/TP40005044-SW3" title="Listing 2The code model for function calls"></a><p class="codesample clear"><strong class="caption_number">Listing 2</strong>&nbsp;&nbsp;The code model for function calls</p><div class="codesample clear"><table><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>extern int foo();<span></span></pre></td></tr><tr><td scope="row"><pre>static int bar();<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>foo();                    call _foo<span></span></pre></td></tr><tr><td scope="row"><pre> <span></span></pre></td></tr><tr><td scope="row"><pre>bar();                    call _bar<span></span></pre></td></tr></table></div><p>All direct function calls are made using the <code>CALL rel32</code> instruction.</p><p>The linker is responsible for creating GOT entries (also known as nonlazy pointers) as well as stub functions and lazy pointers (also known as program load table entries, or PLT entries) for calls to another linkage unit. Since the linker must create these entries, it can also choose not to create them when it sees the opportunity. The linker has a complicated set of rules that dictate which symbols must be accessed indirectly (depending on flat versus two-level namespace, weak versus non-weak definitions, symbol visibility, distance from code, and so on). But ultimately there are many symbols that can be accessed directly (not through GOT or PLT entries). For these symbols the linker makes the following optimization:</p><ol class="ol"><li class="li"><p>A <code>CALL</code> or <code>JMP</code> instruction performs a direct, PC-relative branch to the target.</p></li><li class="li"><p>A load instruction performed on a GOT entry (for example, <code>movq _foo@GOTPCREL(%rip), %rxx</code>) is transformed into a <code>LEA</code> calculation (for example, <code>leaq _foo(%rip), %rxx</code>). This transformation removes one GOT entry and saves one memory load.</p></li></ol><p>In both cases special relocations are used that allow the linker to perform this optimization.</p>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../9-Revision-3.1/history.html'>Next</a><a class='previousLink' rel='prev' href='dynamic_code.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2003, 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-02-04</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

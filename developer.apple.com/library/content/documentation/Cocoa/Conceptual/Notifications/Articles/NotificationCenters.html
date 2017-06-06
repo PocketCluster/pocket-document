@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notification Centers</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/10000043i">
+    <meta id="document-version" name="document-version" content="2.7.3">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="20000216">
+    <meta id="date" name="date" content="2009-08-18">
+    <meta id="description" name="description" content="Explains how to send and receive information about events in Cocoa programs.">
+    <meta id="book-title" name="book-title" content="Notification Programming Topics">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Core Services Layer/Foundation}, {Topic/Data Management/Event Handling}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Notification Programming Topics: Notification Centers">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Notification Programming Topics" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="NotificationQueues.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="Notifications.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/20000216" title="Notification Centers"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Notification Programming Topics</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='NotificationQueues.html'>Next</a><a class='previousLink' rel='prev' href='Notifications.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/20000216-BAJGDAFC" title="Notification Centers"></a><h1 id="pageTitle">Notification Centers</h1>
+
+<p>A <em class="newTerm">notification center</em> manages the sending and receiving of notifications. It notifies all observers of notifications meeting specific criteria. The notification information is encapsulated in <code>NSNotification</code> objects. Client objects register themselves with the notification center as observers of specific notifications posted by other objects. When an event occurs, an object posts an appropriate notification to the notification center. (See <span class="content_text"><a href="Posting.html#//apple_ref/doc/uid/20000724-CEGJFDFG" data-renderer-version="1">Posting a Notification</a></span> for more on posting notifications.) The notification center dispatches a <span class="pediaLink" data-header="Message" data-contents="A message is the name of a method, and any parameters associated with it, that are sent to, and executed by, an object. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Message.html#//apple_ref/doc/uid/TP40008195-CH59" data-renderer-version="1" target="_self">message</a></span> to each registered observer, passing the notification as the sole argument. It is possible for the posting object and the observing object to be the same.</p>
+<p><span class="pediaLink" data-header="Cocoa (Touch)" data-contents="Cocoa and Cocoa Touch are the application development environments for OS X and iOS, respectively. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Cocoa.html#//apple_ref/doc/uid/TP40008195-CH9" data-renderer-version="1" target="_self">Cocoa</a></span> includes two types of notification centers:</p>
+<ul class="ul"><li class="li"><p>The <code>NSNotificationCenter</code> class manages notifications within a single process.</p></li>
+<li class="li"><p>The <code>NSDistributedNotificationCenter</code> class manages notifications across multiple processes on a single computer.</p></li></ul>
+<section><a name="//apple_ref/doc/uid/20000216-111349" title="NSNotificationCenter"></a><h2 class="jump">NSNotificationCenter</h2>
+<p>Each process has a default notification center that you access with the <code>NSNotificationCenter +defaultCenter</code> <span class="pediaLink" data-header="Class method" data-contents="A class method is a method that operates on class objects rather than instances of the class. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ClassMethod.html#//apple_ref/doc/uid/TP40008195-CH8" data-renderer-version="1" target="_self">class method</a></span>. This notification center handles notifications within a single process. For communication between processes on the same machine, use a distributed notification center (see <span class="content_text"><a href="#//apple_ref/doc/uid/20000216-111391" data-renderer-version="1">NSDistributedNotificationCenter</a></span>).</p>
+<p>A notification center delivers notifications to observers synchronously. In other words, when posting a notification, control does not return to the poster until all observers have received and processed the notification. To send notifications asynchronously use a notification queue, which is described in <span class="content_text"><a href="NotificationQueues.html#//apple_ref/doc/uid/20000217-CJBCECJC" data-renderer-version="1">Notification Queues</a></span>.</p>
+<p>In a multithreaded application, notifications are always delivered in the thread in which the notification was posted, which may not be the same thread in which an observer registered itself.</p></section>
+<section><a name="//apple_ref/doc/uid/20000216-111391" title="NSDistributedNotificationCenter"></a><a name="//apple_ref/doc/uid/20000216-111391-BCICDDAC" title="NSDistributedNotificationCenter"></a><h2 class="jump">NSDistributedNotificationCenter</h2>
+<p>Each process has a default distributed notification center that you access with the <code>NSDistributedNotificationCenter +defaultCenter</code> <span class="pediaLink" data-header="Class method" data-contents="A class method is a method that operates on class objects rather than instances of the class. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ClassMethod.html#//apple_ref/doc/uid/TP40008195-CH8" data-renderer-version="1" target="_self">class method</a></span>. This distributed notification center handles notifications that can be sent between processes on a single machine. For communication between processes on different machines, use distributed objects (see <em><!--a target="_self" -->Distributed Objects Programming Topics<!--/a--></em>).</p>
+<p>Posting a distributed notification is an expensive operation. The notification gets sent to a systemwide server that then distributes it to all the processes that have objects registered for distributed notifications. The latency between posting the notification and the notification’s arrival in another process is unbounded. In fact, if too many notifications are being posted and the server’s queue fills up, notifications can be dropped.</p>
+<p>Distributed notifications are delivered via a process’s run loop. A process must be running a run loop in one of the “common” modes, such as <code><!--a  -->NSDefaultRunLoopMode<!--/a--></code>, to receive a distributed notification. If the receiving process is multithreaded, do not depend on the notification arriving on the main thread. The notification is usually delivered to the main thread’s run loop, but other threads could also receive the notification.</p>
+<p>Whereas a regular notification center allows any object to be observed, a distributed notification center is restricted to observing a string object. Because the posting object and the observer may be in different processes, notifications cannot contain pointers to arbitrary objects. Therefore, a distributed notification center requires notifications to use a string as the notification object. Notification matching is done based on this string, rather than an object pointer.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='NotificationQueues.html'>Next</a><a class='previousLink' rel='prev' href='Notifications.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2009 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2009-08-18</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

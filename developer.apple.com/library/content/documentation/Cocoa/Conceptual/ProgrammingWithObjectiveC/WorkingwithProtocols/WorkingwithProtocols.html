@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Working with Protocols</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40011210">
+    <meta id="document-version" name="document-version" content="2.7.1">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40011210-CH11">
+    <meta id="date" name="date" content="2014-09-17">
+    <meta id="description" name="description" content="Describes elements of best practice when writing code with Objective-C using ARC.">
+    <meta id="book-title" name="book-title" content="Programming with Objective-C">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Languages & Utilities/Objective-C}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Programming with Objective-C: Working with Protocols">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Programming with Objective-C" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../FoundationTypesandCollections/FoundationTypesandCollections.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../CustomizingExistingClasses/CustomizingExistingClasses.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40011210-CH11" title="Working with Protocols"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Programming with Objective-C</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../FoundationTypesandCollections/FoundationTypesandCollections.html'>Next</a><a class='previousLink' rel='prev' href='../CustomizingExistingClasses/CustomizingExistingClasses.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40011210-CH11-SW1" title="Working with Protocols"></a><h1 id="pageTitle">Working with Protocols</h1><p>In the real world, people on official business are often required to follow strict procedures when dealing with certain situations. Law enforcement officials, for example, are required to “follow protocol” when making enquiries or collecting evidence.</p><p>In the world of object-oriented programming, it’s important to be able to define a set of behavior that is expected of an object in a given situation. As an example, a table view expects to be able to communicate with a data source object in order to find out what it is required to display. This means that the data source must respond to a specific set of messages that the table view might send.</p><p>The data source could be an instance of any class, such as a view controller (a subclass of <code>NSViewController</code> on OS X or <code>UIViewController</code> on iOS) or a dedicated data source class that perhaps just inherits from <code>NSObject</code>. In order for the table view to know whether an object is suitable as a data source, it’s important to be able to declare that the object implements the necessary methods.</p><p>Objective-C allows you to define <em class="newTerm">protocols</em>, which declare the methods expected to be used for a particular situation. This chapter describes the syntax to define a formal protocol, and explains how to mark a class interface as <em class="newTerm">conforming</em> to a protocol, which means that the class must implement the required methods.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW2" title="Protocols Define Messaging Contracts"></a><h2 class="jump">Protocols Define Messaging Contracts</h2><p>A class interface declares the methods and properties associated with that class. A protocol, by contrast, is used to declare methods and properties that are independent of any specific class.</p><p>The basic syntax to define a protocol looks like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@protocol ProtocolName<span></span></pre></td></tr><tr><td scope="row"><pre>// list of methods and properties<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>Protocols can include declarations for both instance methods and class methods, as well as properties.</p><p>As an example, consider a custom view class that is used to display a pie chart, as shown in <span class="content_text"><a href="#//apple_ref/doc/uid/TP40011210-CH11-SW4" data-renderer-version="1">Figure 5-1</a></span>.</p><figure class="figure"><a name="//apple_ref/doc/uid/TP40011210-CH11-SW4" title="Figure 5-1A Custom Pie Chart View"></a><figcaption><strong class="caption_number">Figure 5-1</strong>&nbsp;&nbsp;A Custom Pie Chart View</figcaption><img src="../Art/piechartsim_2x.png" alt="" width="194" height="379"></figure><p>To make the view as reusable as possible, all decisions about the information should be left to another object, a data source. This means that multiple instances of the same view class could display different information just by communicating with different sources.</p><p>The minimum information needed by the pie chart view includes the number of segments, the relative size of each segment, and the title of each segment. The pie chart’s data source protocol, therefore, might look like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@protocol XYZPieChartViewDataSource<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSUInteger)numberOfSegments;<span></span></pre></td></tr><tr><td scope="row"><pre>- (CGFloat)sizeOfSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSString *)titleForSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-SW14" title="Note"></a><p><strong>Note:</strong>&nbsp;This protocol uses the <code>NSUInteger</code> value for unsigned integer scalar values. This type is discussed in more detail in the next chapter.</p><p></p></aside></div><p>The pie chart view class interface would need a property to keep track of the data source object. This object could be of any class, so the basic property type will be <code>id</code>. The only thing that is known about the object is that it conforms to the relevant protocol.</p><p>The syntax to declare the data source property for the view would look like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface XYZPieChartView : UIView<span></span></pre></td></tr><tr><td scope="row"><pre>@property (weak) id &lt;XYZPieChartViewDataSource&gt; dataSource;<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>Objective-C uses angle brackets to indicate conformance to a protocol. This example declares a weak property for a generic object pointer that conforms to the <code>XYZPieChartViewDataSource</code> protocol.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-SW5" title="Note"></a><p><strong>Note:</strong>&nbsp;Delegate and data source properties are usually marked as <code>weak</code> for the object graph management reasons described earlier, in <span class="content_text"><a href="../EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW22" data-renderer-version="1">Avoid Strong Reference Cycles</a></span>.</p><p></p></aside></div><p>By specifying the required protocol conformance on the property, you’ll get a compiler warning if you attempt to set the property to an object that doesn’t conform to the protocol, even though the basic property class type is generic. It doesn’t matter whether the object is an instance of <code>UIViewController</code> or <code>NSObject</code>. All that matters is that it conforms to the protocol, which means the pie chart view knows it can request the information it needs.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW6" title="Protocols Can Have Optional Methods"></a><h3 class="jump">Protocols Can Have Optional Methods</h3><p>By default, all methods declared in a protocol are required methods. This means that any class that conforms to the protocol must implement those methods.</p><p>It’s also possible to specify <em class="newTerm">optional</em> methods in a protocol. These are methods that a class can implement only if it needs to.</p><p>As an example, you might decide that the titles on the pie chart should be optional. If the data source object doesn’t implement the <code>titleForSegmentAtIndex:</code>, no titles should be shown in the view.</p><p>You can mark protocol methods as optional using the <code>@optional</code> directive, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@protocol XYZPieChartViewDataSource<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSUInteger)numberOfSegments;<span></span></pre></td></tr><tr><td scope="row"><pre>- (CGFloat)sizeOfSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@optional<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSString *)titleForSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>In this case, only the <code>titleForSegmentAtIndex:</code> method is marked optional. The previous methods have no directive, so are assumed to be required.</p><p>The <code>@optional</code> directive applies to any methods that follow it, either until the end of the protocol definition, or until another directive is encountered, such as <code>@required</code>. You might add further methods to the protocol like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@protocol XYZPieChartViewDataSource<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSUInteger)numberOfSegments;<span></span></pre></td></tr><tr><td scope="row"><pre>- (CGFloat)sizeOfSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@optional<span></span></pre></td></tr><tr><td scope="row"><pre>- (NSString *)titleForSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>- (BOOL)shouldExplodeSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@required<span></span></pre></td></tr><tr><td scope="row"><pre>- (UIColor *)colorForSegmentAtIndex:(NSUInteger)segmentIndex;<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>This example defines a protocol with three required methods and two optional methods.</p><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW7" title="Check that Optional Methods Are Implemented at Runtime"></a><h4 class="jump">Check that Optional Methods Are Implemented at Runtime</h4><p>If a method in a protocol is marked as optional, you must check whether an object implements that method before attempting to call it.</p><p>As an example, the pie chart view might test for the segment title method like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSString *thisSegmentTitle;<span></span></pre></td></tr><tr><td scope="row"><pre>    if ([self.dataSource respondsToSelector:@selector(titleForSegmentAtIndex:)]) {<span></span></pre></td></tr><tr><td scope="row"><pre>        thisSegmentTitle = [self.dataSource titleForSegmentAtIndex:index];<span></span></pre></td></tr><tr><td scope="row"><pre>    }<span></span></pre></td></tr></table></div><p>The <code>respondsToSelector:</code> method uses a <span class="pediaLink" data-header="Selector" data-contents="A selector is the name used to select a method to execute for an object, or the unique identifier that replaces the name when the source code is compiled. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Selector.html#//apple_ref/doc/uid/TP40008195-CH48" data-renderer-version="1" target="_self">selector</a></span>, which refers to the identifier for a method after compilation. You can provide the correct identifier by using the <code>@selector()</code> directive and specifying the name of the method.</p><p>If the data source in this example implements the method, the title is used; otherwise, the title remains <code>nil</code>.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-SW8" title="Remember"></a><p><strong>Remember:</strong>&nbsp;Local <em>object</em> variables are automatically initialized to <code>nil</code>.</p><p></p></aside></div><p>If you attempt to call the <code>respondsToSelector:</code> method on an <code>id</code> conforming to the protocol as it’s defined above, you’ll get a compiler error that there’s no known instance method for it. Once you qualify an <code>id</code> with a protocol, all static type-checking comes back; you’ll get an error if you try to call any method that isn’t defined in the specified protocol. One way to avoid the compiler error is to set the custom protocol to adopt the <code>NSObject</code> protocol.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW9" title="Protocols Inherit from Other Protocols"></a><h3 class="jump">Protocols Inherit from Other Protocols</h3><p>In the same way that an Objective-C class can inherit from a superclass, you can also specify that one protocol conforms to another.</p><p>As an example, it’s best practice to define your protocols to conform to the <code>NSObject</code> protocol (some of the <code>NSObject</code> behavior is split from its class interface into a separate protocol; the <code>NSObject</code> class adopts the <code>NSObject</code> protocol). </p><p>By indicating that your own protocol conforms to the <code>NSObject</code> protocol, you’re indicating that any object that adopts the custom protocol will also provide implementations for each of the <code>NSObject</code> protocol methods. Because you’re presumably using some subclass of <code>NSObject</code>, you don’t need to worry about providing your own implementations for these <code>NSObject</code> methods. The protocol adoption is useful, however, for situations like that described above.</p><p>To specify that one protocol conforms to another, you provide the name of the other protocol in angle brackets, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@protocol MyProtocol &lt;NSObject&gt;<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>In this example, any object that adopts <code>MyProtocol</code> also effectively adopts all the methods declared in the <code>NSObject</code> protocol.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW3" title="Conforming to Protocols"></a><h2 class="jump">Conforming to Protocols</h2><p>The syntax to indicate that a class adopts a protocol again uses angle brackets, like this</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface MyClass : NSObject &lt;MyProtocol&gt;<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><p>This means that any instance of <code>MyClass</code> will respond not only to the methods declared specifically in the interface, but that <code>MyClass</code> also provides implementations for the required methods in <code>MyProtocol</code>. There’s no need to redeclare the protocol methods in the class interface—the adoption of the protocol is sufficient.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-DontLinkElementID_5" title="Note"></a><p><strong>Note:</strong>&nbsp;The compiler does not automatically synthesize properties declared in adopted protocols.</p><p></p></aside></div><p>If you need a class to adopt multiple protocols, you can specify them as a comma-separated list, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>@interface MyClass : NSObject &lt;MyProtocol, AnotherProtocol, YetAnotherProtocol&gt;<span></span></pre></td></tr><tr><td scope="row"><pre>...<span></span></pre></td></tr><tr><td scope="row"><pre>@end<span></span></pre></td></tr></table></div><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-SW10" title="Tip"></a><p><strong>Tip:</strong>&nbsp;If you find yourself adopting a large number of protocols in a class, it may be a sign that you need to refactor an overly-complex class by splitting the necessary behavior across multiple smaller classes, each with clearly-defined responsibilities.</p><p>One relatively common pitfall for new OS X and iOS developers is to use a single application delegate class to contain the majority of an application’s functionality (managing underlying data structures, serving the data to multiple user interface elements, as well as responding to gestures and other user interaction). As complexity increases, the class becomes more difficult to maintain.</p><p></p></aside></div><p>Once you’ve indicated conformance to a protocol, the class must at least provide method implementations for each of the required protocol methods, as well as any optional methods you choose. The compiler will warn you if you fail to implement any of the required methods.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/TP40011210-CH11-SW11" title="Note"></a><p><strong>Note:</strong>&nbsp;The method declaration in a protocol is just like any other declaration. The method name and argument types in the implementation must match the declaration in the protocol.</p><p></p></aside></div><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW12" title="Cocoa and Cocoa Touch Define a Large Number of Protocols"></a><h3 class="jump">Cocoa and Cocoa Touch Define a Large Number of Protocols</h3><p>Protocols are used by Cocoa and Cocoa Touch objects for a variety of different situations. For example, the table view classes (<code>NSTableView</code> for OS X and <code>UITableView</code> for iOS) both use a data source object to supply them with the necessary information. Both define their own data source protocol, which is used in much the same way as the <code>XYZPieChartViewDataSource</code> protocol example above. Both table view classes also allow you to set a delegate object, which again must conform to the relevant <code>NSTableViewDelegate</code> or <code>UITableViewDelegate</code> protocol. The delegate is responsible for dealing with user interactions, or customizing the display of certain entries.</p><p>Some protocols are used to indicate <em class="newTerm">non-hierarchical similarities</em> between classes. Rather than being linked to specific class requirements, some protocols instead relate to more general Cocoa or Cocoa Touch communication mechanisms that may be adopted by multiple, unrelated classes.</p><p>For example, many framework model objects (such as the collection classes like <code>NSArray</code> and <code>NSDictionary</code>) support the <code>NSCoding</code> protocol, which means they can encode and decode their properties for archival or distribution as raw data. <code>NSCoding</code> makes it relatively easy to write entire object graphs to disk, provided every object within the graph adopts the protocol.</p><p>A few Objective-C language-level features also rely on protocols. In order to use fast enumeration, for example, a collection must adopt the <code>NSFastEnumeration</code> protocol, as described in <span class="content_text"><a href="../FoundationTypesandCollections/FoundationTypesandCollections.html#//apple_ref/doc/uid/TP40011210-CH7-SW30" data-renderer-version="1">Fast Enumeration Makes It Easy to Enumerate a Collection</a></span>. Additionally, some objects can be copied, such as when using a property with a <code>copy</code> attribute as described in <span class="content_text"><a href="../EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW35" data-renderer-version="1">Copy Properties Maintain Their Own Copies</a></span>. Any object you try to copy must adopt the <code>NSCopying</code> protocol, otherwise you’ll get a runtime exception.</p></section></section><section><a name="//apple_ref/doc/uid/TP40011210-CH11-SW13" title="Protocols Are Used for Anonymity"></a><h2 class="jump">Protocols Are Used for Anonymity</h2><p>Protocols are also useful in situations where the class of an object isn’t known, or needs to stay hidden.</p><p>As an example, the developer of a framework may choose not to publish the interface for one of the classes within the framework. Because the class name isn’t known, it’s not possible for a <em>user</em> of the framework to create an instance of that class directly. Instead, some other object in the framework would typically be designated to return a ready-made instance, like this:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    id utility = [frameworkObject anonymousUtility];<span></span></pre></td></tr></table></div><p>In order for this <code>anonymousUtility</code> object to be useful, the developer of the framework can publish a protocol that reveals some of its methods. Even though the original class interface isn’t provided, which means the class stays anonymous, the object can still be used in a limited way:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    id &lt;XYZFrameworkUtility&gt; utility = [frameworkObject anonymousUtility];<span></span></pre></td></tr></table></div><p>If you’re writing an iOS app that uses the Core Data framework, for example, you’ll likely run into the <code>NSFetchedResultsController</code> class. This class is designed to help a data source object supply stored data to an iOS <code>UITableView</code>, making it easy to provide information like the number of rows.</p><p>If you’re working with a table view whose content is split into multiple sections, you can also ask a fetched results controller for the relevant section information. Rather than returning a specific class containing this section information, the <code>NSFetchedResultsController</code> class instead returns an anonymous object, which conforms to the <code>NSFetchedResultsSectionInfo</code> protocol. This means it’s still possible to query the object for the information you need, such as the number of rows in a section:</p><div class="codesample clear"><table><tr><td scope="row"><pre>    NSInteger sectionNumber = ...<span></span></pre></td></tr><tr><td scope="row"><pre>    id &lt;NSFetchedResultsSectionInfo&gt; sectionInfo =<span></span></pre></td></tr><tr><td scope="row"><pre>            [self.fetchedResultsController.sections objectAtIndex:sectionNumber];<span></span></pre></td></tr><tr><td scope="row"><pre>    NSInteger numberOfRowsInSection = [sectionInfo numberOfObjects];<span></span></pre></td></tr></table></div><p>Even though you don’t know the class of the <code>sectionInfo</code> object, the <code>NSFetchedResultsSectionInfo</code> protocol dictates that it can respond to the <code>numberOfObjects</code> message.</p></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../FoundationTypesandCollections/FoundationTypesandCollections.html'>Next</a><a class='previousLink' rel='prev' href='../CustomizingExistingClasses/CustomizingExistingClasses.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2014 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2014-09-17</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

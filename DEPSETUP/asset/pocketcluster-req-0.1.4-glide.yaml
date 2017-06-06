@@ -1,0 +1,49 @@
+package: github.com/stkim1/pc-core
+import:
+- package: github.com/jinzhu/gorm
+  version: 5409931a1bb87e484d68d649af9367c207713ea2
+- package: github.com/jinzhu/inflection
+  version: 1c35d901db3da928c72a72d8458480cc9ade058f
+- package: github.com/mattn/go-sqlite3
+  version: v1.2.0
+- package: gopkg.in/vmihailenco/msgpack.v2
+  version: v2.8.3
+- package: github.com/spf13/afero
+  version: 9be650865eab0c12963d8753212f4f9c66cdcf12
+- package: github.com/cloudflare/cfssl
+  version: 7fb22c8cba7ecaf98e4082d22d65800cf45e042a
+- package: github.com/pkg/errors
+  version: 839d9e913e063e28dfd0e6c7b7512793e0a48be9
+- package: github.com/ricochet2200/go-disk-usage
+  version: f0d1b743428fc09792f93233d9412f89f88fa2ab
+# For swarm
+- package: github.com/docker/leadership
+  version: bfc7753dd48af19513b29deec23c364bf0f274eb
+- package: github.com/docker/libkv
+  version: aabc039ad04deb721e234f99cd1b4aa28ac71a40
+# For distribution
+- package: github.com/bshuster-repo/logrus-logstash-hook
+  version: 5f729f2fb50a301153cae84ff5c58981d51c095a
+- package: github.com/cpuguy83/go-md2man
+  version: a65d4d2de4d5f7c74868dfa9b202a3c8be315aaa
+# ARMv7/ARM64 don't pass tests with old version so upgrade
+# https://github.com/golang/crypto/commit/728b753d0135da6801d45a38e6f43ff55779c5c2 (Jan 24, 2017)
+- package: golang.org/x/crypto
+  version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
+# cloudflare cfssl depedendency
+- package: github.com/jmoiron/sqlx
+  version: 398dd5876282499cdfd4cb8ea0f31a672abe9495
+# for crash log
+- package: github.com/getsentry/raven-go
+  version: b68337dbf03e7fbb53d9fd9b63fd09b28e8f13f7
+# (03/31/2017) this is a very good CA package. Nontheless, we'll not going to use it for now
+# - package: github.com/certifi/gocertifi
+#  version: 03be5e6bb9874570ea7fb0961225d193cbc374c5
+- package: github.com/mitchellh/go-ps
+  version: 4fdf99ab29366514c69ccccddab5dc58b8d84062
+- package: github.com/coreos/go-systemd
+  version: v14
+- package: github.com/godbus/dbus
+  version: v4.0.0
+- package: github.com/miekg/dns
+  version: 75e6e86cc601825c5dbcd4e0c209eab180997cd7

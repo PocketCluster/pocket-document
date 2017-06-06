@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>About Bundles</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/10000123i">
+    <meta id="document-version" name="document-version" content="6.7.0">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="10000123i-CH100">
+    <meta id="date" name="date" content="2017-03-21">
+    <meta id="description" name="description" content="Explains how to use bundle objects to organize resources.">
+    <meta id="book-title" name="book-title" content="Bundle Programming Guide">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Topic/Data Management/File Management}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Bundle Programming Guide: About Bundles">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Bundle Programming Guide" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../BundleTypes/BundleTypes.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../Introduction/Introduction.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/10000123i-CH100" title="About Bundles"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Bundle Programming Guide</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../BundleTypes/BundleTypes.html'>Next</a><a class='previousLink' rel='prev' href='../Introduction/Introduction.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/10000123i-CH100-SW1" title="About Bundles"></a><h1 id="pageTitle">About Bundles</h1><p>Bundles are a convenient way to deliver software in macOS and iOS. Bundles provide a simplified interface for end users and at the same time provide support for development. This chapter provides an introduction to bundles and discusses the role they play in macOS and iOS.</p><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW2" title="Bundles and Packages"></a><h2 class="jump">Bundles and Packages</h2><p>Although bundles and packages are sometimes referred to interchangeably, they actually represent very distinct concepts:</p><ul class="ul"><li class="li"><p>A <em class="newTerm">package</em> is any directory that the Finder presents to the user as if it were a single file.</p></li><li class="li"><p>A <em class="newTerm">bundle</em> is a directory with a standardized hierarchical structure that holds executable code and the resources used by that code.</p></li></ul><p>Packages provide one of the fundamental abstractions that makes macOS easy to use. If you look at an application or plug-in on your computer, what you are actually looking at is a directory. Inside the package directory are the code and resource files needed to make the application or plug-in run. When you interact with the package directory, however, the Finder treats it like a single file. This behavior prevents casual users from making changes that might adversely affect the contents of the package. For example, it prevents users from rearranging or deleting resources or code modules that might prevent an application from running correctly.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/10000123i-CH100-SW3" title="Note"></a><p><strong>Note:</strong>&nbsp;Even though packages are treated as opaque files by default, it is still possible for users to view and modify their contents. On the contextual menu for package directories is a Show Package Contents command. Selecting this command displays a new Finder window set to the top level of the package directory. The user can use this window to navigate the package's directory structure and make changes as if it were a regular directory hierarchy.  </p><p></p></aside></div><p>Whereas packages are there to improve the user experience, bundles are geared more toward helping developers package their code and to helping the operating system access that code. Bundles define the basic structure for organizing the code and resources associated with your software. The presence of this structure also helps facilitate important features such as localization. The exact structure of a bundle depends on whether you are creating an application, <span class="pediaLink" data-header="Framework" data-contents="A framework is a bundle (a structured directory) that contains a dynamic shared library along with associated resources, such as nib files, image files, and header files. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Framework.html#//apple_ref/doc/uid/TP40008195-CH56" data-renderer-version="1" target="_self">framework</a></span>, or plug-in. It also depends on other factors such as the target platform and the type of plug-in.</p><p>The reason bundles and packages are sometimes considered to be interchangeable is that many types of bundles are also packages. For example, applications and loadable bundles are packages because they are usually treated as opaque directories by the system. However, not all bundles are packages and vice versa.</p><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW4" title="How the System Identifies Bundles and Packages"></a><h3 class="jump">How the System Identifies Bundles and Packages</h3><p>The Finder considers a directory to be a package if any of the following conditions are true:</p><ul class="ul"><li class="li"><p>The directory has a known filename extension: <code>.app</code>, <code>.bundle</code>, <code>.framework</code>, <code>.plugin</code>, <code>.kext</code>, and so on. </p></li><li class="li"><p>The directory has an extension that some other application claims represents a package type; see <span class="content_text"><a href="../DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1" data-renderer-version="1">Document Packages</a></span>. </p></li><li class="li"><p>The directory has its package bit set. </p></li></ul><p>The preferred way to specify a package is to give the package directory a known filename extension. For the most part, Xcode takes care of this for you by providing templates that apply the correct extension. All you have to do is create an Xcode project of the appropriate type.  </p><p>Most bundles are also packages. For example, applications and plug-ins are typically presented as a single file by the Finder. However, this is not true for all bundle types. In particular, a framework is a type of bundle that is treated as a single unit for the purposes of linking and runtime usage, but framework directories are transparent so that developers can view the header files and other resources they contain. </p></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW5" title="About Bundle Display Names"></a><h3 class="jump">About Bundle Display Names</h3><p>Display names give the user some control over how bundles and packages appear in the Finder without breaking clients that rely on them. Whereas a user can rename a file freely, renaming an application or framework might cause related code modules that refer to the application or framework by name to break. Therefore, when the user changes the name of a bundle, the change is superficial only. Rather than change the bundle name in the file system, the Finder associates a separate string (known as the <em class="newTerm">display name</em>) with the bundle and displays that string instead. </p><p>Display names are for presentation to the user only. You never use display names to open or access directories in your code, but you do use them when displaying the name of the directory to the user. By default, a bundle’s display name is the same as the bundle name itself. However, the system may alter the default display name in the following cases:</p><ul class="ul"><li class="li"><p>If the bundle is an application, the Finder hides the <code>.app</code> extension in most cases.</p></li><li class="li"><p><a name="//apple_ref/doc/uid/10000123i-CH100-DontLinkElementID_9"></a><a name="//apple_ref/doc/uid/10000123i-CH100-DontLinkElementID_10"></a>If the bundle supports localized display names (and the user has not explicitly changed the bundle name), the Finder displays the name that matches the user’s current language settings. </p></li></ul><p>Although the Finder hides the <code>.app</code> extension for applications most of the time, it may display it to prevent confusion. For example, if the user changes the name of an application and the new name contains another filename extension, the Finder shows the <code>.app</code>. extension to make it clear that the bundle is an application. For example, if you were to add the <code>.mov</code> extension to the <code>Chess</code> application, the Finder would display <code>Chess.mov.app</code> to prevent users from thinking <code>Chess.mov</code> is a QuickTime file.</p><p>For more information about display names and specifying localized bundle names, see <em><!--a target="_self" -->File System Overview<!--/a--></em>. </p></section></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW6" title="The Advantages of Bundles"></a><h2 class="jump">The Advantages of Bundles</h2><p>Bundles provide the following advantages for developers:</p><ul class="ul"><li class="li"><p>Because bundles are directory hierarchies in the file system, a bundle just contains files. Therefore, you can use all of the same file-based interfaces to open your bundle resources as you do to open other types of files.  </p></li><li class="li"><p>The bundle directory structure makes it easy to support multiple localizations. You can easily add new localized resources or remove unwanted ones. </p></li><li class="li"><p>Bundles can reside on volumes of many different formats, including multiple fork formats like HFS, HFS+, and AFP, and single-fork formats like UFS, SMB, and NFS. </p></li><li class="li"><p>Users can install, relocate, and remove bundles simply by dragging them around in the Finder. </p></li><li class="li"><p>Bundles that are also packages, and are therefore treated as opaque files, are less susceptible to accidental user modifications, such as removal, modification, or renaming of critical resources.</p></li><li class="li"><p>A bundle can support multiple chip architectures (PowerPC, Intel) and different address space requirements (32-bit/64-bit). It can also support the inclusion of specialized executables (for example, libraries optimized for a particular set of vector instructions). </p></li><li class="li"><p>Most (but not all) executable code can be bundled. Applications, frameworks (shared libraries), and plug-ins all support the bundle model. Static libraries, dynamic libraries, shell scripts, and UNIX command line tools do not use the bundle structure. </p></li><li class="li"><p>A bundled application can run directly from a server. No special shared libraries, extensions, and resources need to be installed on the local system.</p></li></ul></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW7" title="Types of Bundles"></a><h2 class="jump">Types of Bundles</h2><p>Although all bundles support the same basic features, there are variations in the way you define and create bundles that define their intended usage: </p><ul class="ul"><li class="li"><p><strong>Application</strong> - An application bundle manages the code and resources associated with a launchable process. The exact structure of this bundle depends on the platform (iOS or macOS) that you are targeting. For information about the structure of application bundles, see <span class="content_text"><a href="../BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW13" data-renderer-version="1">Application Bundles</a></span>.  </p></li><li class="li"><p><strong>Frameworks</strong> - A <span class="pediaLink" data-header="Framework" data-contents="A framework is a bundle (a structured directory) that contains a dynamic shared library along with associated resources, such as nib files, image files, and header files. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Framework.html#//apple_ref/doc/uid/TP40008195-CH56" data-renderer-version="1" target="_self">framework</a></span> bundle manages a dynamic shared library and its associated resources, such as header files. An application can link against one or more frameworks to take advantage of the code they contain. For information about the structure of framework bundles, see <span class="content_text"><a href="../BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW28" data-renderer-version="1">Anatomy of a Framework Bundle</a></span>.  </p></li><li class="li"><p><strong>Plug-Ins</strong> - macOS supports plug-ins for many system features. Plug-ins are a way for an application to load custom code modules dynamically. The following list identifies some of the key types of plug-ins you might want to develop:</p><ul class="nested"><li class="nested li"><p><strong>Custom plug-ins</strong> are plug-ins you define for your own purposes; see <span class="content_text"><a href="../BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW32" data-renderer-version="1">Anatomy of a Loadable Bundle</a></span>. </p></li><li class="nested li"><p><strong>Image Unit plug-ins</strong> add custom image-processing behaviors to the Core Image technology; see <em><a href="../../../../GraphicsImaging/Conceptual/ImageUnitTutorial/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004531" data-renderer-version="1" target="_self">Image Unit Tutorial</a></em>.</p></li><li class="nested li"><p><strong>Interface Builder plug-ins</strong> contain custom objects that you want to integrate into Interface Builder’s library window.</p></li><li class="nested li"><p><strong>Preference Pane plug-ins</strong> define custom preferences that you want to integrate into the System Preferences application; see <em><a href="../../../../UserExperience/Conceptual/PreferencePanes/PreferencePanes.html#//apple_ref/doc/uid/10000110i" data-renderer-version="1" target="_self">Preference Pane Programming Guide</a></em>.</p></li><li class="nested li"><p><strong>Quartz Composer plug-ins</strong> define custom patches for the Quartz Composer application; see <em><a href="../../../../GraphicsImaging/Conceptual/QuartzComposer_Patch_PlugIn_ProgGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004787" data-renderer-version="1" target="_self">Quartz Composer Custom Patch Programming Guide</a></em>.</p></li><li class="nested li"><p><strong>Quick Look plug-ins</strong> support the display of custom document types using Quick Look; see <em><a href="../../../../UserExperience/Conceptual/Quicklook_Programming_Guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005020" data-renderer-version="1" target="_self">Quick Look Programming Guide</a></em>. </p></li><li class="nested li"><p><strong>Spotlight plug-ins</strong> support the indexing of custom document types so that those documents can be searched by the user; see <em><a href="../../../../Carbon/Conceptual/MDImporters/MDImporters.html#//apple_ref/doc/uid/TP40001267" data-renderer-version="1" target="_self">Spotlight Importer Programming Guide</a></em>. </p></li><li class="nested li"><p><strong>WebKit plug-ins</strong> extend the content types supported by common web browsers.</p></li><li class="nested li"><p><strong>Widgets</strong> add new HTML-based applications to Dashboard. </p></li></ul></li></ul><p>Although document formats can leverage the bundle structure to organize their contents, documents are generally not considered bundles in the purest sense. A document that is implemented as a directory and treated as an opaque type is considered to be a document package, regardless of its internal format. For more information about document packages, see <span class="content_text"><a href="../DocumentPackages/DocumentPackages.html#//apple_ref/doc/uid/10000123i-CH106-SW1" data-renderer-version="1">Document Packages</a></span>. </p></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW11" title="Creating a Bundle"></a><h2 class="jump">Creating a Bundle</h2><p>For the most part, you do not create bundles or packages manually. When you create a new Xcode project (or add a target to an existing project), Xcode automatically creates the required bundle structure when needed. For example, the application, framework, and loadable bundle targets all have associated bundle structures. When you build any of these targets, Xcode automatically creates the corresponding bundle for you.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/10000123i-CH100-SW12" title="Note"></a><p><strong>Note:</strong>&nbsp;Some Xcode targets (such as shell tools and static libraries) do not result in the creation of a bundle or package. This is normal and there is no need to create bundles specifically for these target types. The resulting binaries generated for those targets are intended to be used as is.</p><p></p></aside></div><p>If you use make files (instead of Xcode) to build your projects, there is no magic to creating a bundle. A bundle is just a directory in the file system with a well-defined structure and a specific filename extension added to the end of the bundle directory name. As long as you create the top-level bundle directory and structure the contents of your bundle appropriately, you can access those contents using the programmatic support for accessing bundles. For more information on how to structure your bundle directory, see <span class="content_text"><a href="../BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW1" data-renderer-version="1">Bundle Structures</a></span>.</p></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW8" title="Programmatic Support for Accessing Bundles"></a><h2 class="jump">Programmatic Support for Accessing Bundles</h2><p>Programs that refer to bundles, or are themselves bundled, can take advantage of interfaces in Cocoa and Core Foundation to access the contents of a bundle. Using these interfaces you can find bundle resources, get information about the bundle’s configuration, and load executable code. In Objective-C applications, you use the <code><a href="https://developer.apple.com/reference/foundation/bundle" target="_self" class="urlLink">NSBundle</a></code> class to get and manage bundle information. For C-based applications, you can use the functions associated with the <code><a href="https://developer.apple.com/reference/corefoundation/cfbundle" target="_self" class="urlLink">CFBundleRef</a></code> opaque type to manage a bundle.</p><div class="notebox"><aside><a name="//apple_ref/doc/uid/10000123i-CH100-SW9" title="Note"></a><p><strong>Note:</strong>&nbsp;Unlike many other Core Foundation and Cocoa types, <code>NSBundle</code> and <code>CFBundleRef</code> are not toll-free bridged data types and cannot be used interchangeably. However, you can extract the bundle path information from either object and use it to create the other.</p><p></p></aside></div><p>For information about how to use the programmatic support in Cocoa and Core Foundation to access bundles, see <span class="content_text"><a href="../AccessingaBundlesContents/AccessingaBundlesContents.html#//apple_ref/doc/uid/10000123i-CH104-SW1" data-renderer-version="1">Accessing a Bundle's Contents</a></span>.  </p></section><section><a name="//apple_ref/doc/uid/10000123i-CH100-SW10" title="Guidelines for Using Bundles"></a><h2 class="jump">Guidelines for Using Bundles</h2><p>Bundles are the preferred organization mechanism for software in macOS and iOS. The bundle structure lets you group executable code and the resources to support that code in one place and in an organized way. The following guidelines offer some additional advice on how to use bundles:</p><ul class="ul"><li class="li"><p>Always include an information-property list (<code>Info.plist</code>) file in your bundle. Make sure you include the keys recommended for your bundle type. For a list of all keys you can include in this file, see <em><a href="../../../../MacOSX/Conceptual/BPRuntimeConfig/000-Introduction/introduction.html#//apple_ref/doc/uid/10000170i" data-renderer-version="1" target="_self">Runtime Configuration Guidelines</a></em>. </p></li><li class="li"><p>If an application cannot run without a specific resource file, include that file inside the application bundle. Applications should always include all of the images, strings files, localizable resources, and plug-ins that they need to operate. Noncritical resources should similarly be stored inside the application bundle whenever possible but may be placed outside the bundle if needed. For more information about the bundle structure of applications, see <span class="content_text"><a href="../BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW13" data-renderer-version="1">Application Bundles</a></span>.</p></li><li class="li"><p>If you plan to load C++ code from a bundle, you might want to mark the symbols you plan to load as <code>extern “C”</code>. Neither <code>NSBundle</code> nor the Core Foundation <code>CFBundleRef</code> functions know about C++ name mangling conventions, so marking your symbols this way can make it much easier to identify them later.</p></li><li class="li"><p>You cannot use the <code>NSBundle</code> class to load Code Fragment Manager (CFM) code. If you need to load CFM-based code, you must use the functions for the <code><a href="https://developer.apple.com/reference/corefoundation/cfbundle" target="_self" class="urlLink">CFBundleRef</a></code> or <code><a href="https://developer.apple.com/reference/corefoundation/cfplugin" target="_self" class="urlLink">CFPlugInRef</a></code> opaque types. You may load CFM-based plugins from a Mach-O executable using this technique.</p></li><li class="li"><p>You should always use the <code><a href="https://developer.apple.com/reference/foundation/bundle" target="_self" class="urlLink">NSBundle</a></code> class (as opposed to the functions associated with the <code>CFBundleRef</code> opaque type) to load any bundle containing Java code. </p></li><li class="li"><p>When loading bundles containing <span class="pediaLink" data-header="Objective-C" data-contents="Objective-C defines a small but powerful set of extensions to the ANSI  C programming language that enables sophisticated object-oriented programming. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/ObjectiveC.html#//apple_ref/doc/uid/TP40008195-CH43" data-renderer-version="1" target="_self">Objective-C</a></span> code, you may use either the <code>NSBundle</code> class or the functions associated with the <code>CFBundleRef</code> opaque type in macOS v10.5 and later, but there are differences in behavior for each. If you use the Core Foundation functions to load a plug-in or other loadable bundle (as opposed to a framework or dynamic shared library), the functions load the bundle privately and bind its symbols immediately; if you use <code>NSBundle</code>, the bundle is loaded globally and its symbols are <span class="pediaLink" data-header="Dynamic binding" data-contents="Dynamic binding is determining the method to invoke at runtime instead of at compile time. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/DynamicBinding.html#//apple_ref/doc/uid/TP40008195-CH15" data-renderer-version="1" target="_self">bound</a></span> lazily. In addition, bundles loaded using the <code>NSBundle</code> class cause the generation of <code><a href="https://developer.apple.com/reference/foundation/nsbundledidloadnotification" target="_self" class="urlLink">NSBundleDidLoadNotification</a></code> <span class="pediaLink" data-header="Notification" data-contents="A notification is a message sent to one or more observing objects to inform them of an event in a program. "><a href="../../../../General/Conceptual/DevPedia-CocoaCore/Notification.html#//apple_ref/doc/uid/TP40008195-CH35" data-renderer-version="1" target="_self">notifications</a></span>, whereas those loaded using the Core Foundation functions do not.  </p></li></ul></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../BundleTypes/BundleTypes.html'>Next</a><a class='previousLink' rel='prev' href='../Introduction/Introduction.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2017 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2017-03-21</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

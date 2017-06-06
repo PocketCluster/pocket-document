@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tuning for Performance and Responsiveness</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta charset="utf-8">
+    <meta id="book-resource-type" name="book-resource-type" content="Guide">
+    <meta scheme="apple_ref" id="identifier" name="identifier" content="//apple_ref/doc/uid/TP40010543">
+    <meta id="document-version" name="document-version" content="5.2.0">
+    <meta id="build" name="build" content="ded95564c405529dbbbe590063edd114" />
+    <meta id="chapterId" name="chapterId" content="TP40010543-CH9">
+    <meta id="date" name="date" content="2015-03-09">
+    <meta id="description" name="description" content="Introduces the development process for Mac apps.">
+    <meta id="book-title" name="book-title" content="Mac App Programming Guide">
+    <meta id="book-root" name="book-root" content="../">
+    <meta id="book-json" name="book-json" content="../book.json">
+    <meta id="devcenter" name="devcenter" content="Mac Dev Center">
+    <meta id="devcenter-url" name="devcenter-url" content="http://developer.apple.com/devcenter/mac">
+    <meta id="reflib" name="reflib" content="Guides and Sample Code">
+    <meta id="book-assignments" name="book-assignments" content="{Type/Guide}, {Technologies/Cocoa Layer/AppKit}, {Topic/General}">
+    
+    
+    <meta id="copyright" name="copyright" content="Copyright 2017 Apple Inc. All Rights Reserved.">
+    <meta id="xcode-display" name="xcode-display" content="render">
+    <meta id="IndexTitle" name="IndexTitle" content="Mac App Programming Guide: Tuning for Performance and Responsiveness">
+    <meta id="resources-uri" name="resources-uri" content="../../../../../Resources/1260">
+    <link id="book-index-page" rel="Start" title="Mac App Programming Guide" type="text/html" href="../index.html">
+    <link id="next-page" rel="Next" type="text/html" href="../RevisionHistory.html">
+    <link id="previous-page" rel="Prev" type="text/html" href="../BuildTimeConfiguration/BuildTimeConfiguration.html">
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/screen.css">
+    
+    <!-- xcode_css -->
+    <link rel="stylesheet" type="text/css" href="../../../../../Resources/1260/CSS/feedback.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta id="platforms" name="platforms" content="">
+</head>    
+<body><a name="//apple_ref/doc/uid/TP40010543-CH9" title="Tuning for Performance and Responsiveness"></a>
+    <div id="_omniture_top">
+    <!-- SiteCatalyst code version: H.8. Copyright 1997-2006 Omniture, Inc. -->
+    <script type="text/javascript">
+    /* RSID: */
+    var s_account="appleglobal,appleusdeveloper,dappdeveloperlib"
+    </script>
+
+    <script type="text/javascript" src="https://www.apple.com/metrics/scripts/s_code_h.js"></script>
+    <script type="text/javascript">
+    s.pageName=AC.Tracking.pageName();
+    s.channel="www.us.developer"
+
+    /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+    var s_code=s.t();if(s_code)document.write(s_code)</script>
+    <!-- End SiteCatalyst code version: H.8. -->
+    </div>
+
+    <div id="adcHeader" class="hideOnPrint hideInXcode">
+        <div id='ssi_Header' class="hideInXcode unified">
+            <a id="ssi_LibraryTitle" href='../../../../../navigation/'>Guides and Sample Code</a>
+            <a id="ssi_AppleDeveloperConnection" href='https://developer.apple.com/'>Developer</a>
+            <div id='ssi_SearchButton' role="button" title="Search">Search</div>
+        </div>
+        <form id='ssi_SearchMenu' method='get' action='../../../../../search/' accept-charset='utf-8'>
+            <label for='adcsearch'>Search Guides and Sample Code</label>
+            
+            
+    
+            <input type='search' id='ssi_SearchField' name='q' accesskey='s' results='5' />
+        </form>
+    </div>
+
+    <header id="header">
+        <div id="title" role="banner">
+            <h1>Mac App Programming Guide</h1>
+            <span id="file_links">
+                <a id="PDF_link" role="button" tabindex='4' rel="alternate" title="Download PDF"><span id="pdf_icon"></span>PDF</a>
+                <a id="Companion_link" role="button" tabindex='3' title="Download Companion File"><span id="companion_icon"></span>Companion File</a>
+            </span>
+        </div>
+        <ul id="headerButtons" class="hideOnPrint" role="toolbar">
+            <li id="toc_button" style="display:none">
+                <button tabindex="5" id="table_of_contents" class="open" role="checkbox" aria-label="Show Table of Contents"><span class="disclosure"></span>Table of Contents</button>
+            </li>
+            <li id="jumpto_button" style="display:none" role="navigation"><select tabindex="6" id="jumpTo"><option value="top">Jump To&#133;</option></select></li>
+            <li id="downloadSample_button" style="display:none">
+                <a id="Sample_link"><button id="Sample_button">Download Sample Code</button></a>
+            </li>
+        </ul>
+    </header>
+    <nav id="tocContainer" tabindex="7">
+        <ul id="toc" role="tree"></ul>
+    </nav>
+
+    <article id="contents" tabindex="0" role="main">
+        <div id="pageNavigationLinks_top" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='../BuildTimeConfiguration/BuildTimeConfiguration.html'>Previous</a>
+        </div>
+        <a id="top" name="top"></a>
+        <a id="INDEX" href="../index.html" style="display:none;"></a>
+        
+        <a name="//apple_ref/doc/uid/TP40010543-CH9-SW1" title="Tuning for Performance and Responsiveness"></a><h1 id="pageTitle">Tuning for Performance and Responsiveness</h1><p>As you develop your app and your project code stabilizes, you can begin performance tuning. Of course, you want your app to launch and respond to the user’s commands as quickly as possible. A responsive app fits easily into the user’s workflow and feels well crafted.</p><p></p><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW12" title="Speed Up Your App’s Launch Time"></a><h2 class="jump">Speed Up Your App’s Launch Time</h2><p>You can improve your app’s performance at launch time by minimizing or deferring work until after the launch sequence has completed. The launch of an app provides users with the first impression of your app, and it’s something they see on a regular basis.</p><p>Your overriding goal during launch should be to display the app’s menu bar and main window and then start responding to user commands as quickly as possible. Making your app responsive to commands quickly provides a better experience for the user. The following sections provide some general tips on how to make your app launch faster.</p><section><a name="//apple_ref/doc/uid/TP40010543-CH9-97799" title="Delay Initialization Code"></a><h3 class="jump">Delay Initialization Code</h3><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_10"></a><p>Many apps spend a lot of time initializing code that isn’t used until much later. Delaying the initialization of subsystems that are not immediately needed can speed up your launch time considerably. Remember that the goal is to display your app interface quickly, so try to initialize only the subsystems related to that goal initially. </p><p>Once you have posted your interface, your app can continue to initialize additional subsystems as needed. However, remember that just because your app is able to process commands does not mean you need all of that code right away. The preferred way of initializing subsystems<a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_11"></a> is on an as-needed basis. Wait until the user executes a command that requires a particular subsystem and then initialize it. That way, if the user never executes the command, you will not have wasted any time running the code to prepare for it. </p><p>Avoid putting a lot of extraneous initialization code in your <code><a href="https://developer.apple.com/reference/objectivec/nsobject/1402907-awakefromnib" target="_self" class="urlLink">awakeFromNib</a></code><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_12"></a> methods. The system calls the <code>awakeFromNib</code> method of your main nib file before your app enters its main event loop. Use that method to initialize the objects in that nib and to prepare your app interface. For all other initialization, use the <code><a href="https://developer.apple.com/reference/appkit/nsapplicationdelegate/1428385-applicationdidfinishlaunching" target="_self" class="urlLink">applicationDidFinishLaunching:</a></code><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_13"></a> method of your <code>NSApplicationDelegate</code> object instead. For more information on nib files and how they are loaded, see <em><a href="../../../../Cocoa/Conceptual/LoadingResources/Introduction/Introduction.html#//apple_ref/doc/uid/10000051i" data-renderer-version="1" target="_self">Resource Programming Guide</a></em>.</p></section><section><a name="//apple_ref/doc/uid/20001855-97354" title="Simplify Your Main Nib File"></a><a name="//apple_ref/doc/uid/TP40010543-CH9-97354-BCIJCGDF" title="Simplify Your Main Nib File"></a><h3 class="jump">Simplify Your Main Nib File</h3><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_14"></a><p>Loading a nib file is an expensive process that can slow down your app launch time if you are not careful. When a nib file is loaded, all of the objects in that file are instantiated and made ready for use. The more objects you include in your app’s main nib, the more time it takes to load that file and launch your app.</p><p>The instantiation<a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_15"></a> process for objects in a nib file requires that any frameworks used by those objects must themselves reside in memory. Thus loading a nib for a Cocoa app would likely require the loading of both the AppKit and Foundation frameworks, if they were not already resident in memory. Similarly, if you declare a custom class in your main nib file and that class relies on other frameworks, the system must load those frameworks as well. </p><p>When designing your app’s main nib file, you should include only those objects needed to display your app’s initial user interface. Usually, this would involve just your app’s menu bar and initial window. For any custom classes you include in the nib, make sure their initialization code is as minimal as possible. Defer any time-consuming operations or memory allocations until after the class is instantiated. </p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-99040" title="Minimize Global Variables"></a><h3 class="jump">Minimize Global Variables</h3><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_16"></a><p>For both apps and frameworks, be careful not to declare global variables that require significant amounts of initialization. The system initializes global variables before calling your app’s <code>main</code> routine. If you use a global variable to declare an object, the system must call the constructor or initialization method for that object during launch time. In general, it’s best to avoid declaring objects as global variables altogether when you can use a pointer instead. </p><p>If you are implementing a framework<a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_17"></a> or any type of reusable code module, you should also minimize the number of global variables you declare. Each app that links to a framework acquires a copy of that framework’s global variables. These variables might require several pages of virtual memory, which then increases the memory footprint of the app. An increased memory footprint can lead to paging in the app, which has a tremendous impact on performance. </p><p>One way to minimize the global variables in a framework is to store the variables in a <code>malloc</code>-allocated block of memory instead. In this technique, you access the variables through a pointer to the memory, which you store as a global variable. Another advantage of this technique is that it allows you to defer the creation of any global variables until the first time they are actually used. See <span class="content_text"><a href="../../../../Performance/Conceptual/ManagingMemory/Articles/MemoryAlloc.html#//apple_ref/doc/uid/20001881" data-renderer-version="1" target="_self">Tips for Allocating Memory</a></span> in <em><a href="../../../../Performance/Conceptual/ManagingMemory/ManagingMemory.html#//apple_ref/doc/uid/10000160i" data-renderer-version="1" target="_self">Memory Usage Performance Guidelines</a></em> for more information.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW14" title="Minimize File Access at Launch Time"></a><h3 class="jump">Minimize File Access at Launch Time</h3><p>Accessing a file is one of the slowest operations performed on a computer, so it is important that you do it as little as possible, especially at launch time. There is always some file access that must occur at launch time, such as loading your executable code and reading in your main nib file, but reducing your initial dependence on startup files can provide significant speed improvements. </p><p>If you can delay the reading of a file until after launch time, do so. The following list includes some files whose contents you may not need until after launch:</p><ul class="ul"><li class="li"><p>Frameworks not used directly by your app—Avoid calling code that uses nonessential frameworks until after launch. </p></li><li class="li"><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_18"></a><p>Nib files whose contents are not displayed immediately—Make sure your nib files and <code>awakeFromNib:</code> code are not doing too much at launch time. See <span class="content_text"><a href="#//apple_ref/doc/uid/20001855-97354" data-renderer-version="1">Simplify Your Main Nib File</a></span> for more information.</p></li><li class="li"><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_19"></a><p>User preference files—User preferences may not be local so read them later if you can. </p></li><li class="li"><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_20"></a><p>Font files—Consider delaying font initialization until after the app has launched. </p></li><li class="li"><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_21"></a><p>Network files—Avoid reading files located on the network if at all possible. </p></li></ul><p>If you must read a file at launch time, do so only once. If you need multiple pieces of data from the same file, such as from a preferences file, consider reading all of the data once rather than accessing the file multiple times.</p></section></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW3" title="Don’t Block the Main Thread"></a><h2 class="jump">Don’t Block the Main Thread</h2><p>The main thread is where your app handles user events and other input, so you should keep it free as much as possible to be responsive to the user. In particular, never use the main thread to perform long-running or potentially unbounded tasks, such as tasks that require network access. Instead, always move those tasks onto background threads. The preferred way to do so is to use Grand Central Dispatch (GCD) or operation objects to perform tasks asynchronously.</p><p>For more information about doing work on background threads, see <em><a href="../../ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091" data-renderer-version="1" target="_self">Concurrency Programming Guide</a></em>.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW2" title="Decrease Your App’s Code Size"></a><h2 class="jump">Decrease Your App’s Code Size</h2><p>In the context of performance, the more memory your app occupies, the more inefficient it is. More memory means more memory allocations, more code, and a greater potential for paging.</p><p>Reducing your code footprint is not just a matter of turning on code optimizations in your compiler, although that does help. You can also reduce your code footprint by organizing your code so that only the minimum set of required functions is in memory at any given time. You implement this optimization by profiling your code. </p><p>See “Memory Instruments” in <em><a href="../../../../DeveloperTools/Conceptual/InstrumentsUserGuide/index.html#//apple_ref/doc/uid/TP40004652" data-renderer-version="2" target="_self">Instruments User Guide</a></em> for information about profiling your app’s memory allocations.</p><section><a name="//apple_ref/doc/uid/TP40010543-CH9-102307" title="Compiler-Level Optimizations"></a><h3 class="jump">Compiler-Level Optimizations</h3><p><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_22"></a>The Xcode compiler supports optimization options that let you choose whether you prefer a smaller binary size, faster code, or faster build times. For new projects, Xcode automatically disables optimizations for the debug build configuration and selects the Fastest, Smallest option for the release build configuration. Code optimizations of any kind result in slower build times because of the extra work involved in the optimization process. If your code is changing, as it does during the development cycle, you do not want optimizations enabled. As you near the end of your development cycle, though, the release build configuration can give you an indication of the size of your finished product, so the Fastest, Smallest option is appropriate.</p><p><span class="content_text">Table 6-1</span> lists the optimization levels available in Xcode. When you select one of these options, Xcode passes the appropriate flags to the compiler for the given group or files. These options are available at the target level or as part of a build configuration. See the <em><!--a target="_self" -->Xcode Build System Guide<!--/a--></em> for information on working with build settings for your project.</p><a name="//apple_ref/doc/uid/TP40010543-CH9-102346-CJBGBAGF" title="Table 6-1Compiler optimization options"></a><div class="tableholder"><table class="graybox" border = "0" cellspacing="0" cellpadding="5"><caption class="tablecaption"><a name="//apple_ref/doc/uid/20001861-102346" title="Table 6-1Compiler optimization options"></a><strong class="caption_number">Table 6-1</strong>&nbsp;&nbsp;Compiler optimization options</caption><tr><th scope="col" class="TableHeading_TableRow_TableCell"><p>Xcode setting</p></th><th scope="col" class="TableHeading_TableRow_TableCell"><p>Description</p></th></tr><tr><td  scope="row"><p>None</p></td><td ><p>The compiler does not attempt to optimize code. Use this option during development when you are focused on solving logic errors and need a fast compile time. Do not use this option for shipping your executable. </p></td></tr><tr><td  scope="row"><p>Fast</p></td><td ><p>The compiler performs simple optimizations to boost code performance while minimizing the impact to compile time. This option also uses more memory during compilation. </p></td></tr><tr><td  scope="row"><p>Faster</p></td><td ><p>The compiler performs nearly all supported optimizations that do not require a space-time tradeoff. The compiler does not perform loop unrolling or function inlining with this option. This option increases both compilation time and the performance of generated code. </p></td></tr><tr><td  scope="row"><p>Fastest</p></td><td ><p>The compiler performs all optimizations in an attempt to improve the speed of the generated code. This option can increase the size of generated code as the compiler performs aggressive inlining of functions. </p><p>This option is generally not recommended.</p></td></tr><tr><td  scope="row"><p>Fastest, Smallest</p></td><td ><p>The compiler performs all optimizations that do not typically increase code size. This is the preferred option for shipping code because it gives your executable a smaller memory footprint. </p></td></tr></table></div><p>As with any performance enhancement, do not make assumptions about which option will give you the best results. You should always measure the results of each optimization you try. For example, the Fastest option might generate extremely fast code for a particular module, but it usually does so at the expense of executable size. Any speed advantages you gain from the code generation are easily lost if the code needs to be paged in from disk at runtime. <a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_23"></a></p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW4" title="Use Core Data for Large Data Sets"></a><h3 class="jump">Use Core Data for Large Data Sets</h3><p>If your app manipulates large amounts of structured data, store it in a Core Data persistent store or in a SQLite database instead of in a flat file. Both Core Data and SQLite provide efficient ways to manage large data sets without requiring the entire set to be in memory all at once. Use SQLite if you deal with low-level data structures, or an existing SQLite database. Core Data provides a high-level abstraction for efficient object-graph management with an Objective-C interface; it is, however, an advanced framework and you shouldn't use it until you have gained adequate experience.</p><p>For more information about Core Data, see <em><a href="../../../../Cocoa/Conceptual/CoreData/index.html#//apple_ref/doc/uid/TP40001075" data-renderer-version="2" target="_self">Core Data Programming Guide</a></em> and <em><!--a target="_self" -->Optimizing Core Data with Instruments<!--/a--></em>.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-SW5" title="Eliminate Memory Leaks"></a><h3 class="jump">Eliminate Memory Leaks</h3><p>Your app should not have any memory leaks. You can use the Instruments app to track down leaks in your code, both in the simulator and on actual devices. See “Memory Instruments” in <em><a href="../../../../DeveloperTools/Conceptual/InstrumentsUserGuide/index.html#//apple_ref/doc/uid/TP40004652" data-renderer-version="2" target="_self">Instruments User Guide</a></em> for information about finding memory leaks.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-131369" title="Dead Strip Your Code"></a><h3 class="jump">Dead Strip Your Code</h3><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_24"></a><p>For statically linked executables, dead-code stripping is the process of removing unreferenced code from the executable file. If the code is unreferenced, it must not be used and therefore is not needed in the executable file. Removing dead code reduces the size of your executable and can help reduce paging. </p><p>To enable dead-code stripping in Xcode, in the Linking group of Build Settings, set the Dead Code Stripping option to Yes.</p></section><section><a name="//apple_ref/doc/uid/TP40010543-CH9-131489" title="Strip Symbol Information"></a><h3 class="jump">Strip Symbol Information</h3><a name="//apple_ref/doc/uid/TP40010543-CH9-DontLinkElementID_25"></a><p>Debugging symbols and dynamic-binding information can take up a lot of space and comprise a large percentage of your executable’s size. Before shipping your code, you should strip out all unneeded symbols.</p><p>To strip debugging symbols from your executable, change the Xcode compiler code generation Generate Debug Symbols option to No. You can also generate debugging symbols on a target-by-target basis if you prefer. See the Xcode Help for more information on build configurations and target settings.</p></section></section>
+        <div id="pageNavigationLinks_bottom" class="pageNavigationLinks">
+            <a class='nextLink' rel='next' href='../RevisionHistory.html'>Next</a><a class='previousLink' rel='prev' href='../BuildTimeConfiguration/BuildTimeConfiguration.html'>Previous</a>
+        </div><br/>
+        <div class="copyright"><br/><hr /><div align="center"><p class="content_text" lang="en" dir="ltr"> Copyright &#x00a9; 2015 Apple Inc. All Rights Reserved. <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">Terms of Use</a>   |  <a href="http://www.apple.com/privacy/" target="_blank">Privacy Policy</a>  |  Updated: 2015-03-09</p></div></div>
+
+        <div id="pediaWindow">
+            <div id="pediaHeader"></div>
+            <div id="pediaBody"></div>
+        </div>
+    </article>
+
+    <div id="blackout">
+    <div id="preload"></div>
+</div>
+<div id="leave_feedback" class="button" role="button" tabindex="0">Feedback</div>
+<div id="modal" aria-hidden="true">
+    <div id="closebox" tabindex="0" aria-label="Close feedback form" role="button"></div>
+    <div id="sending" class="hidden">
+        <h2 tabindex="0">Sending feedback&hellip;</h2>
+        <div id="sending_img"></div>
+    </div>
+    <div id="error" class="hidden">
+        <h2 tabindex="0">We&rsquo;re sorry, an error has occurred.</h2>
+        <p>Please try submitting your feedback later.</p>
+        <div id="error_icon"></div>
+    </div>
+    <div id="success" class="hidden">
+        <h2 tabindex="0">Thank you for providing feedback!</h2>
+        <p>Your input helps improve our developer documentation.</p>
+        <div id="thank_you_icon"></div>
+    </div>
+    
+    <form id="feedback" action="#" method="post">
+        <div class="left-leaf">
+            <h2 id="helpful_title" data-asterisk="a1" tabindex="0">How helpful is this document?</h2>     
+            <sup id="a1" class="asterisk" aria-hidden="true">*</sup>
+
+            <div id="star_group" role="radiogroup" aria-required="true">
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="1" /> 
+                    Very helpful
+                </label>
+                <label> 
+                    <input class="radio" type="radio" name="helped" value="2" /> 
+                    Somewhat helpful
+                </label>
+                <label>
+                    <input class="radio" type="radio" name="helped" value="3" /> 
+                    Not helpful
+                </label>
+            </div>
+        </div>
+        <div class="right-leaf">
+            <h2>How can we improve this document?</h2>
+            <div id="improve" class="checkboxes">
+                <label>
+                    <input type="checkbox" name="typo" /> 
+                    Fix typos or links
+                </label>
+                <label>
+                    <input type="checkbox" name="infoIncorrect" /> 
+                    Fix incorrect information
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_examples" /> 
+                    Add or update code samples
+                </label>
+                <label>
+                    <input type="checkbox" name="needs_art" /> 
+                    Add or update illustrations
+                </label>
+                <label>
+                    <input type="checkbox" name="missingInfo" /> 
+                    Add information about...
+                </label>
+            </div>
+        </div>
+
+        <textarea id="comment" name="problem" cols="70" rows="8" placeholder="Please tell us more about your experience with this document" data-asterisk="a2" required></textarea>
+        <sup id="a2" class="asterisk" aria-hidden="true">*</sup>
+
+        <p class="fineprint">
+            <em aria-hidden="true"><span>*</span> Required information</em>
+        </p> 
+
+        <input id="submit" type="button" value="Send" />
+
+        <section id="legal">
+            <p>
+                To submit a product bug or enhancement request, please visit the 
+                <a href="https://developer.apple.com/bugreporter/" target="_blank">Bug Reporter</a> 
+                page.
+            </p>
+            <p>
+                Please read <a href="http://www.apple.com/legal/policies/ideas.html" target="_blank">Apple's Unsolicited Idea Submission Policy</a> 
+                before you send us your feedback.
+            </p> 
+        </section>
+    </form>
+</div>
+
+    
+    <script charset="utf-8" src="../../../../../Resources/1260/JavaScript/lib/prototype.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/library.js"></script>
+    <script src="../../../../../Resources/1260/JavaScript/feedback.js"></script>
+</body>
+</html>

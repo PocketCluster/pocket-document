@@ -1,0 +1,190 @@
+start commit - baafe3a332735d0cf7111be8ad571869fe038b35
+
+https://github.com/gravitational/teleport/compare/baafe3a332735d0cf7111be8ad571869fe038b35...aa47d85203381f5b7664c88d1132f6733996e729
+
+e43032f6a6cdd55f1d3cb97fdb108c1ee6f6dfe2
+0a78b45b3c9ed12fea9458534954b30313026680
+f6a7a2eebf12c537d97ece5e60f19ca5ca5269d0    Merge branch 'master' of github.com:gravitational/teleport
+07e8d212ff5caff194feb4b217b4638e238d0c86    Minor usability issue with tctl
+5629a944ae75fafba02f1c768f68cb9eb638815e    Updated the docs
+7185690940c76dcd2c115653dc00a68c9f85f2c2    Merge branch 'master' of github.com:gravitational/teleport
+fcf8daaeba148e715395844c3ae8340c53106be7    Add RemoveSite method to reverse tunnel
+6f2dcb00369ad2de3fce4aad5b12b7932cf67686    Merge pull request #565 from gravitational/sasha/cleanup
+103dc2ad9f3d91da05679dff5100a3fee769c3a5    Fix expired session cleanup
+9edca758cf336331351d0d7a8d4fb9a490008e85    Fixes Gravity #1118
+7933393fcc87663050d205b9175be574b9f556ad    Merge pull request #570 from gravitational/sasha/presence
+13088c0fe8a275c5adaa293124bfbcca4acf186a    Documentation edits
+3bacc4f020f799394caf1c55162398bab82286b1    (web) refactoring of the build scripts
+e05393f9552625c476bb7a32f98a8b31bb7f44b3    Merge pull request #584 from gravitational/ev/docs-edits
+7a0500fb68daab8bcc1f298a78064cb6932e01da    Merge pull request #583 from gravitational/403_and_node_ip
+ba853303918e1a48741655b241c58ef60c86a821    Merge pull request #581 from gravitational/ev/profiles
+5a0e0616f426a3b8f6a60b786ac9dfddb7c0e238    Merge pull request #589 from gravitational/bugs/fixes
+14dd7ff42b5c861db7016da7eeb97d3729707cc7    Merge pull request #598 from gravitational/sasha/user   
+                                            https://github.com/gravitational/teleport/pull/598
+485787cf4418290d4d9819008caf1fa2d43845f6    Merge pull request #597 from nmaki/config_auth_servers_fix
+9cd84ffcf3fe380d0045b47c64202ae3ef3f7221    Merge pull request #596 from gravitational/lib/update
+bff4e2351af5ffe2265047b93bcf1515af458282    Removed debug info from release builds.
+eae9d16999d0b2566763ab36aaa212753bdc4d27    Merge pull request #605 from gravitational/ev/604
+                                            https://github.com/gravitational/teleport/pull/605
+002b640a16f097e2f834b4ae33c9edfb81d5798c    Merge pull request #607 from gravitational/ev/scp
+                                            https://github.com/gravitational/teleport/pull/607
+0a6b04ba4af69034371f0321a6ee4e25667b8cda    Merge pull request #608 from gravitational/dmitri/fix-expiration-dir
+36859a0bc875eb6d67c7222c989551bd74d9a74d    Merge pull request #612 from carbin-gun/master
+08c53e4923644e287b8f06f2e317af3a2cc1e991    Merge branch 'master' of github.com:gravitational/teleport
+9b9b55cbcc63321cda4c4735f1b6dd788be9c859    Merge branch 'master' of github.com:gravitational/teleport
+be8068b3b8fe4350ec2622eb3b24d48d97d7035f    Updated README to reflect recent code changes.
+61c8fed31925e1060b3914b564af695163aa8050    Merge pull request #617 from tehsis/oidc
+7bb3fa08b4cf5a9fbadd0afa45e5f720b9409278    Merge pull request #629 from gravitational/ev/minor-changes
+0c251639c815fc38e9c43f76969e1548a70808d7    Updated README.md with Web UI building instructions
+be27e0979dcc82bb2a181403716490bf4cb33193    Merge pull request #626 from gravitational/alexey/remove_ip
+1bcb8fba03881d0d5d50e70df739648e88621e61    Merge pull request #630 from gravitational/sasha/oidc (vendor updated)   
+f38b3aa95a3726769b26f9f57fdf8888e766241b    Merge pull request #638 from gravitational/ev/quiet-clusters
+a8533fde6694f40eb8ff237bdff6f5a3f34fae06    Merge branch 'jcj83429-u2f' (trace update)
+e42f95041e91e14ab8c17861b604a3088bb17245    Merge pull request #644 from gravitational/ev/1.3
+893b39c2deb7e17adbf6c03f6b77652f6a2f4d72    Version bump
+dc72a13b9daebbd7833a0091b585b289f744809c    Merge pull request #649 from gravitational/ev/release (remove u2fsig from sshlogin.go)
+c5f2a4a29527b8ad2fa23b271e6d1cc228472e39    Merge pull request #650 from gravitational/sasha/corruption
+bed42f3c89111bf75b32aca53434d724e9cd48d0    Version bump to 1.3.1
+fc5110cf920aee3597fd4403ab7629320e5b46ab    Merge pull request #657 from gravitational/dmitri/connect-context-head
+                                            https://github.com/gravitational/teleport/pull/657
+1afbc4b1d13bb50731eefe9e872b6ee44e65e7c6    Merge pull request #663 from gravitational/sasha/tokens
+# LAST CHERRY_PICKED!!!
+
+                                --- BREAKING CHANGE ---
+
+af19b4a89af427556745db1a175b2841390ac5f9    Merge pull request #683 from gravitational/sasha/oidc
+                                            Introduces V2 API, keeps V1 API is still backwards compatible
+                                            https://github.com/gravitational/teleport/pull/683
+                                            [Dec 31, 2016] 
+
+39349090b591e096b367f41ce1eb2347e2d5e466    Update README.md
+                                            January 4, 2017 at 3:10:08 PM GMT+9
+
+                                --- BREAKING CHANGE ---
+
+
+
+4f1c3dfd76ea3af0e2281eedb4bf1c8312bbd240    Merge pull request #631 from gravitational/sasha/refresh    
+                                            [CA GEN CHANGE]
+                                            [PUT BACK RELAXATION]
+                                            Sasha/refresh
+                                            https://github.com/gravitational/teleport/pull/631
+                                            December 9, 2016 at 6:29:48 AM GMT+9
+
+1c0b1dcb85a6f272fd6f61d286fd8cb5bccffb6b    Merge pull request #637 from gravitational/ev/1.3
+                                            [CA GEN CHANGE]    
+                                            Updated "tctl auth sign" command
+                                            https://github.com/gravitational/teleport/pull/637
+                                            December 13, 2016 at 3:44:26 AM GMT+9
+
+45dcc1819b50ca6bc95abb205ff11a7c8cf47422    Merge pull request #720 from gravitational/ev/error-message-handling
+                                            January 23, 2017 at 1:57:57 PM GMT+9
+
+--- https://github.com/gravitational/teleport/issues/579 ---
+5cfd89fd81a95194aa66a67ae7a112d192466dd9    Merge pull request #728 from gravitational/ev/login-ux
+                                            Improved CLI UX + a bunch of regressions fixed
+                                            https://github.com/gravitational/teleport/pull/728
+                                            January 26, 2017 at 6:51:49 AM GMT+9
+
+7b967d0c66f0b504962f44ff1b1b05a32d999f1c    Nicer HTTPS error message on mismatched proxy hostname
+                                            January 29, 2017 at 11:48:51 AM GMT+9
+
+c226a45a5f424ca15e5cae5f6b292884abc0bad0    Merge pull request #731 from gravitational/ev/regressions
+                                            January 30, 2017 at 6:00:39 AM GMT+9
+
+f473407e97073087b2be8ee5399212b69c0d9f9e    Merge pull request #733 from gravitational/ev/729
+                                            January 31, 2017 at 9:55:34 AM GMT+9
+
+96dde7679319ddb498bf83b71b24d8561de625a8    Merge pull request #737 from gravitational/ev/keepalive
+                                            January 31, 2017 at 10:03:57 AM GMT+9
+
+--- https://github.com/gravitational/teleport/issues/579 ---
+a8c363300a5e17ab5b21bb7db839c8097527a4c0    Merge pull request #734 from gravitational/ev/667
+                                            tsh logout + tctl create
+                                            https://github.com/gravitational/teleport/pull/734
+                                            January 31, 2017 at 10:13:01 AM GMT+9
+
+a7190624da322816e281015ed5741f6a41bf3617    Merge pull request #741 from gravitational/ev/sshagent
+                                            Resolved the issue of having too many certs in ssh-agent
+                                            https://github.com/gravitational/teleport/pull/741
+                                            February 2, 2017 at 7:12:42 AM GMT+9
+
+d9a7508a7a386a53ffcc301c41a6439666d4cf92    Merge pull request #747 from gravitational/sasha/proxy
+                                            fix default proxy SSH principal
+                                            February 3, 2017 at 8:19:44 AM GMT+9
+
+
+--- 0382ec3a50ab9fb3265016c6270b33de490780b5 ---> russjones fork
+
+0a6f419f076fb5f7afd8fc0201bc818151697075    Merge pull request #730 from russjones/rjones/Principals
+                                            Multiple Principals
+                                            https://github.com/gravitational/teleport/pull/730
+                                            February 10, 2017 at 11:23:23 AM GMT+9
+
+e71a09d01bd2bc45fe5137d9eb17e33460166d03    Merge pull request #762 from russjones/rjones/agent-load
+                                            LocalKeyAgent changes for OpenSSH interoperability
+                                            https://github.com/gravitational/teleport/pull/762
+                                            February 10, 2017 at 11:30:52 AM GMT+9
+
+802535c2998d272e3311db805da5c0c29a730342    Merge pull request #763 from russjones/rjones/ssh-config-docs
+                                            Update OpenSSH Documentation
+                                            https://github.com/gravitational/teleport/pull/763
+                                            February 10, 2017 at 11:34:01 AM GMT+9
+
+# CRYPTO VENDOR UPGRADES for ARMHF/ARM64
+04fdbd9b528b27c892a995595fcad9c915db476c    Merge pull request #772 from russjones/rjones/deduplicate-principals
+                                            Deduplicate principals for host certificates.
+                                            https://github.com/gravitational/teleport/pull/772
+                                            February 14, 2017 at 7:59:24 AM GMT+9
+
+7d47d1ff1246a8e582cf840de769d4aaa60745bf    Merge pull request #775 from gravitational/rjones/agent-fixes
+                                            SSH Agent Fixes
+                                            https://github.com/gravitational/teleport/pull/775
+                                            February 14, 2017 at 3:47:33 PM GMT+9
+# CRYPTO VENDOR UPGRADES for ARMHF/ARM64
+
+<<<<<<< HEAD
+4c5ac2e3c2bdad48b043c1a8d98697465fee66f9    Merge pull request #788 from gravitational/ev/regressions
+                                            SCP fixes
+                                            https://github.com/gravitational/teleport/pull/788
+                                            February 24, 2017 at 1:58:08 PM GMT+9
+
+/// --- This is not incorporated as it is not necessary and requires namespace --- ///
+bd65635eb3ef2551f74ba2e8fb5a3d3c8a084cc2	AN IMPORTANT FLOW OF HOW TO FINE CONTROL AGENT FORWARDING COMPATIBLE WITH OPENSSH
+                                            Merge pull request #819 from gravitational/sasha/agents
+                                            Sasha/agents
+                                            https://github.com/gravitational/teleport/pull/819
+                                            March 11, 2017 at 12:30:27 PM GMT+9
+/// --- This is not incorporated as it is not necessary and requires namespace --- ///
+
+488d7b481016bed600ac23550d1ad83d1f7d89ab    Merge pull request #834 from gravitational/rjones/load-external-agent
+                                            Load Keys into System Agent and Exit
+                                            https://github.com/gravitational/teleport/pull/834
+                                            March 15, 2017 at 9:10:35 AM GMT+9
+
+--- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * -
+
+# ROLE BASED ACCESS CONTROL, introducing namespace
+be5cc56dd85c82d21c6c8b73b3a513c7788f64fe    Merge pull request #652 from gravitational/sasha/rbac
+                                            https://github.com/gravitational/teleport/issues/620
+                                            https://github.com/gravitational/teleport/pull/652
+
+d5bd7da58cce41d3d5decd13520792cb18c992f2    Merge pull request #661 from gravitational/ev/backends  (BACKEND MOD)
+ca5e8d53db34ed7c24f9bcc3693de98b7ab397f3    Merge pull request #678 from gravitational/ev/net
+e669e542e6edcfa5bd38e3d49f39c1ceba171b23    Merge pull request #681 from gravitational/ev/net
+                                            https://github.com/gravitational/teleport/pull/681
+
+# Too much refactor related to next two commits, d34e55, 3ec87b
+2e59ee51cc969987789b09cc0f277ba2e19cdd70    Merge pull request #748 from gravitational/ev/client
+                                            Moved HTTP client code from lib/web into lib/client
+                                            https://github.com/gravitational/teleport/pull/748
+                                            February 3, 2017 at 11:59:49 AM GMT+9
+
+d34e55fff7701775840cb6b7d414cdb90dad6380    Merge pull request #751 from gravitational/ev/webclient
+                                            February 8, 2017 at 3:53:19 AM GMT+9
+
+3ec87b20d1cc0838465f81d9754a93f350fe10ee    Merge pull request #753 from gravitational/ev/client-ip
+                                            February 8, 2017 at 6:22:07 AM GMT+9
+
+b907f1c65a14a28c21c41ea47a37df655182770c    Merge pull request #766 from gravitational/rjones/fix-otp-test
+                                            February 11, 2017 at 7:54:09 AM GMT+9
