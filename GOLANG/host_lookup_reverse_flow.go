@@ -134,6 +134,7 @@ hosts.go :: func lookupStaticHost(host string) []string
 
 hosts.go :: func lookupStaticAddr(addr string) []string
 
+    /*--- TEST DNE---*/ 
     // goLookupPTR is the native Go implementation of LookupAddr.
     // Used only if cgoLookupPTR refuses to handle the request (that is,
     // only if cgoLookupPTR is the stub in cgo_stub.go).
@@ -141,7 +142,15 @@ hosts.go :: func lookupStaticAddr(addr string) []string
     // on our lookup code, so that Go and C get the same answers.
     hosts.go :: func goLookupPTR(ctx context.Context, addr string) ([]string, error)
 
-        lookup_unix.go :: func lookupAddr(ctx context.Context, addr string) ([]string, error)
+        /*** _FIX_CONF_ ***/ 
+        lookup_unix.go :: func lookupAddr(ctx context.Context, addr string) ([]string, error) {
+            if systemConf().canUseCgo() {
+                if ptrs, err, ok := cgoLookupPTR(ctx, addr); ok {
+                    return ptrs, err
+                }
+            }
+            return goLookupPTR(ctx, addr)
+        }
 
             // LookupAddr performs a reverse lookup for the given address, returning a list
             // of names mapping to that address.
