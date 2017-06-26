@@ -1,0 +1,10 @@
+--- /etc/hosts ---
+
+src/net/hosts.go :: lookupStaticHost()
+
+src/net/hosts.go :: lookupStaticAddr()
+
+src/net/hook.go :: testHookHostsPath
+
+
+--- /etc/resolv.conf ---
