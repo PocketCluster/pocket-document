@@ -2,7 +2,7 @@ hosts.go :: func lookupStaticHost(host string) []string
 
     dnsclient_unix.go :: func goLookupHostOrder(ctx context.Context, name string, order hostLookupOrder) (addrs []string, err error)
 
-        /*** _FIX_CONF_ ***/ 
+        /*** _FIX_CONF_ ***/
         lookup_unix.go :: func lookupHost(ctx context.Context, host string) (addrs []string, err error) {
             order := systemConf().hostLookupOrder(host)
             if order == hostLookupCgo {
@@ -18,7 +18,7 @@ hosts.go :: func lookupStaticHost(host string) []string
             // LookupHost looks up the given host using the local resolver. It returns an array of that host's addresses.
             lookup.go :: func LookupHost(host string) (addrs []string, err error)
 
-        /*** [[DEAD END]] ***/ 
+        /*** [[DEAD END]] ***/
         // goLookupHost is the native Go implementation of LookupHost.
         // Used only if cgoLookupHost refuses to handle the request
         // (that is, only if cgoLookupHost is the stub in cgo_stub.go).
@@ -29,13 +29,73 @@ hosts.go :: func lookupStaticHost(host string) []string
 
     /* --- --- */
 
-    /*--- TEST DNE---*/ 
+    /*--- TEST DNE---*/
     // lookup entries from /etc/hosts
     dnsclient_unix.go :: func goLookupIPFiles(name string) (addrs []IPAddr)
 
-        dnsclient_unix.go :: func goLookupIPOrder(ctx context.Context, name string, order hostLookupOrder) (addrs []IPAddr, err error)
+        dnsclient_unix.go :: func goLookupIPOrder(ctx context.Context, name string, order hostLookupOrder) (addrs []IPAddr, err error) {
+        	if order == hostLookupFilesDNS || order == hostLookupFiles {
+        		addrs = goLookupIPFiles(name)
+        		if len(addrs) > 0 || order == hostLookupFiles {
+        			return addrs, nil
+        		}
+        	}
+        	if !isDomainName(name) {
+        		return nil, &DNSError{Err: "invalid domain name", Name: name}
+        	}
+        	resolvConf.tryUpdate("/etc/resolv.conf")
+        	resolvConf.mu.RLock()
+        	conf := resolvConf.dnsConfig
+        	resolvConf.mu.RUnlock()
+        	type racer struct {
+        		fqdn string
+        		rrs  []dnsRR
+        		error
+        	}
+        	lane := make(chan racer, 1)
+        	qtypes := [...]uint16{dnsTypeA, dnsTypeAAAA}
+        	var lastErr error
+        	for _, fqdn := range conf.nameList(name) {
+        		for _, qtype := range qtypes {
+        			go func(qtype uint16) {
+        				_, rrs, err := tryOneName(ctx, conf, fqdn, qtype)
+        				lane <- racer{fqdn, rrs, err}
+        			}(qtype)
+        		}
+        		for range qtypes {
+        			racer := <-lane
+        			if racer.error != nil {
+        				// Prefer error for original name.
+        				if lastErr == nil || racer.fqdn == name+"." {
+        					lastErr = racer.error
+        				}
+        				continue
+        			}
+        			addrs = append(addrs, addrRecordList(racer.rrs)...)
+        		}
+        		if len(addrs) > 0 {
+        			break
+        		}
+        	}
+        	if lastErr, ok := lastErr.(*DNSError); ok {
+        		// Show original name passed to lookup, not suffixed one.
+        		// In general we might have tried many suffixes; showing
+        		// just one is misleading. See also golang.org/issue/6324.
+        		lastErr.Name = name
+        	}
+        	sortByRFC6724(addrs)
+        	if len(addrs) == 0 {
+        		if order == hostLookupDNSFiles {
+        			addrs = goLookupIPFiles(name)
+        		}
+        		if len(addrs) == 0 && lastErr != nil {
+        			return nil, lastErr
+        		}
+        	}
+        	return addrs, nil
+        }
 
-            /*** _FIX_CONF_ ***/ 
+            /*** _FIX_CONF_ ***/
             lookup_unix.go :: func lookupIP(ctx context.Context, host string) (addrs []IPAddr, err error) {
                 order := systemConf().hostLookupOrder(host)
                 if order == hostLookupCgo {
@@ -95,7 +155,7 @@ hosts.go :: func lookupStaticHost(host string) []string
                             // parameters.
                             dial.go :: func (d *Dialer) DialContext(ctx context.Context, network, address string) (Conn, error)
 
-                                dial.go :: func (d *Dialer) Dial(network, address string) 
+                                dial.go :: func (d *Dialer) Dial(network, address string)
 
                             // Listen announces on the local network address laddr.
                             // The network net must be a stream-oriented network: "tcp", "tcp4",
@@ -125,7 +185,7 @@ hosts.go :: func lookupStaticHost(host string) []string
                     // It returns an array of that host's IPv4 and IPv6 addresses.
                     lookup.go :: func LookupIP(host string) (ips []IP, err error)
 
-            /*** [[DEAD END]] ***/ 
+            /*** [[DEAD END]] ***/
             // goLookupIP is the native Go implementation of LookupIP. The libc versions are in cgo_*.go.
             dnsclient_unix.go :: func goLookupIP(ctx context.Context, name string) (addrs []IPAddr, err error)
 
@@ -134,7 +194,7 @@ hosts.go :: func lookupStaticHost(host string) []string
 
 hosts.go :: func lookupStaticAddr(addr string) []string
 
-    /*--- TEST DNE---*/ 
+    /*--- TEST DNE---*/
     // goLookupPTR is the native Go implementation of LookupAddr.
     // Used only if cgoLookupPTR refuses to handle the request (that is,
     // only if cgoLookupPTR is the stub in cgo_stub.go).
@@ -142,7 +202,7 @@ hosts.go :: func lookupStaticAddr(addr string) []string
     // on our lookup code, so that Go and C get the same answers.
     hosts.go :: func goLookupPTR(ctx context.Context, addr string) ([]string, error)
 
-        /*** _FIX_CONF_ ***/ 
+        /*** _FIX_CONF_ ***/
         lookup_unix.go :: func lookupAddr(ctx context.Context, addr string) ([]string, error) {
             if systemConf().canUseCgo() {
                 if ptrs, err, ok := cgoLookupPTR(ctx, addr); ok {
@@ -155,4 +215,3 @@ hosts.go :: func lookupStaticAddr(addr string) []string
             // LookupAddr performs a reverse lookup for the given address, returning a list
             // of names mapping to that address.
             lookup_unix.go :: func LookupAddr(addr string) (names []string, err error)
-

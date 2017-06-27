@@ -196,3 +196,46 @@ dnsclient_unix.go :: func LookupAddr(addr string) (names []string, err error)
                     defaultNS   = []string{"127.0.0.1:53", "[::1]:53"}
                     getHostname = os.Hostname // variable for testing
                 )
+
+
+            // Do a lookup for a single name, which must be rooted
+            // (otherwise answer will not find the answers).
+            func tryOneName(ctx context.Context, cfg *dnsConfig, name string, qtype uint16) (string, []dnsRR, error) {
+            	if len(cfg.servers) == 0 {
+            		return "", nil, &DNSError{Err: "no DNS servers", Name: name}
+            	}
+
+            	var lastErr error
+            	for i := 0; i < cfg.attempts; i++ {
+            		for _, server := range cfg.servers {
+            			msg, err := exchange(ctx, server, name, qtype, cfg.timeout)
+            			if err != nil {
+            				lastErr = &DNSError{
+            					Err:    err.Error(),
+            					Name:   name,
+            					Server: server,
+            				}
+            				if nerr, ok := err.(Error); ok && nerr.Timeout() {
+            					lastErr.(*DNSError).IsTimeout = true
+            				}
+            				continue
+            			}
+            			// libresolv continues to the next server when it receives
+            			// an invalid referral response. See golang.org/issue/15434.
+            			if msg.rcode == dnsRcodeSuccess && !msg.authoritative && !msg.recursion_available && len(msg.answer) == 0 && len(msg.extra) == 0 {
+            				lastErr = &DNSError{Err: "lame referral", Name: name, Server: server}
+            				continue
+            			}
+            			cname, rrs, err := answer(name, server, msg, qtype)
+            			// If answer errored for rcodes dnsRcodeSuccess or dnsRcodeNameError,
+            			// it means the response in msg was not useful and trying another
+            			// server probably won't help. Return now in those cases.
+            			// TODO: indicate this in a more obvious way, such as a field on DNSError?
+            			if err == nil || msg.rcode == dnsRcodeSuccess || msg.rcode == dnsRcodeNameError {
+            				return cname, rrs, err
+            			}
+            			lastErr = err
+            		}
+            	}
+            	return "", nil, lastErr
+            }
