@@ -60,7 +60,7 @@ echo "sync dependency projects..."
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-node-agent/"    "/opt/gopkg/src/github.com/stkim1/pc-node-agent/"
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/PC-APP-V2/pc-core/"          "/opt/gopkg/src/github.com/stkim1/pc-core/"
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/pcrypto/"             "/opt/gopkg/src/github.com/stkim1/pcrypto/"
-rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/netifaces/"           "/opt/gopkg/src/github.com/stkim1/netifaces/"
+rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/findgate/"            "/opt/gopkg/src/github.com/stkim1/findgate/"
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/udpnet/"              "/opt/gopkg/src/github.com/stkim1/udpnet/"
 
 echo "clean files..."
