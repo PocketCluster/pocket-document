@@ -3,18 +3,6 @@
 import os, os.path, yaml, json, string, subprocess, traceback, pprint
 from dateutil import parser
 
-
-"""
-# find final url
-def follow_redirect(url):
-    print "following", url, "..."
-    httplib.HTTPConnection.debuglevel = 1
-    request = urllib2.Request(url)
-    opener = urllib2.build_opener()
-    f = opener.open(request)
-    return f.url
-"""
-
 # --------------------------------------------- UTILITY BELT -----------------------------------------------------------
 
 def walklevel(some_dir, level=1):
@@ -247,7 +235,7 @@ def conflict_mirror_command(rootpath=None, pkg=None):
         #return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone --branch master https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
         return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
     else:
-        return "(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d {} >/dev/null 2>&1 || true) && cd {}".format(pkg, repodir)
+        return "(go get -d {} >/dev/null 2>&1 || true) && cd {}".format(pkg, repodir)
 
 
 def checkout_commit(rootpath=None, pkg=None, ver=None):
