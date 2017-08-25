@@ -464,6 +464,11 @@ github.com/vishvananda/netlink
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/vishvananda && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/vishvananda && git clone https://github.com/vishvananda/netlink && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/vishvananda/netlink && git checkout 482f7a52b758233521878cb6c5904b6bd63f3457
 
+xi2.org/x/xz
+	19aeb13c4e7cb6bd3188dfede73840f33455425a	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	(go get -d xi2.org/x/xz || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/xi2.org/x/xz && git checkout 19aeb13c4e7cb6bd3188dfede73840f33455425a
+
 github.com/armon/go-metrics
 	eb0af217e5e9747e41dd5303755356b62d28e3ec	 -> 	docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
@@ -578,7 +583,7 @@ golang.org/x/crypto
 	c10c31b5e94b6f7a0283272dc2bb27163dcea24b	 -> 	2015-05-06 20:01:23-07:00 : distribution-2.6.0
 	1351f936d976c60a0a48d728281922cf63eafb8d	 -> 	2015-02-19 07:57:16+11:00 : etcd-3.1.1
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/crypto >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/crypto
+	(go get -d golang.org/x/crypto >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/crypto
 
 github.com/docker/leadership
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -608,7 +613,7 @@ gopkg.in/check.v1
 	64131543e7896d5bcc6bd5a76287eb75ea96c673	 -> 	2014-10-24 11:38:53-02:00 : distribution-2.6.0
 	64131543e7896d5bcc6bd5a76287eb75ea96c673	 -> 	2014-10-24 11:38:53-02:00 : Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d gopkg.in/check.v1 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/gopkg.in/check.v1
+	(go get -d gopkg.in/check.v1 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/gopkg.in/check.v1
 
 golang.org/x/sys
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -617,7 +622,7 @@ golang.org/x/sys
 	eb2c74142fd19a79b3f237334c7384d5167b1b46	 -> 	2016-01-26 17:36:05-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	833a04a10549a95dc34458c195cbad61bbb6cb4d	 -> 	2015-12-10 17:34:15-08:00 : swarm-1.2.6
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/sys >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/sys
+	(go get -d golang.org/x/sys >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/sys
 
 github.com/docker/libkv
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -684,7 +689,7 @@ google.golang.org/api
 	9bf6e6e569ff057f75d9604a46c52928f17d2b54	 -> 	2016-03-21 16:44:42-07:00 : distribution-2.6.0
 	dc6d2353af16e2a2b0ff6986af051d473a4ed468	 -> 	2015-12-16 13:09:16+11:00 : docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d google.golang.org/api >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/google.golang.org/api
+	(go get -d google.golang.org/api >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/google.golang.org/api
 
 github.com/pborman/uuid
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -729,14 +734,14 @@ google.golang.org/grpc
 	v1.0.2                                  	 -> 	2016-10-03 10:23:44-07:00 : docker-c8388a-2016_11_22
 	d3ddb4469d5a1b949fc7a7da7c1d6a0d1b6de994	 -> 	2016-03-17 10:50:43-07:00 : distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d google.golang.org/grpc >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/google.golang.org/grpc
+	(go get -d google.golang.org/grpc >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/google.golang.org/grpc
 
 golang.org/x/oauth2
 ----------------- !!!CONFLICT!!! --------------------- 
 	045497edb6234273d67dbc25da3f2ddbc4c4cacf	 -> 	2016-03-04 15:22:30-06:00 : distribution-2.6.0
 	2baa8a1b9338cf13d9eeb27696d761155fa480be	 -> 	2015-12-03 13:21:41-08:00 : docker-c8388a-2016_11_22
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/oauth2 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/oauth2
+	(go get -d golang.org/x/oauth2 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/oauth2
 
 github.com/mattn/go-sqlite3
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -778,7 +783,7 @@ golang.org/x/time
 	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : etcd-3.1.1
 	a4bde12657593d5e90d0533a3e4fd95e635124cb	 -> 	2016-02-02 10:34:45-08:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/time >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/time
+	(go get -d golang.org/x/time >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/time
 
 github.com/coreos/etcd
 ----------- [[ MAIN PACKGE CONFLICT ]] --------------- 
@@ -812,7 +817,7 @@ golang.org/x/net
 	2beffdc2e92c8a3027590f898fe88f69af48a3f8	 -> 	2000-01-01 00:00:00+00:00 : docker-c8388a-2016_11_22
 	2beffdc2e92c8a3027590f898fe88f69af48a3f8	 -> 	2000-01-01 00:00:00+00:00 : libcompose-0.4.0-70abeb-f5739a7-mix
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d golang.org/x/net >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/net
+	(go get -d golang.org/x/net >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/golang.org/x/net
 
 github.com/gorilla/context
 ----------------- !!!CONFLICT!!! --------------------- 
@@ -911,7 +916,7 @@ gopkg.in/yaml.v2
 	7ad95dd0798a40da1ccdff6dff35fd177b5edf40	 -> 	2015-06-24 11:29:02+01:00 : Teleport-1.2.0
 	bef53efd0c76e49e6de55ead051f886bea7e9420	 -> 	2015-01-16 18:20:57-02:00 : distribution-2.6.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-	(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d gopkg.in/yaml.v2 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/gopkg.in/yaml.v2
+	(go get -d gopkg.in/yaml.v2 >/dev/null 2>&1 || true) && cd /Users/almightykim/Workspace/POCKETPKG/src/gopkg.in/yaml.v2
 
 github.com/opencontainers/runc
 ----------------- !!!CONFLICT!!! --------------------- 
