@@ -100,6 +100,7 @@ function clean_gopath() {
 	rm -rf github.com/mdp/rsc && (rmdir github.com/mdp > /dev/null 2>&1 || true)
 	rm -rf github.com/tstranex/u2f && (rmdir github.com/tstranex > /dev/null 2>&1 || true)
 	rm -rf github.com/opencontainers/runtime-spec && (rmdir github.com/opencontainers > /dev/null 2>&1 || true)
+	rm -rf github.com/petar/GoLLRB && (rmdir github.com/petar > /dev/null 2>&1 || true)
 	rm -rf github.com/BurntSushi/toml && (rmdir github.com/BurntSushi > /dev/null 2>&1 || true)
 	rm -rf github.com/Graylog2/go-gelf && (rmdir github.com/Graylog2 > /dev/null 2>&1 || true)
 	rm -rf github.com/hashicorp/go-immutable-radix && (rmdir github.com/hashicorp > /dev/null 2>&1 || true)

@@ -122,6 +122,7 @@ else
     cd "${LIBCOMPOSE}/vendor/" && clean_vendor
     popd
 
+    # setup etcd
     pushd ${WORK_ROOT}
     echo "setting up etcd..."
     COREOS="${GOREPO}/src/github.com/coreos"
@@ -142,6 +143,7 @@ else
     fi
     popd
 
+    # setup graceful
     pushd ${WORK_ROOT}
     echo "setting up gopkg.in/tylerb/graceful.v1 ..."
     TYLERB="${GOREPO}/src/gopkg.in/tylerb"
@@ -153,6 +155,21 @@ else
     if [[ ! -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
         echo "cleanup old link ${GRACEFUL} and rebuild..."
         cd ${TYLERB} && (rm ${GRACEFUL} || true) && ln -s ../../../DEPREPO/graceful ./graceful.v1
+    fi
+    popd
+
+    # setup pocket-sync
+    pushd ${WORK_ROOT}
+    echo "setting up pocket-sync ..."
+    REDUN="${GOREPO}/src/github.com/Redundancy"
+    if [[ ! -d ${REDUN} ]]; then
+        mkdir -p "${REDUN}"
+    fi
+    PSYNC="${REDUN}/go-sync"
+    LINK=$(readlink "${PSYNC}")
+    if [[ ! -d ${PSYNC} ]] || [[ ${LINK} != "../../../DEPREPO/pocket-sync" ]]; then
+        echo "cleanup old link ${PSYNC} and rebuild ..."
+        cd ${REDUN}  && (rm ${PSYNC} || true) && ln -s ../../../DEPREPO/pocket-sync ./go-sync
     fi
     popd
 

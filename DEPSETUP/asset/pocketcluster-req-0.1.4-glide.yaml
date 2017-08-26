@@ -49,3 +49,5 @@ import:
   version: 75e6e86cc601825c5dbcd4e0c209eab180997cd7
 - package: xi2.org/x/xz
   version: 19aeb13c4e7cb6bd3188dfede73840f33455425a
+- package: github.com/petar/GoLLRB
+  version: 53be0d36a84c2a886ca057d34b6aa4468df9ccb4
