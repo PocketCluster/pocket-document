@@ -93,6 +93,9 @@ function test_dependencies {
     cd "${GOREPO}/src/github.com/docker/distribution/uuid"              && go test ./...
     cd "${GOREPO}/src/github.com/docker/distribution/version"           && go test ./...
 
+    # test go-sync
+    cd "${GOREPO}/src/github.com/Redundancy/go-sync"                    && go test ./...
+
     echo "Testing Done!"
     popd
 }

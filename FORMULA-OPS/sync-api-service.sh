@@ -1,22 +1,11 @@
 #!/usr/bin/env bash
 
-pushd () {
-    command pushd "$@" > /dev/null
-}
+source ./util.sh
 
-popd () {
-    command popd "$@" > /dev/null
-}
-
-BLOCKSIZE=$((1024 * 1024 * 8))
+BLOCKSIZE=$((1024 * 1024 * 2))
 COREIMAGE=${1}
 NODEIMAGE=${2}
 METAJSON=${3}
-
-if [[ ${PWD} != *"pocket-formula/devops" ]]; then
-  echo "should be executed in pocket-formula/devops directory"
-  exit
-fi
 
 if [[ -z ${COREIMAGE} ]]; then
   echo "should specify core image"
@@ -41,6 +30,8 @@ PKG_VER=$(pcsync pkgver ${CORE_CHKSUM} ${NODE_CHKSUM} ${META_CHKSUM})
 printf "BlockSize ${BLOCKSIZE}\n\tCore image : ${COREIMAGE} -> ${CORE_CHKSUM}\n\tNode image : ${NODEIMAGE} -> ${NODE_CHKSUM}\n\tMeta Json  : ${METAJSON} -> ${META_CHKSUM}\n"
 
 pcsync pkglist ${CORE_CHKSUM} ${NODE_CHKSUM} ${META_CHKSUM} ${PKG_VER} ../template/base-package.template ../v014/package/list.json
+
+echo "remove tar,xz,gz extensions from .pcsync file!"
 
 pushd ${PWD} > /dev/null
 echo "syncing formula..."
