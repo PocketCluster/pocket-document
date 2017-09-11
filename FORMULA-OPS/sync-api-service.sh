@@ -29,7 +29,7 @@ PKG_VER=$(pcsync pkgver ${CORE_CHKSUM} ${NODE_CHKSUM} ${META_CHKSUM})
 
 printf "BlockSize ${BLOCKSIZE}\n\tCore image : ${COREIMAGE} -> ${CORE_CHKSUM}\n\tNode image : ${NODEIMAGE} -> ${NODE_CHKSUM}\n\tMeta Json  : ${METAJSON} -> ${META_CHKSUM}\n"
 
-pcsync pkglist ${CORE_CHKSUM} ${NODE_CHKSUM} ${META_CHKSUM} ${PKG_VER} ../template/base-package.template ../v014/package/list.json
+pcsync pkglist ${CORE_CHKSUM} ${NODE_CHKSUM} ${META_CHKSUM} ${PKG_VER} ../repositories/sources.txt ../template/base-package.template ../v014/package/list.json
 
 echo "remove tar,xz,gz extensions from .pcsync file!"
 
