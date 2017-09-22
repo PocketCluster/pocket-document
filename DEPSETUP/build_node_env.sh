@@ -64,6 +64,7 @@ rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/findgate/"      
 rsync_native_directory "${HOME}/Workspace/pc-osx-manager/GOLANG/udpnet/"              "/opt/gopkg/src/github.com/stkim1/udpnet/"
 
 echo "clean files..."
+clean_remote_files "/opt/gopkg/src/github.com/Redundancy/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/exec/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/lib/"
 clean_remote_files "/opt/gopkg/src/github.com/stkim1/pc-core/staticlib/"
