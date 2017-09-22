@@ -143,7 +143,6 @@ e71a09d01bd2bc45fe5137d9eb17e33460166d03    Merge pull request #762 from russjon
                                             February 14, 2017 at 3:47:33 PM GMT+9
 # CRYPTO VENDOR UPGRADES for ARMHF/ARM64
 
-<<<<<<< HEAD
 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9    Merge pull request #788 from gravitational/ev/regressions
                                             SCP fixes
                                             https://github.com/gravitational/teleport/pull/788
@@ -161,6 +160,65 @@ bd65635eb3ef2551f74ba2e8fb5a3d3c8a084cc2	AN IMPORTANT FLOW OF HOW TO FINE CONTRO
                                             Load Keys into System Agent and Exit
                                             https://github.com/gravitational/teleport/pull/834
                                             March 15, 2017 at 9:10:35 AM GMT+9
+
+39582254805d4be8a98416bff0e2ac8c2ec7c57c    Merge pull request #839 from gravitational/rjones/user-ca-export
+                                            User CA Export
+                                            https://github.com/gravitational/teleport/pull/839
+                                            March 16, 2017 at 9:28:33 AM GMT+9
+
+67c652686807ccc7a0942daa65830edddb5a18c5    Merge pull request #846 from gravitational/rjones/agent-unload
+                                            Unload stale keys
+                                            https://github.com/gravitational/teleport/pull/846
+                                            March 18, 2017 at 7:07:16 AM GMT+9
+
+/// --- This is not incorporated as it requires user role --- ///
+44cb57ba12c2755c8aceafec94f89b095d59cc9b    Merge pull request #850 from gravitational/sasha/agent2
+                                            Sasha/agent2
+                                            https://github.com/gravitational/teleport/pull/850
+                                            March 22, 2017 at 7:19:37 AM GMT+9
+/// --- This is not incorporated as it requires user role --- ///
+
+/// --- This is not incorporated as it fixes ansible issues --- ///
+22a2eedabbba06c4cc6752fb262760b211179800    Merge pull request #851 from gravitational/rjones/ansible-fixes
+                                            Ansible Regressions
+                                            https://github.com/gravitational/teleport/pull/851
+                                            March 22, 2017 at 8:52:44 AM GMT+9
+/// --- This is not incorporated as it fixes ansible issues --- ///
+
+<<<<<<< HEAD TODO
+d6a0beafde735694777238d80170616082b1a2f3    Merge pull request #862 from gravitational/rjones/no-second-factor
+                                            Allow Password Only Users
+                                            https://github.com/gravitational/teleport/pull/862
+                                            March 23, 2017 at 7:27:38 AM GMT+9
+
+762a4e0d5cd67eecb3d614b008dd2a3e6cb77638    Merge pull request #874 from gravitational/sasha/interop
+                                            add principal
+                                            https://github.com/gravitational/teleport/pull/874
+                                            March 29, 2017 at 8:24:18 AM GMT+9
+
+/// watch for makefile. read commit
+e87f2fc83b76c22c3709b7f59f1bbd2278afe6c6    Merge pull request #878 from gravitational/ev/877
+                                            Fixed scp regressions
+                                            https://github.com/gravitational/teleport/pull/878
+                                            March 30, 2017 at 9:12:13 AM GMT+9
+
+e05a5c3b13d3aaa99146f88ef7d25246b3fbdf12    Merge pull request #902 from gravitational/rjones/ca-format
+                                            CA Export Format
+                                            https://github.com/gravitational/teleport/pull/902
+                                            April 7, 2017 at 4:16:32 AM GMT+9
+
+70272e9931dda5da030baa5a9cf31678ab1ca68f    Merge pull request #905 from gravitational/rjones/export-docs
+                                            Update docs explaining CA export format changes.
+                                            https://github.com/gravitational/teleport/pull/902
+                                            April 7, 2017 at 6:22:27 AM GMT+9
+
+36f1b4859ade9fdb6d3867da14169b57b9114121    Merge pull request #908 from gravitational/rjones/auth-export-fix
+                                            Trim whitespace during auth export.
+                                            https://github.com/gravitational/teleport/pull/908
+                                            April 8, 2017 at 2:09:07 AM GMT+9
+
+3c2570fa3547a1478a7440328a9f056930104d34    Sasha High Availability.
+                                            April 8, 2017 at 8:51:31 AM GMT+9
 
 --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * --- * -
 
@@ -188,3 +246,10 @@ d34e55fff7701775840cb6b7d414cdb90dad6380    Merge pull request #751 from gravita
 
 b907f1c65a14a28c21c41ea47a37df655182770c    Merge pull request #766 from gravitational/rjones/fix-otp-test
                                             February 11, 2017 at 7:54:09 AM GMT+9
+
+
+# Incumbent. We don't need public proxy address
+837fc68dd418c5130b551ed23b56ef6a4f6b704f    Merge pull request #845 from gravitational/rjones/teleport-status
+                                            Public Proxy Address
+                                            March 18, 2017 at 4:01:13 AM GMT+9
+

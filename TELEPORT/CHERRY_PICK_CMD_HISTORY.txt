@@ -211,3 +211,26 @@ git cherry-pick -m 1 488d7b481016bed600ac23550d1ad83d1f7d89ab
 ... conflict resolved ...
 git add --all .
 git cherry-pick --continue
+
+(2017/09/23)
+git show --pretty=raw --stat 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9
+git cherry-pick -m 1 4c5ac2e3c2bdad48b043c1a8d98697465fee66f9
+... conflict resolved ...
+git add --all .
+git cherry-pick --continue
+
+git show --pretty=raw --stat 488d7b481016bed600ac23550d1ad83d1f7d89ab
+git cherry-pick -m 1 488d7b481016bed600ac23550d1ad83d1f7d89ab
+... conflict resolved ...
+git add --all .
+git cherry-pick --continue
+
+git show --pretty=raw --stat 39582254805d4be8a98416bff0e2ac8c2ec7c57c
+git cherry-pick -m 1 39582254805d4be8a98416bff0e2ac8c2ec7c57c
+... conflict resolved ...
+git add --all .
+git cherry-pick --continue
+
+git show --pretty=raw --stat 67c652686807ccc7a0942daa65830edddb5a18c5
+git cherry-pick -m 1 67c652686807ccc7a0942daa65830edddb5a18c5
+
