@@ -51,3 +51,5 @@ import:
   version: 19aeb13c4e7cb6bd3188dfede73840f33455425a
 - package: github.com/petar/GoLLRB
   version: 53be0d36a84c2a886ca057d34b6aa4468df9ccb4
+- package: github.com/flosch/pongo2
+  version: v3

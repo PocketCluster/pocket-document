@@ -264,6 +264,11 @@ github.com/imdario/mergo
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/imdario && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/imdario && git clone https://github.com/imdario/mergo && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/imdario/mergo && git checkout 0.2.1
 
+github.com/flosch/pongo2
+	v3                                      	 -> 	pocketcluster-req-0.1.4
+	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+	mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/flosch && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/flosch && git clone https://github.com/flosch/pongo2 && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/flosch/pongo2 && git checkout v3
+
 github.com/mailgun/oxy
 	0c3e45a1f7b20e1f818612ad4f42abfc0923f3d5	 -> 	Teleport-1.2.0
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -

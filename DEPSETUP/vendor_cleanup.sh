@@ -125,6 +125,7 @@ function clean_gopath() {
 	rm -rf github.com/hashicorp/go-memdb && (rmdir github.com/hashicorp > /dev/null 2>&1 || true)
 	rm -rf github.com/gravitational/kingpin && (rmdir github.com/gravitational > /dev/null 2>&1 || true)
 	rm -rf github.com/imdario/mergo && (rmdir github.com/imdario > /dev/null 2>&1 || true)
+	rm -rf github.com/flosch/pongo2 && (rmdir github.com/flosch > /dev/null 2>&1 || true)
 	rm -rf github.com/mailgun/oxy && (rmdir github.com/mailgun > /dev/null 2>&1 || true)
 	rm -rf github.com/golang/glog && (rmdir github.com/golang > /dev/null 2>&1 || true)
 	rm -rf github.com/yvasiyarov/gorelic && (rmdir github.com/yvasiyarov > /dev/null 2>&1 || true)
