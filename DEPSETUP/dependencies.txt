@@ -915,6 +915,7 @@ github.com/urfave/cli
 ----------------- !!!CONFLICT!!! --------------------- 
 	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : etcd-3.1.1
 	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : libcompose-0.4.0-70abeb-f5739a7-mix
+	v1.18.0                                 	 -> 	2016-06-27 22:30:56-07:00 : pocketcluster-req-0.1.4
 	-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 	/bin/mkdir -p /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave && /usr/local/bin/git clone https://github.com/urfave/cli && cd /Users/almightykim/Workspace/POCKETPKG/src/github.com/urfave/cli
 
