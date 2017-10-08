@@ -242,7 +242,8 @@ func (s *Server) handleSessionRequests(sconn *ssh.ServerConn, ch ssh.Channel, in
 
 
 
-
+// scp mode execute command
+./pocketd scp --remote-addr=192.168.1.105:50901 --local-addr=192.168.1.166:3022 -t /pocket/100mb.test
 
 
 // define a hidden 'scp' command (it implements server-side implementation of handling
