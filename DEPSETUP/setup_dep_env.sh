@@ -20,12 +20,13 @@ MAIN_COMPONENT=("distribution-2.6.0" "docker-c8388a-2016_11_22")
 TESTGO=${TESTGO:-0}
 ADV_TESTGO=${ADV_TESTGO:-0}
 
-echo "prep directories"
 pushd ${WORK_ROOT}
+echo "prep directories"
 cd ${GOREPO}
 mkdir -p {src,bin,pkg}
 popd
 
+# --- condense dependencies first ---
 ${WORK_ROOT}/condense_dep.py && source ${WORK_ROOT}/vendor_cleanup.sh
 
 for comp in ${MAIN_COMPONENT[@]}; do
@@ -46,7 +47,7 @@ for comp in ${MAIN_COMPONENT[@]}; do
     fi
 done
 
-# setup teleport
+# --- setup teleport ---
 pushd ${WORK_ROOT}
 echo "setting up teleport..."
 GRAVITATIONAL="${GOREPO}/src/github.com/gravitational"
@@ -62,7 +63,7 @@ fi
 cd "${TELEPORT}/vendor/" && clean_vendor
 popd
 
-# setup swarm
+# --- setup swarm ---
 pushd ${WORK_ROOT}
 echo "setting up swarm..."
 DOCKER="${GOREPO}/src/github.com/docker"
@@ -78,7 +79,7 @@ fi
 cd "${SWARM}/vendor" && clean_vendor
 popd
 
-# setup libcompose
+# --- setup libcompose ---
 pushd ${WORK_ROOT}
 echo "setting up libcompose..."
 DOCKER="${GOREPO}/src/github.com/docker"
@@ -94,7 +95,7 @@ fi
 cd "${LIBCOMPOSE}/vendor/" && clean_vendor
 popd
 
-# setup distribution
+# --- setup distribution (docker registry) ---
 pushd ${WORK_ROOT}
 echo "setting up distribution..."
 if [[ -d "${GOREPO}/src/github.com/docker/distribution" ]]; then
@@ -107,7 +108,34 @@ cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-2.
 echo "special treatment for distribution/registry/registry.go since registry.go is using very old version of logrus, it still contains logstash formatter"
 sed -i '' 's|"github.com/Sirupsen/logrus/formatters/logstash"|logstash "github.com/bshuster-repo/logrus-logstash-hook"|g' ./distribution//registry/registry.go
 
-# setup etcd
+echo "eliminate storage driver other than filesystem..."
+rm -rf ./distribution/registry/storage/driver/azure/
+rm -rf ./distribution/registry/storage/driver/gcs/
+rm -rf ./distribution/registry/storage/driver/oss/
+rm -rf ./distribution/registry/storage/driver/s3-aws/
+rm -rf ./distribution/registry/storage/driver/s3-goamz/
+rm -rf ./distribution/registry/storage/driver/swift/
+rm -rf ./distribution/registry/storage/driver/middleware/cloudfront/
+
+echo "eliminate vendored storage drivers..."
+rm -rf ./distribution/vendor/github.com/aws/aws-sdk-go/           && (rmdir ./distribution/vendor/github.com/aws > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/docker/goamz/             && (rmdir ./distribution/vendor/github.com/docker > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/Azure/azure-sdk-for-go/   && (rmdir ./distribution/vendor/github.com/Azure > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/google.golang.org/cloud/             && (rmdir ./distribution/vendor/google.golang.org > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/ncw/swift/                && (rmdir ./distribution/vendor/github.com/ncw > /dev/null 2>&1 || true)
+rm -rf ./distribution/vendor/github.com/denverdino/aliyungo/      && (rmdir ./distribution/vendor/github.com/denverdino > /dev/null 2>&1 || true)
+popd
+
+# --- setup docker ---
+pushd ${WORK_ROOT}
+if [[ -d "${GOREPO}/src/github.com/docker/docker" ]]; then
+    echo "delete old link : ${GOREPO}/src/github.com/docker/docker"
+    rm "${GOREPO}/src/github.com/docker/docker"
+fi
+mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/docker-c8388a-2016_11_22" "./docker"
+popd
+
+# --- setup etcd ---
 pushd ${WORK_ROOT}
 echo "setting up etcd..."
 COREOS="${GOREPO}/src/github.com/coreos"
@@ -128,7 +156,7 @@ else
 fi
 popd
 
-# setup graceful
+# --- setup graceful ---
 pushd ${WORK_ROOT}
 echo "setting up gopkg.in/tylerb/graceful.v1 ..."
 TYLERB="${GOREPO}/src/gopkg.in/tylerb"
@@ -143,7 +171,7 @@ if [[ ! -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
 fi
 popd
 
-# setup pocket-sync
+# --- setup pocket-sync ---
 pushd ${WORK_ROOT}
 echo "setting up pocket-sync ..."
 REDUN="${GOREPO}/src/github.com/Redundancy"
@@ -154,40 +182,42 @@ PSYNC="${REDUN}/go-sync"
 LINK=$(readlink "${PSYNC}")
 if [[ ! -d ${PSYNC} ]] || [[ ${LINK} != "../../../DEPREPO/pocket-sync" ]]; then
     echo "cleanup old link ${PSYNC} and rebuild ..."
-    cd ${REDUN}  && (rm ${PSYNC} || true) && ln -s ../../../DEPREPO/pocket-sync ./go-sync
+    cd ${REDUN} && (rm ${PSYNC} || true) && ln -s ../../../DEPREPO/pocket-sync ./go-sync
 fi
 popd
 
-
-echo "eliminate storage driver other than filesystem..."
-rm -rf ./distribution/registry/storage/driver/azure/
-rm -rf ./distribution/registry/storage/driver/gcs/
-rm -rf ./distribution/registry/storage/driver/oss/
-rm -rf ./distribution/registry/storage/driver/s3-aws/
-rm -rf ./distribution/registry/storage/driver/s3-goamz/
-rm -rf ./distribution/registry/storage/driver/swift/
-rm -rf ./distribution/registry/storage/driver/middleware/cloudfront/
-
-echo "eliminate vendored storage drivers..."
-rm -rf ./distribution/vendor/github.com/aws/aws-sdk-go/           && (rmdir ./distribution/vendor/github.com/aws > /dev/null 2>&1 || true)
-rm -rf ./distribution/vendor/github.com/docker/goamz/             && (rmdir ./distribution/vendor/github.com/docker > /dev/null 2>&1 || true)
-rm -rf ./distribution/vendor/github.com/Azure/azure-sdk-for-go/   && (rmdir ./distribution/vendor/github.com/Azure > /dev/null 2>&1 || true)
-rm -rf ./distribution/vendor/google.golang.org/cloud/             && (rmdir ./distribution/vendor/google.golang.org > /dev/null 2>&1 || true)
-rm -rf ./distribution/vendor/github.com/ncw/swift/                && (rmdir ./distribution/vendor/github.com/ncw > /dev/null 2>&1 || true)
-rm -rf ./distribution/vendor/github.com/denverdino/aliyungo/      && (rmdir ./distribution/vendor/github.com/denverdino > /dev/null 2>&1 || true)
-
-popd
-
-# setup docker
-if [[ -d "${GOREPO}/src/github.com/docker/docker" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/docker/docker"
-    rm "${GOREPO}/src/github.com/docker/docker"
-fi
+# --- setup github.com/blevesearch/bleve (for log search ekanite) ---
 pushd ${WORK_ROOT}
-mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/docker-c8388a-2016_11_22" "./docker"
+echo "github.com/blevesearch/bleve ..."
+BLSEARCH="${GOREPO}/src/github.com/blevesearch"
+if [[ ! -d ${BLSEARCH} ]]; then
+    mkdir -p ${BLSEARCH}
+fi
+BLEVE="${BLSEARCH}/bleve"
+LINK=$(readlink ${BLEVE})
+if [[ ! -d ${BLEVE} ]] || [[ ${LINK} != "../../../DEPREPO/bleve" ]]; then
+    echo "cleanup old link ${BLEVE} and rebuild ..."
+    cd ${BLSEARCH} && (rm ${BLEVE} || true) && ln -s ../../../DEPREPO/bleve ./bleve
+fi
 popd
 
-# THIS IS 2ndary dependency setup. We might need to recover from this!
+# --- setup github.com/ekanite/ekanite ---
+pushd ${WORK_ROOT}
+echo "github.com/ekanite/ekanite ..."
+GHEKNT="${GOREPO}/src/github.com/ekanite"
+if [[ ! -d ${GHEKNT} ]]; then
+    mkdir -p ${GHEKNT}
+fi
+EKANITE="${GHEKNT}/ekanite"
+LINK=$(readlink ${EKANITE})
+if [[ ! -d ${EKANITE} ]] || [[ ${LINK} != "../../../DEPREPO/ekanite" ]]; then
+    echo "cleanup old link ${EKANITE} and rebuild ..."
+    cd ${GHEKNT} && (rm ${EKANITE} || true) && ln -s ../../../DEPREPO/ekanite ./ekanite
+fi
+popd
+
+
+# --- THIS IS 2ndary dependency setup. We might need to recover from this! ---
 # cfssl dependency clearing
 if [[ ! -d "${GOREPO}/src/github.com/cloudflare/cfssl" ]]; then
     echo "Cloudflare cfssl is not present!!!"

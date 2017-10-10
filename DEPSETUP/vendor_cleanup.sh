@@ -175,6 +175,7 @@ function clean_gopath() {
 	rm -rf github.com/grpc-ecosystem/go-grpc-prometheus && (rmdir github.com/grpc-ecosystem > /dev/null 2>&1 || true)
 	rm -rf github.com/docker/libnetwork && (rmdir github.com/docker > /dev/null 2>&1 || true)
 	rm -rf github.com/gravitational/roundtrip && (rmdir github.com/gravitational > /dev/null 2>&1 || true)
+	rm -rf github.com/coreos/bbolt && (rmdir github.com/coreos > /dev/null 2>&1 || true)
 	rm -rf github.com/aanand/compose-file && (rmdir github.com/aanand > /dev/null 2>&1 || true)
 	rm -rf github.com/tonistiigi/fifo && (rmdir github.com/tonistiigi > /dev/null 2>&1 || true)
 	rm -rf github.com/gokyle/hotp && (rmdir github.com/gokyle > /dev/null 2>&1 || true)
