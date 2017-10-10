@@ -189,6 +189,7 @@ popd
 # --- setup github.com/blevesearch/bleve (for log search ekanite) ---
 pushd ${WORK_ROOT}
 echo "github.com/blevesearch/bleve ..."
+printf "\n\n\t!!![ATTENTION] BLEVE NEEDS ALOT MORE DEPENDENCIES!!!\n\tFor 0.1.4, we'll leave out logging.\n\tTake a look backend dep management to activate bleve.\n\n"
 BLSEARCH="${GOREPO}/src/github.com/blevesearch"
 if [[ ! -d ${BLSEARCH} ]]; then
     mkdir -p ${BLSEARCH}
