@@ -1,0 +1,57 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+# Accept any related or established connections
+-I INPUT  1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+-I OUTPUT 1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# Allow all traffic on the loopback interface
+-A INPUT  -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+
+# Outbound DNS lookups
+-A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+
+# Outbound PING requests
+-A OUTPUT -p icmp -j ACCEPT
+
+# Outbound Network Time Protocol (NTP) request
+-A OUTPUT -p udp --dport 123 --sport 123 -j ACCEPT
+
+# git://
+-A OUTPUT -p tcp -m tcp --dport 9418 -m state --state NEW -j ACCEPT
+
+# SSH
+-A OUTPUT -p tcp -m tcp --dport 22 -m state --state NEW -j ACCEPT
+-A INPUT  -p tcp -m tcp --dport 22 -m state --state NEW -j ACCEPT
+
+# HTTP
+-A OUTPUT -p tcp -m tcp --dport 80 -m state --state NEW -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 443 -m state --state NEW -j ACCEPT
+-A INPUT  -p tcp -m tcp --dport 80 -m state --state NEW -j ACCEPT
+-A INPUT  -p tcp -m tcp --dport 443 -m state --state NEW -j ACCEPT
+
+# Uptime
+-A INPUT  -p tcp -m tcp --dport 8082 -m state --state NEW -j ACCEPT
+
+# SMTP
+-A OUTPUT -p tcp -m tcp --dport 25 -m state --state NEW -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 465 -m state --state NEW -j ACCEPT
+
+# Teleport
+## Node  : SSH port. This is Teleport's equivalent of port #22 for SSH.
+-A INPUT  -p tcp -m tcp --dport 3022 -m state --state NEW -j ACCEPT
+-A OUTPUT -p tcp -m tcp --dport 3022 -m state --state NEW -j ACCEPT
+
+## Proxy : SSH port clients connect to. A proxy will forward this connection to port #3022 on the destination node.
+-A OUTPUT -p tcp -m tcp --dport 3023 -m state --state NEW -j ACCEPT
+
+## Proxy : HTTPS connection to authenticate tsh users and web users into the cluster. The same connection is used to serve a Web UI.
+-A OUTPUT -p tcp -m tcp --dport 3080 -m state --state NEW -j ACCEPT
+
+## Auth : SSH port used by the Auth Service to serve its API to other nodes in a cluster.
+-A OUTPUT -p tcp -m tcp --dport 3025 -m state --state NEW -j ACCEPT
+
+COMMIT

@@ -1,0 +1,11 @@
+- name: Install essential package
+  action: apt pkg= state=installed
+  with_items:
+    - dialog
+    - language-pack-en-base
+    - libpam-systemd
+    - dbus
+    - fail2ban
+    - logwatch
+    - iptables-persistent
+  sudo: yes

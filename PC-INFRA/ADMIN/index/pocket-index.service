@@ -1,0 +1,15 @@
+[Unit]
+Description=PocketCluster Index Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/pocket-index.pid
+Restart=always
+Environment="CONFIG_PATH=/www-server/config.yaml"
+ExecStart=/www-server/indexsrv
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

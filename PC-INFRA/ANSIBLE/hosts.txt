@@ -1,0 +1,8 @@
+us-east-01.cdn.pocketcluster.org
+us-west-01.cdn.pocketcluster.org
+
+
+container.cdn.pocketcluster.org
+
+192.189.25.197
+107.181.138.177

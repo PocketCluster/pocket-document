@@ -1,0 +1,12 @@
+[Unit]
+Description=PocketCluster API Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/api-service.pid
+Restart=always
+ExecStart=/usr/local/bin/api-service
+
+[Install]
+WantedBy=multi-user.target

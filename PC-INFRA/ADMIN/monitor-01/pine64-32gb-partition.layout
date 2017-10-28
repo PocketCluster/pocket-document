@@ -1,0 +1,8 @@
+label: dos
+label-id: 0x2b51fa93
+device: /dev/sdb
+unit: sectors
+
+/dev/sdb1 : start=       40960, size=      102400, type=c, bootable
+/dev/sdb2 : start=      143360, size=    53801984, type=83
+/dev/sdb3 : start=    53945344, size=     8388608, type=82
