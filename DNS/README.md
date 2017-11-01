@@ -52,3 +52,4 @@ prepend domain-name-servers 127.0.0.1, 208.67.222.222, 208.67.220.220;
 - <https://askubuntu.com/questions/157154/how-do-i-include-lines-in-resolv-conf-that-wont-get-lost-on-reboot>
 - <https://www.cyberciti.biz/faq/dhclient-etcresolvconf-hooks/>
 - <https://use.opendns.com/>
+- <https://linux.die.net/man/5/dhclient.conf>
