@@ -1,0 +1,67 @@
+version: '2'
+
+services:
+  namenode:
+    image: pc-master:5000/x86_64/xenial:latest
+    container_name: pc-core
+    hostname: pc-core
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    networks:
+      hadoop:
+        ipv4_address: 172.16.128.1
+    volumes:
+      - data-hadoop:/pocket/hadoop
+      - data-spark:/pocket/spark
+      - data-user:/PocketCluster
+    environment:
+      - constraint:node==pc-core
+      - CLUSTER_NAME=pocketcluster/hadoop-spark-note
+      - SLAVE_NODES={% for node in slavenodes %}{{ node.name }}=172.16.128.{{ node.address }};{% endfor %}
+    depends_on:
+      {% for node in slavenodes %}- datanode{{ node.index }}
+      {% endfor %}
+  {% for node in slavenodes %}
+  datanode{{ node.index }}:
+    image: pc-master:5000/aarch64/xenial:latest
+    container_name: {{ node.name }}
+    hostname: {{ node.name }}
+    networks:
+      hadoop:
+        ipv4_address: 172.16.128.{{ node.address }}
+    volumes:
+      - data-hadoop:/pocket/hadoop
+      - data-spark:/pocket/spark
+    environment:
+      - constraint:node=={{ node.name }}
+  {% endfor %}
+
+volumes:
+  data-hadoop: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /pocket/hadoop/2.7.3
+      o: bind
+  data-spark: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /pocket/spark/2.1.0
+      o: bind
+  data-user: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /PocketCluster
+      o: bind
+
+networks:
+  hadoop:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 172.16.128.0/24
+          gateway: 172.16.128.254
+          ip_range: 172.16.128.0/24
