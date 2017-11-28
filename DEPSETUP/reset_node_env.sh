@@ -44,8 +44,8 @@ function recover_cert_auth() {
     echo "sudo -s chown root:root ca-certificates.crt && sudo -s chmod 644 ca-certificates.crt && sudo -s mv ca-certificates.crt /etc/ssl/certs/"
 }
 
-reset_ssh_command ${TARGET_HOST} "$(stop_pocket)"
-reset_ssh_command ${TARGET_HOST} "$(cmd_reset_hostname ${TARGET_HOST})"
-reset_ssh_command ${TARGET_HOST} "$(cmd_remove_pocket)"
-reset_ssh_command ${TARGET_HOST} "$(recover_cert_auth ${TARGET_HOST})"
-reset_ssh_command ${TARGET_HOST} "$(start_pocket)"
+(reset_ssh_command ${TARGET_HOST} "$(stop_pocket)" || true)
+(reset_ssh_command ${TARGET_HOST} "$(cmd_reset_hostname ${TARGET_HOST})" || true)
+(reset_ssh_command ${TARGET_HOST} "$(cmd_remove_pocket)" || true)
+(reset_ssh_command ${TARGET_HOST} "$(recover_cert_auth ${TARGET_HOST})" || true)
+(reset_ssh_command ${TARGET_HOST} "$(start_pocket)" || true)
