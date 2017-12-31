@@ -1,0 +1,12 @@
+[Unit]
+Description=PocketCluster Container CDN Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/cdn.pid
+Restart=always
+ExecStart=/usr/local/bin/cdnserve
+
+[Install]
+WantedBy=multi-user.target

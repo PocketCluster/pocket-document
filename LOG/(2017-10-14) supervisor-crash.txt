@@ -1,0 +1,121 @@
+ 
+[31mERRO[0m[0063] invalid timestamp from orchst last.ts 1508035453 | md.ts 1508035451 
+[31mERRO[0m[0063] invalid timestamp from pcssh last.ts 1508035453 | md.ts 1508035449 
+[31mERRO[0m[0063] invalid timestamp from pcssh last.ts 1508035453 | md.ts 1508035451 
+[34mINFO[0m[0063] new polling is made %v1508035455             
+[34mINFO[0m[0065] new polling is made %v1508035457             
+[34mINFO[0m[0067] new polling is made %v1508035459             
+[31mERRO[0m[0068] invalid timestamp from orchst last.ts 1508035459 | md.ts 1508035455 
+[31mERRO[0m[0068] invalid timestamp from orchst last.ts 1508035459 | md.ts 1508035457 
+[31mERRO[0m[0068] invalid timestamp from pcssh last.ts 1508035459 | md.ts 1508035455 
+[31mERRO[0m[0068] invalid timestamp from pcssh last.ts 1508035459 | md.ts 1508035457 
+[34mINFO[0m[0069] new polling is made %v1508035461             
+[37mDEBU[0m[0071] [AGENT] BEACON-TX [2017-10-15 11:44:23.248673761 +0900 KST] Host 192.168.1.166 
+[34mINFO[0m[0071] new polling is made %v1508035463             
+2017-10-15 11:44:23.536 PocketCluster[2660:544092] found an obj by the class name DebugWindow
+[37mDEBU[0m[0072] [LIFE] app is focused lifecycle.Event{From:StageVisible, To:StageFocused} 
+[37mDEBU[0m[0073] [SUPERVISOR] stopping services...            
+[37mDEBU[0m[0073] [REGISTRY] server exit. Error : <nil>        
+[37mDEBU[0m[0073] TunClient[Admin].Close()                     
+[37mDEBU[0m[0073] TunClient[Proxy].Close()                     
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.container.registry' | &{{0 0} 1 service.container.registry [] 0x1001ef300}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.container.registry' | &{{0 0} 0 service.container.registry [] 0x1001ef300}] exited 
+[37mDEBU[0m[0073] [VBOXCTRL] VBox Core Control shutdown...     
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.operation' | &{{0 0} 1 service.orchestration.operation [0xc420543b00 0xc420543b20] 0x1001ef510}] waiter [ivent.orchst.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.operation' | &{{0 0} 1 service.orchestration.operation [0xc420543b00 0xc420543b20] 0x1001ef510}] waiter [ivent.monitor.node.req.status] cleaned 
+[37mDEBU[0m[0073] [VBOXLSTN] connection open error (accept tcp4 127.0.0.1:10068: use of closed network connection) 
+[37mDEBU[0m[0073] TunClient[Admin]: authServersSyncLoop() exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.operation' | &{{0 0} 1 service.orchestration.operation [0xc420543b00 0xc420543b20] 0x1001ef510}] removed 
+2017-10-15 11:44:24.835324 I | etcdserver: skipped leadership transfer for single member cluster
+[37mDEBU[0m[0073] [Admin] connection closed. Error : <nil>     
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.operation' | &{{0 0} 0 service.orchestration.operation [0xc420543b00 0xc420543b20] 0x1001ef510}] exited 
+2017-10-15 11:44:24.835544 I | embed: [ETCD-POCKET] terminating client service...
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.conn.admin' | &{{0 0} 1 service.pcssh.conn.admin [] 0x1001c9660}] removed 
+[37mDEBU[0m[0073] [AGENT] stopping agent service...            
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.conn.admin' | &{{0 0} 0 service.pcssh.conn.admin [] 0x1001c9660}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [event.beacon.core.location.receive] cleaned 
+[37mDEBU[0m[0073] [PROXY] connection closed. Error : <nil>     
+[37mDEBU[0m[0073] TunClient[Proxy]: authServersSyncLoop() exited 
+[37mDEBU[0m[0073] [AUTH] Auth Tunnel exited <nil>              
+[34mINFO[0m[0073] [SSH:auth] server [::]:3025 exited           
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[34mINFO[0m[0073] [SSH:auth] server shutting down              
+[37mDEBU[0m[0073] [NAME-SERVICE] service shutting down         
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[37mDEBU[0m[0073] sessionRegistry.Close()                      
+[37mDEBU[0m[0073] [PROXY] SSH proxy exited. Error: <nil>       
+[37mDEBU[0m[0073] [PROXY] ReverseTunnel exited. Error: <nil>   
+[37mDEBU[0m[0073] server.heartbeatPresence() exited            
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[34mINFO[0m[0073] [SSH:proxy] server [::]:3023 exited          
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [event.beacon.core.search.receive] cleaned 
+[34mINFO[0m[0073] [SSH:auth] server shutting down              
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[34mINFO[0m[0073] [SSH:auth] closed connection                 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [ivent.network.address.change] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [ivent.report.node.list.request] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [ivent.monitor.node.req.status] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [ivent.pcssh.proxy.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] waiter [ivent.vbox.ctrl.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 1 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.master' | &{{0 0} 0 service.beacon.master [0xc420543ce0 0xc420543d00 0xc420543d20 0xc420543d60 0xc420543d80 0xc420543da0 0xc420543dc0] 0x1001f5ae0}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.vbox.master.control' | &{{0 0} 1 service.vbox.master.control [0xc420550b20] 0x1001f9a30}] waiter [ivent.network.address.change] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.vbox.master.control' | &{{0 0} 1 service.vbox.master.control [0xc420550b20] 0x1001f9a30}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.vbox.master.control' | &{{0 0} 0 service.vbox.master.control [0xc420550b20] 0x1001f9a30}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.monitor.node.resp.beacon] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.monitor.node.resp.pcssh] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.monitor.node.resp.orchst] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.beacon.manager.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.pcssh.proxy.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] waiter [ivent.orchst.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 1 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.monitor.system.health' | &{{0 0} 0 service.monitor.system.health [0xc4205438e0 0xc420543900 0xc420543920 0xc420543960 0xc420543980 0xc4205439a0] 0x1001f2660}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.location.write' | &{{0 0} 1 service.beacon.location.write [0xc420550ca0 0xc420550cc0] 0x1001b6080}] waiter [event.beacon.core.location.send] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.location.write' | &{{0 0} 1 service.beacon.location.write [0xc420550ca0 0xc420550cc0] 0x1001b6080}] waiter [ivent.beacon.core.service.close] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.location.write' | &{{0 0} 1 service.beacon.location.write [0xc420550ca0 0xc420550cc0] 0x1001b6080}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.beacon.location.write' | &{{0 0} 0 service.beacon.location.write [0xc420550ca0 0xc420550cc0] 0x1001b6080}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.server' | &{{0 0} 1 service.orchestration.server [0xc420543ba0] 0x1001efce0}] waiter [ivent.beacon.manager.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.server' | &{{0 0} 1 service.orchestration.server [0xc420543ba0] 0x1001efce0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.orchestration.server' | &{{0 0} 0 service.orchestration.server [0xc420543ba0] 0x1001efce0}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.conn.proxy' | &{{0 0} 1 service.pcssh.conn.proxy [0xc4205508c0] 0x1001c9ab0}] waiter [ivent.auth.session.obj] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.conn.proxy' | &{{0 0} 1 service.pcssh.conn.proxy [0xc4205508c0] 0x1001c9ab0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.conn.proxy' | &{{0 0} 0 service.pcssh.conn.proxy [0xc4205508c0] 0x1001c9ab0}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.authority' | &{{0 0} 1 service.pcssh.authority [] 0x1001c88c0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.authority' | &{{0 0} 0 service.pcssh.authority [] 0x1001c88c0}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.operation' | &{{0 0} 1 service.internal.node.name.operation [0xc420543a80] 0x1001f16f0}] waiter [ivent.beacon.manager.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.operation' | &{{0 0} 1 service.internal.node.name.operation [0xc420543a80] 0x1001f16f0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.operation' | &{{0 0} 0 service.internal.node.name.operation [0xc420543a80] 0x1001f16f0}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.server.proxy' | &{{0 0} 1 service.pcssh.server.proxy [0xc420550860] 0x1001ca570}] waiter [ivent.proxy.identity] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.server.proxy' | &{{0 0} 1 service.pcssh.server.proxy [0xc420550860] 0x1001ca570}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.pcssh.server.proxy' | &{{0 0} 0 service.pcssh.server.proxy [0xc420550860] 0x1001ca570}] exited 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.server' | &{{0 0} 1 service.internal.node.name.server [0xc420543a00] 0x1001f1510}] waiter [ivent.name.server.instance.spawn] cleaned 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.server' | &{{0 0} 1 service.internal.node.name.server [0xc420543a00] 0x1001f1510}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.internal.node.name.server' | &{{0 0} 0 service.internal.node.name.server [0xc420543a00] 0x1001f1510}] exited 
+[37mDEBU[0m[0073] [ETCD] server shuts down                     
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.storage.process' | &{{0 0} 1 service.storage.process [] 0x1001eeee0}] removed 
+[37mDEBU[0m[0073] [SUPERVISOR-SERVICE] ['service.storage.process' | &{{0 0} 0 service.storage.process [] 0x1001eeee0}] exited 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.beacon.location.read' | &{{0 0} 1 service.beacon.location.read [0xc420550c00] 0x1001b5a10}] waiter [ivent.beacon.core.service.close] cleaned 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.beacon.location.read' | &{{0 0} 1 service.beacon.location.read [0xc420550c00] 0x1001b5a10}] removed 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.beacon.location.read' | &{{0 0} 0 service.beacon.location.read [0xc420550c00] 0x1001b5a10}] exited 
+[37mDEBU[0m[0074] [VBOXLSTN] VBox Core listener shutdown...    
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.vbox.master.listener' | &{{0 0} 1 service.vbox.master.listener [0xc420550ac0] 0x1001f9330}] waiter [ivent.vbox.ctrl.instance.spawn] cleaned 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.vbox.master.listener' | &{{0 0} 1 service.vbox.master.listener [0xc420550ac0] 0x1001f9330}] removed 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.vbox.master.listener' | &{{0 0} 0 service.vbox.master.listener [0xc420550ac0] 0x1001f9330}] exited 
+[37mDEBU[0m[0074] [AUTH] heartbeat to other auth servers exited 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.pcssh.server.auth' | &{{0 0} 1 service.pcssh.server.auth [0xc420550980 0xc4205509a0 0xc4205509c0] 0x1001c6da0}] waiter [ivent.auth.session.obj] cleaned 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.pcssh.server.auth' | &{{0 0} 1 service.pcssh.server.auth [0xc420550980 0xc4205509a0 0xc4205509c0] 0x1001c6da0}] waiter [ivent.authority.client.conn] cleaned 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.pcssh.server.auth' | &{{0 0} 1 service.pcssh.server.auth [0xc420550980 0xc4205509a0 0xc4205509c0] 0x1001c6da0}] waiter [ivent.monitor.node.req.status] cleaned 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.pcssh.server.auth' | &{{0 0} 1 service.pcssh.server.auth [0xc420550980 0xc4205509a0 0xc4205509c0] 0x1001c6da0}] removed 
+[37mDEBU[0m[0074] [SUPERVISOR-SERVICE] ['service.pcssh.server.auth' | &{{0 0} 0 service.pcssh.server.auth [0xc420550980 0xc4205509a0 0xc4205509c0] 0x1001c6da0}] exited 
+panic: send on closed channel
+
+goroutine 210 [running]:
+panic(0x10109d680, 0xc4211b8960)
+    /opt/go-1.7.6/src/runtime/panic.go:500 +0x1a1
+github.com/stkim1/pc-core/service.(*srvcSupervisor).notifyWaiter(0xc420176d20, 0xc4205509c0, 0x1012a2e4c, 0x1d, 0x10100ec60, 0xc420dacfb0)
+    /Users/almightykim/Workspace/GOPLACE/src/github.com/stkim1/pc-core/service/supervisor.go:225 +0x72
+github.com/stkim1/pc-core/service.(*srvcSupervisor).fanOut(0xc420176d20)
+    /Users/almightykim/Workspace/GOPLACE/src/github.com/stkim1/pc-core/service/supervisor.go:241 +0x1fe
+created by github.com/stkim1/pc-core/service.(*srvcSupervisor).StartServices
+    /Users/almightykim/Workspace/GOPLACE/src/github.com/stkim1/pc-core/service/supervisor.go:427 +0xc0

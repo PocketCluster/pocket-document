@@ -3,18 +3,6 @@
 import os, os.path, yaml, json, string, subprocess, traceback, pprint
 from dateutil import parser
 
-
-"""
-# find final url
-def follow_redirect(url):
-    print "following", url, "..."
-    httplib.HTTPConnection.debuglevel = 1
-    request = urllib2.Request(url)
-    opener = urllib2.build_opener()
-    f = opener.open(request)
-    return f.url
-"""
-
 # --------------------------------------------- UTILITY BELT -----------------------------------------------------------
 
 def walklevel(some_dir, level=1):
@@ -232,10 +220,9 @@ def nonconflict_mirror_command(rootpath=None, pkg=None, ver=None):
     repodir = os.path.join(rootpath, pkg)
     if pkg.startswith("github.com/"):
         stubdir = os.path.join(rootpath, "/".join(pkg.split("/")[:-1]))
-        return "mkdir -p {} && cd {} && git clone https://{} && cd {} && git checkout {}".format(stubdir, stubdir, pkg,
-                                                                                                 repodir, ver)
+        return "mkdir -p {} && cd {} && git clone https://{} && cd {} && git checkout {}".format(stubdir, stubdir, pkg, repodir, ver)
     else:
-        return "(go get -d {} || true) && cd {} && git checkout {}".format(pkg, repodir, ver)
+        return "(go get -d {} || true) && cd {} && git checkout master && git pull && git checkout {}".format(pkg, repodir, ver)
 
 
 def conflict_mirror_command(rootpath=None, pkg=None):
@@ -245,15 +232,15 @@ def conflict_mirror_command(rootpath=None, pkg=None):
         # Clone single master branch causes an issue when retrieving git commit date such as golang.org/x/crypto.
         # If that happens, re-clone all the branch and get the exact date
         #return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone --branch master https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
-        return "/bin/mkdir -p {} && cd {} && /usr/local/bin/git clone https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
+        return "/bin/mkdir -p {} && cd {} && git clone https://{} && cd {}".format(stubdir, stubdir, pkg, repodir)
     else:
-        return "(/usr/local/Cellar/go/1.7.5/libexec/bin/go get -d {} >/dev/null 2>&1 || true) && cd {}".format(pkg, repodir)
+        return "(go get -d {} >/dev/null 2>&1 || true) && cd {}".format(pkg, repodir)
 
 
 def checkout_commit(rootpath=None, pkg=None, ver=None):
     repodir = os.path.join(rootpath, pkg)
     print "{} chechking out to commit {}".format(pkg, ver)
-    subprocess.call("cd {} && git checkout {}".format(repodir, ver), shell=True)
+    subprocess.call("cd {} && git checkout master && git pull && git checkout {}".format(repodir, ver), shell=True)
     print "\n"
 
 
@@ -263,13 +250,19 @@ def find_latest_commit(rootpath=None, pkg=None, versions=None):
         print "{} !!!NO GIT FOUND!!!! (This must be a main component package)\n".format(pkg)
         return
 
+    # (2017/10/10) update to the latest commit from master branch. This also resolves date issue at some degree
+    subprocess.call("cd {} && git checkout master && git pull".format(fullpath), shell=True)
+
     vertime = list()
     for (ver, origin) in versions:
         # we can also use "cd {} && /usr/local/bin/git show -s --format=%ci {}", but this generates error on tag
         # "git log -1 --format=%ai {}" error sometimes
         # 'git log -1 --simplify-by-decoration --pretty="format:%ci"'
-        p = subprocess.Popen("cd {} && /usr/local/bin/git log -1 --format=%ai {}".format(fullpath, ver), stdin=subprocess.PIPE,
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        p = subprocess.Popen("cd {} && git log -1 --format=%ai {}".format(fullpath, ver),
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE,
+                             shell=True)
         output, err = p.communicate(b"input data that is passed to subprocess' stdin")
         try:
             commit_time = parser.parse(output)
@@ -283,7 +276,7 @@ def find_latest_commit(rootpath=None, pkg=None, versions=None):
 
     commit_sorted = sorted(vertime, key=lambda t: t[2], reverse=True)
     print "{} chechking out to commit {}".format(pkg, commit_sorted[0][0])
-    subprocess.call("cd {} && /usr/local/bin/git checkout {}".format(fullpath, commit_sorted[0][0]), shell=True)
+    subprocess.call("cd {} && git checkout {}".format(fullpath, commit_sorted[0][0]), shell=True)
     print "\n"
     return commit_sorted
 

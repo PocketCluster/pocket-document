@@ -14,20 +14,19 @@ export PATH=$GEM_HOME/ruby/2.0.0/bin:$HOME/.util:$GOROOT/bin:$GOREPO/bin:$GOWORK
 export WORK_ROOT="${GOREPO}/DEPSETUP"
 
 # main component to unpack
-MAIN_COMPONENT=("swarm-1.2.6" "distribution-2.6.0" "docker-c8388a-2016_11_22")
+MAIN_COMPONENT=("distribution-2.6.0" "docker-c8388a-2016_11_22")
 
 # TESTING
 TESTGO=${TESTGO:-0}
 ADV_TESTGO=${ADV_TESTGO:-0}
-# COPYING REPO
-COPY_DEP_REPO=${COPY_DEP_REPO:-0}
 
-echo "prep directories"
 pushd ${WORK_ROOT}
+echo "prep directories"
 cd ${GOREPO}
 mkdir -p {src,bin,pkg}
 popd
 
+# --- condense dependencies first ---
 ${WORK_ROOT}/condense_dep.py && source ${WORK_ROOT}/vendor_cleanup.sh
 
 for comp in ${MAIN_COMPONENT[@]}; do
@@ -48,129 +47,55 @@ for comp in ${MAIN_COMPONENT[@]}; do
     fi
 done
 
-if [[ ${COPY_DEP_REPO} -eq 1 ]]; then
-
-    # setup teleport
-    pushd ${WORK_ROOT}
-    echo "setting up teleport..."
-    TELEPORT="${GOREPO}/src/github.com/gravitational/teleport"
-    if [[ -d ${TELEPORT} ]]; then
-        #find ${TELEPORT} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
-        rm -rf ${TELEPORT}/*
-    else
-        mkdir -p ${TELEPORT}
-    fi
-    cp -rf ${GOREPO}/DEPREPO/teleport/* ${TELEPORT}/ && cd "${TELEPORT}/vendor/" && clean_vendor && (rm ${TELEPORT}/*.iml || true)
-    popd
-
-    # setup libcompose
-    pushd ${WORK_ROOT}
-    echo "setting up libcompose..."
-    LIBCOMPOSE="${GOREPO}/src/github.com/docker/libcompose"
-    if [[ -d ${LIBCOMPOSE} ]]; then
-        #find ${LIBCOMPOSE} -mindepth 1 -maxdepth 1 ! -name '*.iml' | xargs rm -rf
-        rm -rf ${LIBCOMPOSE}/*
-    else
-        mkdir -p ${LIBCOMPOSE}
-    fi
-    cp -rf ${GOREPO}/DEPREPO/libcompose/* ${LIBCOMPOSE}/ && cd "${LIBCOMPOSE}/vendor/" && clean_vendor && (rm ${LIBCOMPOSE}/*.iml || true)
-    popd
-
-    # setup etcd
-    pushd ${WORK_ROOT}
-    echo "setting up etcd..."
-    ETCD="${GOREPO}/src/github.com/coreos/etcd"
-    if [[ -d ${ETCD} ]]; then
-        rm -rf ${ETCD}/*
-    else
-        mkdir -p ${ETCD}
-    fi
-    cp -rf ${GOREPO}/DEPREPO/etcd/* ${ETCD}/ && cd "${ETCD}/vendor/" && clean_vendor && (rm ${ETCD}/*.iml || true)
-    popd
-
-else
-
-    # setup teleport
-    pushd ${WORK_ROOT}
-    echo "setting up teleport..."
-    GRAVITATIONAL="${GOREPO}/src/github.com/gravitational"
-    if [[ ! -d ${GRAVITATIONAL} ]]; then
-        mkdir -p "${GRAVITATIONAL}/"
-    fi
-    TELEPORT="${GRAVITATIONAL}/teleport"
-    LINK=$(readlink "${TELEPORT}")
-    if [[ ! -d ${TELEPORT} ]] || [[ $LINK != "../../../DEPREPO/teleport" ]]; then
-        echo "cleanup old link ${TELEPORT} and rebuild..."
-        cd "${GRAVITATIONAL}/" && (rm ${TELEPORT} || true) && ln -s ../../../DEPREPO/teleport ./teleport
-    fi
-    cd "${TELEPORT}/vendor/" && clean_vendor
-    popd
-
-    # setup libcompose
-    pushd ${WORK_ROOT}
-    echo "setting up libcompose..."
-    DOCKER="${GOREPO}/src/github.com/docker"
-    if [[ ! -d ${DOCKER} ]]; then
-        mkdir -p "${DOCKER}/"
-    fi
-    LIBCOMPOSE="${DOCKER}/libcompose"
-    LINK=$(readlink "${LIBCOMPOSE}")
-    if [[ ! -d ${LIBCOMPOSE} ]] || [[ $LINK != "../../../DEPREPO/libcompose" ]]; then
-        echo "cleanup old link ${LIBCOMPOSE} and rebuild..."
-        cd ${DOCKER} && (rm ${LIBCOMPOSE} || true) && ln -s ../../../DEPREPO/libcompose ./libcompose
-    fi
-    cd "${LIBCOMPOSE}/vendor/" && clean_vendor
-    popd
-
-    pushd ${WORK_ROOT}
-    echo "setting up etcd..."
-    COREOS="${GOREPO}/src/github.com/coreos"
-    if [[ ! -d ${COREOS} ]]; then
-        mkdir -p "${COREOS}"
-    fi
-    ETCD="${COREOS}/etcd"
-    LINK=$(readlink "${ETCD}")
-    if [[ ! -d ${ETCD} ]] || [[ ${LINK} != "../../../DEPREPO/etcd" ]]; then
-        echo "cleanup old link ${ETCD} and rebuild..."
-        cd ${COREOS} && (rm ${ETCD} || true) && ln -s ../../../DEPREPO/etcd ./etcd
-    fi
-    if [[ -d "${ETCD}/vendor/" ]]; then
-        cd "${ETCD}/vendor/" && clean_vendor
-    else
-        #cd ${ETCD} && ${GOREPO}/bin/glide install
-        echo "!!! SETUP ETCD VENDOR WITH GLIDE FIRST !!!"
-    fi
-    popd
-
-    pushd ${WORK_ROOT}
-    echo "setting up gopkg.in/tylerb/graceful.v1 ..."
-    TYLERB="${GOREPO}/src/gopkg.in/tylerb"
-    if [[ ! -d ${TYLERB} ]]; then
-        mkdir -p "${TYLERB}"
-    fi
-    GRACEFUL="${TYLERB}/graceful.v1"
-    LINK=$(readlink "${GRACEFUL}")
-    if [[ ! -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
-        echo "cleanup old link ${GRACEFUL} and rebuild..."
-        cd ${TYLERB} && (rm ${GRACEFUL} || true) && ln -s ../../../DEPREPO/graceful ./graceful.v1
-    fi
-    popd
-
-fi
-
-# setup swarm
+# --- setup teleport ---
 pushd ${WORK_ROOT}
-echo "setting up swarm..."
-if [[ -d "${GOREPO}/src/github.com/docker/swarm" ]]; then
-    echo "delete old link : ${GOREPO}/src/github.com/docker/swarm"
-    rm "${GOREPO}/src/github.com/docker/swarm"
-else
-    mkdir -p "${GOREPO}/src/github.com/docker/"
+echo "setting up teleport..."
+GRAVITATIONAL="${GOREPO}/src/github.com/gravitational"
+if [[ ! -d ${GRAVITATIONAL} ]]; then
+    mkdir -p "${GRAVITATIONAL}/"
 fi
-cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/swarm-1.2.6" "./swarm"
+TELEPORT="${GRAVITATIONAL}/teleport"
+LINK=$(readlink "${TELEPORT}")
+if [[ ! -d ${TELEPORT} ]] || [[ $LINK != "../../../DEPREPO/teleport" ]]; then
+    echo "cleanup old link ${TELEPORT} and rebuild..."
+    cd "${GRAVITATIONAL}/" && (rm ${TELEPORT} || true) && ln -s ../../../DEPREPO/teleport ./teleport
+fi
+cd "${TELEPORT}/vendor/" && clean_vendor
 popd
 
-# setup distribution
+# --- setup swarm ---
+pushd ${WORK_ROOT}
+echo "setting up swarm..."
+DOCKER="${GOREPO}/src/github.com/docker"
+if [[ ! -d ${DOCKER} ]]; then
+    mkdir -p "${DOCKER}/"
+fi
+SWARM="${DOCKER}/swarm"
+LINK=$(readlink "${SWARM}")
+if [[ ! -d ${SWARM} ]] || [[ ${LINK} != "../../../DEPREPO/swarm" ]]; then
+    echo "cleanup old link : ${SWARM}"
+    cd ${DOCKER} && (rm ${SWARM} || true) && ln -s ../../../DEPREPO/swarm ./swarm
+fi
+cd "${SWARM}/vendor" && clean_vendor
+popd
+
+# --- setup libcompose ---
+pushd ${WORK_ROOT}
+echo "setting up libcompose..."
+DOCKER="${GOREPO}/src/github.com/docker"
+if [[ ! -d ${DOCKER} ]]; then
+    mkdir -p "${DOCKER}/"
+fi
+LIBCOMPOSE="${DOCKER}/libcompose"
+LINK=$(readlink "${LIBCOMPOSE}")
+if [[ ! -d ${LIBCOMPOSE} ]] || [[ $LINK != "../../../DEPREPO/libcompose" ]]; then
+    echo "cleanup old link ${LIBCOMPOSE} and rebuild..."
+    cd ${DOCKER} && (rm ${LIBCOMPOSE} || true) && ln -s ../../../DEPREPO/libcompose ./libcompose
+fi
+cd "${LIBCOMPOSE}/vendor/" && clean_vendor
+popd
+
+# --- setup distribution (docker registry) ---
 pushd ${WORK_ROOT}
 echo "setting up distribution..."
 if [[ -d "${GOREPO}/src/github.com/docker/distribution" ]]; then
@@ -199,19 +124,101 @@ rm -rf ./distribution/vendor/github.com/Azure/azure-sdk-for-go/   && (rmdir ./di
 rm -rf ./distribution/vendor/google.golang.org/cloud/             && (rmdir ./distribution/vendor/google.golang.org > /dev/null 2>&1 || true)
 rm -rf ./distribution/vendor/github.com/ncw/swift/                && (rmdir ./distribution/vendor/github.com/ncw > /dev/null 2>&1 || true)
 rm -rf ./distribution/vendor/github.com/denverdino/aliyungo/      && (rmdir ./distribution/vendor/github.com/denverdino > /dev/null 2>&1 || true)
-
 popd
 
-# setup docker
+# --- setup docker ---
+pushd ${WORK_ROOT}
 if [[ -d "${GOREPO}/src/github.com/docker/docker" ]]; then
     echo "delete old link : ${GOREPO}/src/github.com/docker/docker"
     rm "${GOREPO}/src/github.com/docker/docker"
 fi
-pushd ${WORK_ROOT}
 mkdir -p "${GOREPO}/src/github.com/docker/" && cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/docker-c8388a-2016_11_22" "./docker"
 popd
 
-# THIS IS 2ndary dependency setup. We might need to recover from this!
+# --- setup etcd ---
+pushd ${WORK_ROOT}
+echo "setting up etcd..."
+COREOS="${GOREPO}/src/github.com/coreos"
+if [[ ! -d ${COREOS} ]]; then
+    mkdir -p "${COREOS}"
+fi
+ETCD="${COREOS}/etcd"
+LINK=$(readlink "${ETCD}")
+if [[ ! -d ${ETCD} ]] || [[ ${LINK} != "../../../DEPREPO/etcd" ]]; then
+    echo "cleanup old link ${ETCD} and rebuild..."
+    cd ${COREOS} && (rm ${ETCD} || true) && ln -s ../../../DEPREPO/etcd ./etcd
+fi
+if [[ -d "${ETCD}/vendor/" ]]; then
+    cd "${ETCD}/vendor/" && clean_vendor
+else
+    #cd ${ETCD} && ${GOREPO}/bin/glide install
+    echo "!!! SETUP ETCD VENDOR WITH GLIDE FIRST !!!"
+fi
+popd
+
+# --- setup graceful ---
+pushd ${WORK_ROOT}
+echo "setting up gopkg.in/tylerb/graceful.v1 ..."
+TYLERB="${GOREPO}/src/gopkg.in/tylerb"
+if [[ ! -d ${TYLERB} ]]; then
+    mkdir -p "${TYLERB}"
+fi
+GRACEFUL="${TYLERB}/graceful.v1"
+LINK=$(readlink "${GRACEFUL}")
+if [[ ! -d ${GRACEFUL} ]] || [[ ${LINK} != "../../../DEPREPO/graceful" ]]; then
+    echo "cleanup old link ${GRACEFUL} and rebuild..."
+    cd ${TYLERB} && (rm ${GRACEFUL} || true) && ln -s ../../../DEPREPO/graceful ./graceful.v1
+fi
+popd
+
+# --- setup pocket-sync ---
+pushd ${WORK_ROOT}
+echo "setting up pocket-sync ..."
+REDUN="${GOREPO}/src/github.com/Redundancy"
+if [[ ! -d ${REDUN} ]]; then
+    mkdir -p "${REDUN}"
+fi
+PSYNC="${REDUN}/go-sync"
+LINK=$(readlink "${PSYNC}")
+if [[ ! -d ${PSYNC} ]] || [[ ${LINK} != "../../../DEPREPO/pocket-sync" ]]; then
+    echo "cleanup old link ${PSYNC} and rebuild ..."
+    cd ${REDUN} && (rm ${PSYNC} || true) && ln -s ../../../DEPREPO/pocket-sync ./go-sync
+fi
+popd
+
+# --- setup github.com/blevesearch/bleve (for log search ekanite) ---
+pushd ${WORK_ROOT}
+echo "github.com/blevesearch/bleve ..."
+printf "\n\n\t!!![ATTENTION] BLEVE NEEDS ALOT MORE DEPENDENCIES!!!\n\tFor 0.1.4, we'll leave out logging.\n\tTake a look backend dep management to activate bleve.\n\n"
+BLSEARCH="${GOREPO}/src/github.com/blevesearch"
+if [[ ! -d ${BLSEARCH} ]]; then
+    mkdir -p ${BLSEARCH}
+fi
+BLEVE="${BLSEARCH}/bleve"
+LINK=$(readlink ${BLEVE})
+if [[ ! -d ${BLEVE} ]] || [[ ${LINK} != "../../../DEPREPO/bleve" ]]; then
+    echo "cleanup old link ${BLEVE} and rebuild ..."
+    cd ${BLSEARCH} && (rm ${BLEVE} || true) && ln -s ../../../DEPREPO/bleve ./bleve
+fi
+popd
+
+# --- setup github.com/ekanite/ekanite ---
+pushd ${WORK_ROOT}
+echo "github.com/ekanite/ekanite ..."
+GHEKNT="${GOREPO}/src/github.com/ekanite"
+if [[ ! -d ${GHEKNT} ]]; then
+    mkdir -p ${GHEKNT}
+fi
+EKANITE="${GHEKNT}/ekanite"
+LINK=$(readlink ${EKANITE})
+if [[ ! -d ${EKANITE} ]] || [[ ${LINK} != "../../../DEPREPO/ekanite" ]]; then
+    echo "cleanup old link ${EKANITE} and rebuild ..."
+    cd ${GHEKNT} && (rm ${EKANITE} || true) && ln -s ../../../DEPREPO/ekanite ./ekanite
+fi
+popd
+
+
+# --- THIS IS 2ndary dependency setup. We might need to recover from this! ---
 # cfssl dependency clearing
 if [[ ! -d "${GOREPO}/src/github.com/cloudflare/cfssl" ]]; then
     echo "Cloudflare cfssl is not present!!!"
