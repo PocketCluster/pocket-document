@@ -14,7 +14,8 @@ export PATH=$GEM_HOME/ruby/2.0.0/bin:$HOME/.util:$GOROOT/bin:$GOREPO/bin:$GOWORK
 export WORK_ROOT="${GOREPO}/DEPSETUP"
 
 # main component to unpack
-MAIN_COMPONENT=("distribution-2.6.0" "docker-c8388a-2016_11_22")
+# MAIN_COMPONENT=("distribution-2.6.0" "docker-c8388a-2016_11_22")
+MAIN_COMPONENT=("distribution-d22e09a6-2016_11_22" "docker-c8388a-2016_11_22")
 
 # TESTING
 TESTGO=${TESTGO:-0}
@@ -104,7 +105,7 @@ if [[ -d "${GOREPO}/src/github.com/docker/distribution" ]]; then
 else
     mkdir -p "${GOREPO}/src/github.com/docker/"
 fi
-cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-2.6.0" "./distribution"
+cd "${GOREPO}/src/github.com/docker" && ln -s "../../../MAINCOMP/distribution-d22e09a6-2016_11_22" "./distribution"
 echo "special treatment for distribution/registry/registry.go since registry.go is using very old version of logrus, it still contains logstash formatter"
 sed -i '' 's|"github.com/Sirupsen/logrus/formatters/logstash"|logstash "github.com/bshuster-repo/logrus-logstash-hook"|g' ./distribution//registry/registry.go
 
