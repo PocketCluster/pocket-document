@@ -1,0 +1,145 @@
+execve("/bin/ping", ["ping", "www.google.com"], [/* 31 vars */]) = 0
+brk(NULL)                               = 0x2d964000
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+faccessat(AT_FDCWD, "/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=14110, ...}) = 0
+mmap(NULL, 14110, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f928c7000
+close(3)                                = 0
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\260\31\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=22944, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f928c6000
+mmap(NULL, 86536, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f9288b000
+mprotect(0x7f9288f000, 65536, PROT_NONE) = 0
+mmap(0x7f9289f000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x7f9289f000
+close(3)                                = 0
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\350\371\1\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1265992, ...}) = 0
+mmap(NULL, 1335960, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f92744000
+mprotect(0x7f92872000, 61440, PROT_NONE) = 0
+mmap(0x7f92881000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x12d000) = 0x7f92881000
+mmap(0x7f92887000, 12952, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f92887000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f928c5000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f928c4000
+mprotect(0x7f92881000, 16384, PROT_READ) = 0
+mprotect(0x7f9289f000, 4096, PROT_READ) = 0
+mprotect(0x418000, 4096, PROT_READ)     = 0
+mprotect(0x7f928cd000, 4096, PROT_READ) = 0
+munmap(0x7f928c7000, 14110)             = 0
+brk(NULL)                               = 0x2d964000
+brk(0x2d985000)                         = 0x2d985000
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, NULL) = 0
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, {CAP_CHOWN|CAP_DAC_OVERRIDE|CAP_DAC_READ_SEARCH|CAP_FOWNER|CAP_FSETID|CAP_KILL|CAP_SETGID|CAP_SETUID|CAP_SETPCAP|CAP_LINUX_IMMUTABLE|CAP_NET_BIND_SERVICE|CAP_NET_BROADCAST|CAP_NET_ADMIN|CAP_NET_RAW|CAP_IPC_LOCK|CAP_IPC_OWNER|CAP_SYS_MODULE|CAP_SYS_RAWIO|CAP_SYS_CHROOT|CAP_SYS_PTRACE|CAP_SYS_PACCT|CAP_SYS_ADMIN|CAP_SYS_BOOT|CAP_SYS_NICE|CAP_SYS_RESOURCE|CAP_SYS_TIME|CAP_SYS_TTY_CONFIG|CAP_MKNOD|CAP_LEASE|CAP_AUDIT_WRITE|CAP_AUDIT_CONTROL|CAP_SETFCAP|CAP_MAC_OVERRIDE|CAP_MAC_ADMIN|CAP_SYSLOG|CAP_WAKE_ALARM|CAP_BLOCK_SUSPEND|CAP_AUDIT_READ, CAP_CHOWN|CAP_DAC_OVERRIDE|CAP_DAC_READ_SEARCH|CAP_FOWNER|CAP_FSETID|CAP_KILL|CAP_SETGID|CAP_SETUID|CAP_SETPCAP|CAP_LINUX_IMMUTABLE|CAP_NET_BIND_SERVICE|CAP_NET_BROADCAST|CAP_NET_ADMIN|CAP_NET_RAW|CAP_IPC_LOCK|CAP_IPC_OWNER|CAP_SYS_MODULE|CAP_SYS_RAWIO|CAP_SYS_CHROOT|CAP_SYS_PTRACE|CAP_SYS_PACCT|CAP_SYS_ADMIN|CAP_SYS_BOOT|CAP_SYS_NICE|CAP_SYS_RESOURCE|CAP_SYS_TIME|CAP_SYS_TTY_CONFIG|CAP_MKNOD|CAP_LEASE|CAP_AUDIT_WRITE|CAP_AUDIT_CONTROL|CAP_SETFCAP|CAP_MAC_OVERRIDE|CAP_MAC_ADMIN|CAP_SYSLOG|CAP_WAKE_ALARM|CAP_BLOCK_SUSPEND|CAP_AUDIT_READ, 0}) = 0
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, NULL) = 0
+capset({_LINUX_CAPABILITY_VERSION_3, 0}, {0, CAP_NET_ADMIN|CAP_NET_RAW, 0}) = 0
+prctl(PR_SET_KEEPCAPS, 1)               = 0
+getuid()                                = 0
+setuid(0)                               = 0
+prctl(PR_SET_KEEPCAPS, 0)               = 0
+getuid()                                = 0
+geteuid()                               = 0
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, NULL) = 0
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, {0, CAP_NET_ADMIN|CAP_NET_RAW, 0}) = 0
+capset({_LINUX_CAPABILITY_VERSION_3, 0}, {CAP_NET_RAW, CAP_NET_ADMIN|CAP_NET_RAW, 0}) = 0
+socket(PF_INET, SOCK_RAW, IPPROTO_ICMP) = 3
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, NULL) = 0
+capget({_LINUX_CAPABILITY_VERSION_3, 0}, {CAP_NET_RAW, CAP_NET_ADMIN|CAP_NET_RAW, 0}) = 0
+capset({_LINUX_CAPABILITY_VERSION_3, 0}, {0, CAP_NET_ADMIN|CAP_NET_RAW, 0}) = 0
+getpid()                                = 1568
+openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=111, ...}) = 0
+read(4, "domain localdomain\nsearch locald"..., 4096) = 111
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=111, ...}, 0) = 0
+openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=111, ...}) = 0
+read(4, "domain localdomain\nsearch locald"..., 4096) = 111
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+socket(PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+connect(4, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(4)                                = 0
+socket(PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 4
+connect(4, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+close(4)                                = 0
+openat(AT_FDCWD, "/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=497, ...}) = 0
+read(4, "# /etc/nsswitch.conf\n#\n# Example"..., 4096) = 497
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=14110, ...}) = 0
+mmap(NULL, 14110, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f928c7000
+close(4)                                = 0
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\340!\0\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0644, st_size=39272, ...}) = 0
+mmap(NULL, 128280, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f92724000
+mprotect(0x7f9272d000, 61440, PROT_NONE) = 0
+mmap(0x7f9273c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0x8000) = 0x7f9273c000
+mmap(0x7f9273e000, 21784, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f9273e000
+close(4)                                = 0
+mprotect(0x7f9273c000, 4096, PROT_READ) = 0
+munmap(0x7f928c7000, 14110)             = 0
+openat(AT_FDCWD, "/etc/host.conf", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=92, ...}) = 0
+read(4, "# The \"order\" line is only used "..., 4096) = 92
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+openat(AT_FDCWD, "/etc/hosts", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=168, ...}) = 0
+read(4, "127.0.0.1    localhost\n# ::1    "..., 4096) = 168
+read(4, "", 4096)                       = 0
+close(4)                                = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 4
+fstat(4, {st_mode=S_IFREG|0644, st_size=14110, ...}) = 0
+mmap(NULL, 14110, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f928c7000
+close(4)                                = 0
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libnss_dns.so.2", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0p\17\0\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0644, st_size=18656, ...}) = 0
+mmap(NULL, 82136, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f9270f000
+mprotect(0x7f92713000, 61440, PROT_NONE) = 0
+mmap(0x7f92722000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0x3000) = 0x7f92722000
+close(4)                                = 0
+faccessat(AT_FDCWD, "/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/lib/aarch64-linux-gnu/libresolv.so.2", O_RDONLY|O_CLOEXEC) = 4
+read(4, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0\267\0\1\0\0\0\2209\0\0\0\0\0\0"..., 832) = 832
+fstat(4, {st_mode=S_IFREG|0644, st_size=76456, ...}) = 0
+mmap(NULL, 149960, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 4, 0) = 0x7f926ea000
+mprotect(0x7f926fb000, 65536, PROT_NONE) = 0
+mmap(0x7f9270b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 4, 0x11000) = 0x7f9270b000
+mmap(0x7f9270d000, 6600, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f9270d000
+close(4)                                = 0
+mprotect(0x7f9270b000, 4096, PROT_READ) = 0
+mprotect(0x7f92722000, 4096, PROT_READ) = 0
+munmap(0x7f928c7000, 14110)             = 0
+newfstatat(AT_FDCWD, "/etc/resolv.conf", {st_mode=S_IFREG|0644, st_size=111, ...}, 0) = 0
+socket(PF_INET, SOCK_DGRAM|SOCK_NONBLOCK, IPPROTO_IP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+ppoll([{fd=4, events=POLLOUT}], 1, {0, 0}, NULL, 0) = 1 ([{fd=4, revents=POLLOUT}], left {0, 0})
+sendto(4, "\25\257\1\0\0\1\0\0\0\0\0\0\3www\6google\3com\0\0\1\0\1", 32, MSG_NOSIGNAL, NULL, 0) = 32
+ppoll([{fd=4, events=POLLIN}], 1, {5, 0}, NULL, 0) = 1 ([{fd=4, revents=POLLIN}], left {4, 999353750})
+ioctl(4, FIONREAD, [32])                = 0
+recvfrom(4, "\25\257\204\0\0\1\0\0\0\0\0\0\3www\6google\3com\0\0\1\0\1", 1024, 0, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("127.0.0.1")}, [16]) = 32
+close(4)                                = 0
+socket(PF_INET, SOCK_DGRAM|SOCK_NONBLOCK, IPPROTO_IP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+ppoll([{fd=4, events=POLLOUT}], 1, {0, 0}, NULL, 0) = 1 ([{fd=4, revents=POLLOUT}], left {0, 0})
+sendto(4, "qK\1\0\0\1\0\0\0\0\0\0\3www\6google\3com\vloca"..., 44, MSG_NOSIGNAL, NULL, 0) = 44
+ppoll([{fd=4, events=POLLIN}], 1, {5, 0}, NULL, 0) = 1 ([{fd=4, revents=POLLIN}], left {4, 999482812})
+ioctl(4, FIONREAD, [44])                = 0
+recvfrom(4, "qK\204\0\0\1\0\0\0\0\0\0\3www\6google\3com\vloca"..., 1024, 0, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("127.0.0.1")}, [16]) = 44
+close(4)                                = 0
+write(2, "ping: unknown host www.google.co"..., 34ping: unknown host www.google.com
+) = 34
+exit_group(2)                           = ?
++++ exited with 2 +++

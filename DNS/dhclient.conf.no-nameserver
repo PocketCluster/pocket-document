@@ -1,0 +1,20 @@
+# Configuration file for /sbin/dhclient.
+#
+# This is a sample configuration file for dhclient. See dhclient.conf's
+#   man page for more information about the syntax of this file
+#   and a more comprehensive list of the parameters understood by
+#   dhclient.
+#
+# Normally, if the DHCP server provides reasonable information and does
+#   not leave anything out (like the domain name, for example), then
+#   few changes must be made to this file, if any.
+#
+
+option rfc3442-classless-static-routes code 121 = array of unsigned integer 8;
+
+send host-name = gethostname();
+request subnet-mask, broadcast-address, time-offset, routers,
+    interface-mtu, rfc3442-classless-static-routes, ntp-servers;
+
+require subnet-mask;
+timeout 300;

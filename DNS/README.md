@@ -1,5 +1,15 @@
 # Node `pocketd` dns config guide
 
+### `nameserver 127.0.0.1` blocks proper resolving
+
+with `pocketd` on and `nameserver 127.0.0.1` entry in `resolv.conf`, system cannot properly resolve domain name. this need to be fixed.  
+this involved with `resolvconf` conflicting with `isc-dhcp-cliet`.  
+
+> Reference
+
+- [nameserver 127.0.0.1](ping-trace-off.txt)
+- [w/o nameserver 127.0.0.1](ping-trace-on.txt)
+
 ### `dhcpagent` is to receieve dhcp event.
 
 1. [DEBUG] place a script in `/etc/dhcp/dhclient-exit-hooks.d/dhcpagent` with following content for debugging
