@@ -153,3 +153,12 @@ chown root:root /etc/nginx/nginx.conf
 
 nginx -c /etc/nginx/nginx.conf -t
 service nginx restart && service nginx status
+
+
+# ------------------ FIX NGINX PID NOT FOUND --------------
+# https://www.digitalocean.com/community/questions/unable-to-start-nginx-failed-to-read-pid-from-file-run-nginx-pid
+# https://bugs.launchpad.net/ubuntu/+source/nginx/+bug/1581864
+
+mkdir /etc/systemd/system/nginx.service.d
+printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
+systemctl daemon-reload
