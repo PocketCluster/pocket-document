@@ -1,18 +1,18 @@
-# You may add here your
-# server {
-#	...
-# }
-# statements for each of your virtual hosts to this file
+# --- Default Re-direction ---
 
-##
-# You should look at the following URL's in order to grasp a solid understanding
-# of Nginx configuration files in order to fully unleash the power of Nginx.
-# http://wiki.nginx.org/Pitfalls
-# http://wiki.nginx.org/QuickStart
-# http://wiki.nginx.org/Configuration
-#
-# Generally, you will want to move this file somewhere, and start with a clean
-# file but keep this around for reference. Or just disable in sites-enabled.
-#
-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
-##
+# https://stackoverflow.com/questions/7947030/nginx-no-www-to-www-and-www-to-no-www
+## Redirect all non-www to www
+## Here 'default_server' means if none of the other domains resolve, the last resort is to resolve this server block.
+
+server {
+    server_name               pocketcluster.io;
+    listen                    *:80 default_server;
+    listen                    *:443 ssl default_server;
+    #listen                   [::]:80 ipv6only=on;
+    #listen                   [::]:443 ipv6only=on;
+
+    ssl_certificate           /etc/letsencrypt/live/pocketcluster.io/fullchain.pem;
+    ssl_certificate_key       /etc/letsencrypt/live/pocketcluster.io/privkey.pem;
+    
+    return 301 https://index.pocketcluster.io$request_uri;
+}
