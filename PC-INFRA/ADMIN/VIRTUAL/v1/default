@@ -1,0 +1,18 @@
+# --- Default Re-direction ---
+
+# https://stackoverflow.com/questions/7947030/nginx-no-www-to-www-and-www-to-no-www
+## Redirect all non-www to www
+## Here 'default_server' means if none of the other domains resolve, the last resort is to resolve this server block.
+
+server {
+    server_name               pocketcluster.io;
+    listen                    *:80 default_server;
+    listen                    *:443 ssl default_server;
+    #listen                   [::]:80 ipv6only=on;
+    #listen                   [::]:443 ipv6only=on;
+
+    ssl_certificate           /etc/letsencrypt/live/pocketcluster.io/fullchain.pem;
+    ssl_certificate_key       /etc/letsencrypt/live/pocketcluster.io/privkey.pem;
+    
+    return 301 https://index.pocketcluster.io$request_uri;
+}
