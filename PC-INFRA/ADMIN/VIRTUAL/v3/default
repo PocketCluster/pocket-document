@@ -1,0 +1,13 @@
+###  Default
+# We intentionally skips all default_server to reduce exccessive relocation
+
+server {
+    server_name    index.pocketcluster.io news.pocketcluster.io api.pocketcluster.io;
+    listen         *:80 default_server;
+    #listen        [::]:80 default_server;    
+
+    # plain http port should not handle ssl
+    ssl            off;
+
+    return         301 https://$server_name$request_uri;
+}
