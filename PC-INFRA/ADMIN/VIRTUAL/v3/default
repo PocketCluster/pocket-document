@@ -1,13 +1,20 @@
 ###  Default
-# We intentionally skips all default_server to reduce exccessive relocation
 
 server {
-    server_name    index.pocketcluster.io news.pocketcluster.io api.pocketcluster.io;
+    server_name    index.pocketcluster.io news.pocketcluster.io;
     listen         *:80 default_server;
-    #listen        [::]:80 default_server;    
+    #listen        [::]:80 default_server;
 
     # plain http port should not handle ssl
     ssl            off;
 
-    return         301 https://$server_name$request_uri;
+    if ($host = 'index.pocketcluster.io') {
+        return     301 https://index.pocketcluster.io$request_uri;
+    }
+    if ($host = 'news.pocketcluster.io') {
+        return     301 https://news.pocketcluster.io$request_uri;
+    }
+
+    # we don't respond other than the predefined hosts
+    return 	       444;
 }
