@@ -18,6 +18,11 @@ nginx -c /etc/nginx/nginx.conf -t
 service nginx restart && service nginx status
 
 ---
+curl --head index.pocketcluster.io
+curl --head news.pocketcluster.io
+curl -iv --head api.pocketcluster.io
+curl -iv --head pocketcluster.io
 
 curl -iv https://api.pocketcluster.io/service/v014/package/list
 curl -iv https://api.pocketcluster.io/healthcheck
+
