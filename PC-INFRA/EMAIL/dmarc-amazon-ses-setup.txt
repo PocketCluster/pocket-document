@@ -1,0 +1,16 @@
+v=DMARC1;p=quarantine;sp=quarantine;adkim=r;aspf=r;fo=1;rf=afrf;rua=mailto:stkim1@pocketcluster.io
+
+v=DMARC1;p=quarantine;pct=100;rua=mailto:dmarc-reports@bounces.amazon.com;ruf=mailto:dmarc-reports@bounces.amazon.com
+
+v=DMARC1;p=quarantine;pct=100;rua=mailto:stkim1@pocketcluster.io;ruf=mailto:stkim1@pocketcluster.io
+
+v=DMARC1;p=quarantine;pct=25;rua=mailto:stkim1@pocketcluster.io
+
+- - -
+
+v=DMARC1;p=quarantine;pct=100;sp=quarantine;adkim=r;aspf=r;fo=1;rf=afrf;rua=mailto:stkim1@pocketcluster.io;ruf=mailto:stkim1@pocketcluster.io
+
+
+final :
+
+v=DMARC1;p=none;rua=mailto:stkim1@pocketcluster.io

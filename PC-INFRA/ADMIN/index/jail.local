@@ -209,21 +209,21 @@ action = %(action_mwl)s
 #
 # JAILS
 #
-[ssh]
-
-enabled  = true
-port     = ssh
-filter   = sshd
-logpath  = /var/log/auth.log
-maxretry = 6
-
-[ssh-ddos]
-
-enabled  = true
-port     = ssh
-filter   = sshd-ddos
-logpath  = /var/log/auth.log
-maxretry = 6
+#[ssh]
+#
+#enabled  = true
+#port     = ssh
+#filter   = sshd
+#logpath  = /var/log/auth.log
+#maxretry = 6
+#
+#[ssh-ddos]
+#
+#enabled  = true
+#port     = ssh
+#filter   = sshd-ddos
+#logpath  = /var/log/auth.log
+#maxretry = 6
 
 #
 # SSH servers
@@ -235,12 +235,12 @@ port    = ssh
 logpath = %(sshd_log)s
 
 
-[sshd-ddos]
+#[sshd-ddos]
 # This jail corresponds to the standard configuration in Fail2ban.
 # The mail-whois action send a notification e-mail with a whois request
 # in the body.
-port    = ssh
-logpath = %(sshd_log)s
+#port    = ssh
+#logpath = %(sshd_log)s
 
 
 [dropbear]
@@ -260,68 +260,68 @@ maxretry = 5
 # HTTP servers
 #
 
-[apache-auth]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-
-
-[apache-badbots]
-# Ban hosts which agent identifies spammer robots crawling the web
-# for email addresses. The mail outputs are buffered.
-port     = http,https
-logpath  = %(apache_access_log)s
-bantime  = 172800
-maxretry = 1
-
-
-[apache-noscript]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-maxretry = 6
-
-
-[apache-overflows]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-maxretry = 2
-
-
-[apache-nohome]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-maxretry = 2
-
-
-[apache-botsearch]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-maxretry = 2
-
-
-[apache-fakegooglebot]
-
-port     = http,https
-logpath  = %(apache_access_log)s
-maxretry = 1
-ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
-
-
-[apache-modsecurity]
-
-port     = http,https
-logpath  = %(apache_error_log)s
-maxretry = 2
-
-[apache-shellshock]
-
-port    = http,https
-logpath = %(apache_error_log)s
-maxretry = 1
+#[apache-auth]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#
+#
+#[apache-badbots]
+## Ban hosts which agent identifies spammer robots crawling the web
+## for email addresses. The mail outputs are buffered.
+#port     = http,https
+#logpath  = %(apache_access_log)s
+#bantime  = 172800
+#maxretry = 1
+#
+#
+#[apache-noscript]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#maxretry = 6
+#
+#
+#[apache-overflows]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#maxretry = 2
+#
+#
+#[apache-nohome]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#maxretry = 2
+#
+#
+#[apache-botsearch]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#maxretry = 2
+#
+#
+#[apache-fakegooglebot]
+#
+#port     = http,https
+#logpath  = %(apache_access_log)s
+#maxretry = 1
+#ignorecommand = %(ignorecommands_dir)s/apache-fakegooglebot <ip>
+#
+#
+#[apache-modsecurity]
+#
+#port     = http,https
+#logpath  = %(apache_error_log)s
+#maxretry = 2
+#
+#[apache-shellshock]
+#
+#port    = http,https
+#logpath = %(apache_error_log)s
+#maxretry = 1
 
 [nginx-http-auth]
 
@@ -336,11 +336,11 @@ port     = http,https
 logpath  = %(nginx_error_log)s
 maxretry = 2
 
-[nginx-scriptforce]
+[nginx-extra]
 
 enabled  = true
 port     = http,https
-filter   = nginx-scriptforce
+filter   = nginx-extra
 logpath  = /var/log/nginx/access.log
 maxretry = 2
 
