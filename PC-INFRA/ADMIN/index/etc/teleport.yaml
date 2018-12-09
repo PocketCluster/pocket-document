@@ -1,0 +1,35 @@
+teleport:
+  nodename: index
+  pid_file: /var/run/teleport.pid
+  auth_token: 56ba43550eb64924da267ae57b9c549f
+  auth_servers:
+  - vpn-sf:3025
+  connection_limits:
+    max_connections: 1000
+    max_users: 250
+  log:
+    output: stderr
+    severity: INFO
+  storage:
+    type: bolt
+  data_dir: /var/lib/teleport
+
+ssh_service:
+  enabled: "yes"
+  listen_addr: 0.0.0.0:3022
+  labels:
+    service: index
+    location: DO-SF
+  commands:
+  - name: hostname
+    command: [/bin/hostname]
+    period: 1m0s
+  - name: arch
+    command: [/bin/uname, -p]
+    period: 1h0m0s
+
+auth_service:
+    enabled: no
+
+proxy_service:
+    enabled: no
